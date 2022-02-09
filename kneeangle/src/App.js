@@ -56,7 +56,7 @@ function App() {
     canvasCtx.translate(videoWidth, 0);
     canvasCtx.scale(-1, 1);
     canvasCtx.font = '40px Verdana';
-    canvasCtx.strokeStyle = 'white';
+    canvasCtx.fillStyle = 'green';
     canvasCtx.drawImage(
       results.image,
       0,
@@ -93,9 +93,9 @@ function App() {
         lineWidth: 2
       });
       if (leftAngle <= 180 - allowedAngleVariation || leftAngle >= 180 + allowedAngleVariation) {
-        canvasCtx.strokeStyle = 'red';
+        canvasCtx.fillStyle = 'red';
       }
-      canvasCtx.strokeText(Math.round(leftAngle), videoWidth * leftX2 + 50, videoHeight * leftY2);
+      canvasCtx.fillText(Math.round(leftAngle), videoWidth * leftX2 + 50, videoHeight * leftY2);
 
     } else { // right knee
       if (results.poseLandmarks) {
@@ -124,9 +124,9 @@ function App() {
         lineWidth: 2
       });
       if (rightAngle <= 180 - allowedAngleVariation || rightAngle >= 180 + allowedAngleVariation) {
-        canvasCtx.strokeStyle = 'red';
+        canvasCtx.fillStyle = 'red';
       }
-      canvasCtx.strokeText(Math.round(rightAngle), videoWidth * rightX2 - 120, videoHeight * rightY2);
+      canvasCtx.fillText(Math.round(rightAngle), videoWidth * rightX2 - 120, videoHeight * rightY2);
     }  
   canvasCtx.restore();
 }
