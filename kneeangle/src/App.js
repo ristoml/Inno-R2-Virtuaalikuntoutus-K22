@@ -8,11 +8,11 @@ import { Camera } from '@mediapipe/camera_utils';
 function App() {
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
-  let leftFoot, rightFoot;
+  let leftLeg, rightLeg;
   let leftX1, leftY1, leftX2, leftY2, leftX3, leftY3, leftAngle;
   let rightX1, rightY1, rightX2, rightY2, rightX3, rightY3, rightAngle;
-  var allowedAngleVariation = 10;  
-  var selectedFoot = 1; // 1 for left knee, 2 for right
+  var allowedAngleVariation = 10; // maximum allowed variation from 180 degrees before printing angle with red text
+  var selectedLeg = 1; // 1 for left knee, 2 for right
 
   useEffect(() => {
     const pose = new Pose({
@@ -66,9 +66,9 @@ function App() {
     );
 
     // left knee
-    if (selectedFoot === 1) {
+    if (selectedLeg === 1) {
       if (results.poseLandmarks) {
-        leftFoot = [
+        leftLeg = [
           results.poseLandmarks[23],
           results.poseLandmarks[25],
           results.poseLandmarks[27],
@@ -84,11 +84,11 @@ function App() {
         leftAngle = Math.atan2(leftY3 - leftY2, leftX3 - leftX2) - Math.atan2(leftY1 - leftY2, leftX1 - leftX2);
         leftAngle = leftAngle * (180 / Math.PI);
       }
-      drawConnectors(canvasCtx, leftFoot, POSE_CONNECTIONS, {
+      drawConnectors(canvasCtx, leftLeg, POSE_CONNECTIONS, {
         color: '#00FF00',
         lineWidth: 4
       });
-      drawLandmarks(canvasCtx, leftFoot, {
+      drawLandmarks(canvasCtx, leftLeg, {
         color: '#FF0000',
         lineWidth: 2
       });
@@ -99,7 +99,7 @@ function App() {
 
     } else { // right knee
       if (results.poseLandmarks) {
-        rightFoot = [
+        rightLeg = [
           results.poseLandmarks[24],
           results.poseLandmarks[26],
           results.poseLandmarks[28]
@@ -115,11 +115,11 @@ function App() {
         rightAngle = Math.atan2(rightY3 - rightY2, rightX3 - rightX2) - Math.atan2(rightY1 - rightY2, rightX1 - rightX2);
         rightAngle = rightAngle * (180 / Math.PI);
       }
-      drawConnectors(canvasCtx, rightFoot, POSE_CONNECTIONS, {
+      drawConnectors(canvasCtx, rightLeg, POSE_CONNECTIONS, {
         color: '#00FF00',
         lineWidth: 4
       });
-      drawLandmarks(canvasCtx, rightFoot, {
+      drawLandmarks(canvasCtx, rightLeg, {
         color: '#FF0000',
         lineWidth: 2
       });
