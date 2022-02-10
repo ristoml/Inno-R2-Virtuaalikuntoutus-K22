@@ -12,7 +12,7 @@ function App() {
   let leftX1, leftY1, leftX2, leftY2, leftX3, leftY3, leftAngle;
   let rightX1, rightY1, rightX2, rightY2, rightX3, rightY3, rightAngle;
   var allowedAngleVariation = 10; // maximum allowed variation from 180 degrees before printing angle with red text
-  var selectedLeg = 1; // 1 for left knee, 2 for right
+  var selectedLeg = 2; // 1 for right knee, 2 for left
 
   useEffect(() => {
     const pose = new Pose({
@@ -56,7 +56,7 @@ function App() {
     canvasCtx.translate(videoWidth, 0);
     canvasCtx.scale(-1, 1);
     canvasCtx.font = '40px Verdana';
-    canvasCtx.fillStyle = 'green';
+    canvasCtx.fillStyle = '#00FF00';
     canvasCtx.drawImage(
       results.image,
       0,
@@ -96,7 +96,7 @@ function App() {
       canvasCtx.translate(videoWidth * leftX2 + 120, videoHeight * leftY2);
       canvasCtx.scale(-1, 1);
       if (leftAngle <= 180 - allowedAngleVariation || leftAngle >= 180 + allowedAngleVariation) {
-        canvasCtx.fillStyle = 'red';
+        canvasCtx.fillStyle = '#FF0000';
       }
       canvasCtx.fillText(Math.round(leftAngle), 0, 0);
       canvasCtx.restore();
@@ -131,7 +131,7 @@ function App() {
       canvasCtx.translate(videoWidth * rightX2 - 50, videoHeight * rightY2);
       canvasCtx.scale(-1, 1);
       if (rightAngle <= 180 - allowedAngleVariation || rightAngle >= 180 + allowedAngleVariation) {
-        canvasCtx.fillStyle = 'red';
+        canvasCtx.fillStyle = '#FF0000';
       }
       canvasCtx.fillText(Math.round(rightAngle), 0, 0);
       // canvasCtx.restore();
