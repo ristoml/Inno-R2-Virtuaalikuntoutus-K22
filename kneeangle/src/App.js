@@ -66,7 +66,7 @@ function App() {
     );
 
     // left knee
-    if (selectedLeg === 1) {
+    if (selectedLeg === 2) {
       if (results.poseLandmarks) {
         leftLeg = [
           results.poseLandmarks[23],
@@ -92,10 +92,14 @@ function App() {
         color: '#FF0000',
         lineWidth: 2
       });
+      canvasCtx.save();
+      canvasCtx.translate(videoWidth * leftX2 + 120, videoHeight * leftY2);
+      canvasCtx.scale(-1, 1);
       if (leftAngle <= 180 - allowedAngleVariation || leftAngle >= 180 + allowedAngleVariation) {
         canvasCtx.fillStyle = 'red';
       }
-      canvasCtx.fillText(Math.round(leftAngle), videoWidth * leftX2 + 50, videoHeight * leftY2);
+      canvasCtx.fillText(Math.round(leftAngle), 0, 0);
+      canvasCtx.restore();
 
     } else { // right knee
       if (results.poseLandmarks) {
@@ -123,10 +127,14 @@ function App() {
         color: '#FF0000',
         lineWidth: 2
       });
+      canvasCtx.save();
+      canvasCtx.translate(videoWidth * rightX2 - 50, videoHeight * rightY2);
+      canvasCtx.scale(-1, 1);
       if (rightAngle <= 180 - allowedAngleVariation || rightAngle >= 180 + allowedAngleVariation) {
         canvasCtx.fillStyle = 'red';
       }
-      canvasCtx.fillText(Math.round(rightAngle), videoWidth * rightX2 - 120, videoHeight * rightY2);
+      canvasCtx.fillText(Math.round(rightAngle), 0, 0);
+      // canvasCtx.restore();
     }  
   canvasCtx.restore();
 }
