@@ -1,15 +1,12 @@
-import React from "react";
-
-const Button = (props) => {
+const Button = ({ color, onClick, text }) => {
   return (
     <button
-      style={{position: "absolute", zIndex: 2}}
-      value={props.value}
-      // onClick={props.onClick}
+      onClick={onClick}
+      style={{ backgroundColor: color }}
     >
-      {props.value}
+      {text}
     </button>
-  );
+  )
 }
 
-export default Button;
+export default Button
