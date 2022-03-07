@@ -19,6 +19,7 @@ const App = () => {
     <div className='container'>
       <Canvas
         isLeftLeg={isLeftLeg}
+        isStarted={!showStart}
       />
       <ControlPanel
         onChange={() => setIsLeftLeg(!isLeftLeg)}

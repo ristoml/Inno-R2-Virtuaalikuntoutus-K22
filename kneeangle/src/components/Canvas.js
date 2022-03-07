@@ -4,13 +4,23 @@ import { Pose, POSE_CONNECTIONS } from '@mediapipe/pose'
 import { drawConnectors, drawLandmarks } from '@mediapipe/drawing_utils'
 import { Camera } from '@mediapipe/camera_utils'
 
-const Canvas = ({ isLeftLeg }) => {
+const Canvas = ({ isLeftLeg, isStarted }) => {
   const webcamRef = useRef(null)
   const canvasRef = useRef(null)
   let leftLeg, rightLeg
-  let leftX1, leftY1, leftX2, leftY2, leftX3, leftY3, leftAngle
-  let rightX1, rightY1, rightX2, rightY2, rightX3, rightY3, rightAngle
-  var allowedAngleVariation = 10 // maximum allowed variation from 180 degrees before printing angle with red text
+  let leftHipX, leftHipY, leftKneeX, leftKneeY, leftAnkleX, leftaAnkleY, leftAngle
+  let rightHipX, rightHipY, rightKneeX, rightKneeY, rightAnkleX, rightAnkleY, rightAngle
+  var allowedAngleVariation = 10 // maximum allowed variation before printing angle with red text
+
+  // squat counter stuff
+  var hipMargin = 1.05 // considered being in upright standing position
+  var squatMargin = 1.2 // considered being in squatted position
+  var hipAtStart, counter
+  let ran = false;
+  let squatted = false;
+
+  // record results
+  // let record = []
 
   useEffect(() => {
     const pose = new Pose({
@@ -67,19 +77,20 @@ const Canvas = ({ isLeftLeg }) => {
     if (isLeftLeg) {
       if (results.poseLandmarks) {
         leftLeg = [
+          results.poseLandmarks[24],
           results.poseLandmarks[23],
           results.poseLandmarks[25],
           results.poseLandmarks[27],
         ]
         // coordinates for kneeangle calculation
-        leftX1 = results.poseLandmarks[23].x
-        leftY1 = results.poseLandmarks[23].y
-        leftX2 = results.poseLandmarks[25].x
-        leftY2 = results.poseLandmarks[25].y
-        leftX3 = results.poseLandmarks[27].x
-        leftY3 = results.poseLandmarks[27].y
+        leftHipX = results.poseLandmarks[23].x
+        leftHipY = results.poseLandmarks[23].y
+        leftKneeX = results.poseLandmarks[25].x
+        leftKneeY = results.poseLandmarks[25].y
+        leftAnkleX = results.poseLandmarks[27].x
+        leftaAnkleY = results.poseLandmarks[27].y
         // calculate kneeangle
-        leftAngle = Math.atan2(leftY3 - leftY2, leftX3 - leftX2) - Math.atan2(leftY1 - leftY2, leftX1 - leftX2)
+        leftAngle = Math.atan2(leftaAnkleY - leftKneeY, leftAnkleX - leftKneeX) - Math.atan2(leftHipY - leftKneeY, leftHipX - leftKneeX)
         leftAngle = leftAngle * (180 / Math.PI)
       }
       drawConnectors(canvasCtx, leftLeg, POSE_CONNECTIONS, {
@@ -91,30 +102,54 @@ const Canvas = ({ isLeftLeg }) => {
         lineWidth: 2
       })
       canvasCtx.save()
-      canvasCtx.translate(videoWidth * leftX2 + 120, videoHeight * leftY2)
+      canvasCtx.translate(videoWidth * leftKneeX + 120, videoHeight * leftKneeY)
       canvasCtx.scale(-1, 1)
       if (leftAngle <= 180 - allowedAngleVariation || leftAngle >= 180 + allowedAngleVariation) {
         canvasCtx.fillStyle = 'FF0000'
       }
-      canvasCtx.fillText(Math.round(leftAngle), 0, 0)
+      canvasCtx.fillText(180 - Math.round(leftAngle), 0, 0)
+      canvasCtx.restore()
+
+      // squat counter
+      canvasCtx.scale(-1, 1)
+      if (isStarted) {
+        if (!ran) {
+          counter = 0
+          hipAtStart = leftHipY * hipMargin
+          ran = true
+        }
+        if (leftHipY >= hipAtStart * squatMargin) {
+          squatted = true
+        }
+        if (leftHipY <= hipAtStart && squatted) {
+          counter++
+          squatted = false
+        }
+        canvasCtx.fillText(counter, -40, 40)
+      } else {
+        counter = 0
+        squatted = false
+        ran = false
+      }
       canvasCtx.restore()
 
     } else { // right knee
       if (results.poseLandmarks) {
         rightLeg = [
+          results.poseLandmarks[23],
           results.poseLandmarks[24],
           results.poseLandmarks[26],
           results.poseLandmarks[28]
         ]
 
-        rightX1 = results.poseLandmarks[24].x
-        rightY1 = results.poseLandmarks[24].y
-        rightX2 = results.poseLandmarks[26].x
-        rightY2 = results.poseLandmarks[26].y
-        rightX3 = results.poseLandmarks[28].x
-        rightY3 = results.poseLandmarks[28].y
+        rightHipX = results.poseLandmarks[24].x
+        rightHipY = results.poseLandmarks[24].y
+        rightKneeX = results.poseLandmarks[26].x
+        rightKneeY = results.poseLandmarks[26].y
+        rightAnkleX = results.poseLandmarks[28].x
+        rightAnkleY = results.poseLandmarks[28].y
 
-        rightAngle = Math.atan2(rightY3 - rightY2, rightX3 - rightX2) - Math.atan2(rightY1 - rightY2, rightX1 - rightX2)
+        rightAngle = Math.atan2(rightAnkleY - rightKneeY, rightAnkleX - rightKneeX) - Math.atan2(rightHipY - rightKneeY, rightHipX - rightKneeX)
         rightAngle = rightAngle * (180 / Math.PI)
       }
       drawConnectors(canvasCtx, rightLeg, POSE_CONNECTIONS, {
@@ -126,15 +161,15 @@ const Canvas = ({ isLeftLeg }) => {
         lineWidth: 2
       })
       canvasCtx.save()
-      canvasCtx.translate(videoWidth * rightX2 - 50, videoHeight * rightY2)
+      canvasCtx.translate(videoWidth * rightKneeX - 50, videoHeight * rightKneeY)
       canvasCtx.scale(-1, 1)
       if (rightAngle <= 180 - allowedAngleVariation || rightAngle >= 180 + allowedAngleVariation) {
         canvasCtx.fillStyle = 'red'
       }
-      canvasCtx.fillText(Math.round(rightAngle), 0, 0)
+      canvasCtx.fillText(180 - Math.round(rightAngle), 0, 0)
       // canvasCtx.restore()
-    }  
-  canvasCtx.restore()
+    }
+    canvasCtx.restore()
   }
   return (
     <div className="Canvas">

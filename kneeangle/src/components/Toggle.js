@@ -1,9 +1,13 @@
 const Toggle = ({ onChange }) => {
   return (
-    <input
-      type='checkbox'
-      onChange={onChange}
-    />
+    <div>
+      <label for='rightleg'>Right leg:</label>
+      <input
+        type='checkbox'
+        id='rightleg'
+        onChange={onChange}
+      />      
+    </div>
   )
 }
 
