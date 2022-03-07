@@ -170,6 +170,28 @@ const Canvas = ({ isLeftLeg, isStarted }) => {
       // canvasCtx.restore()
     }
     canvasCtx.restore()
+    // squat counter
+    canvasCtx.scale(-1, 1)
+    if (isStarted) {
+      if (!ran) {
+        counter = 0
+        hipAtStart = rightHipY * hipMargin
+        ran = true
+      }
+      if (rightHipY >= hipAtStart * squatMargin) {
+        squatted = true
+      }
+      if (rightHipY <= hipAtStart && squatted) {
+        counter++
+        squatted = false
+      }
+      canvasCtx.fillText(counter, -40, 40)
+    } else {      
+      counter = 0
+      squatted = false
+      ran = false
+    }
+    canvasCtx.restore()
   }
   return (
     <div className="Canvas">
