@@ -126,8 +126,7 @@ const Canvas = ({ isLeftLeg, isStarted }) => {
           squatted = false
         }
         canvasCtx.fillText(counter, -40, 40)
-      } else {
-        counter = 0
+      } else {        
         squatted = false
         ran = false
       }
@@ -187,7 +186,6 @@ const Canvas = ({ isLeftLeg, isStarted }) => {
       }
       canvasCtx.fillText(counter, -40, 40)
     } else {      
-      counter = 0
       squatted = false
       ran = false
     }
