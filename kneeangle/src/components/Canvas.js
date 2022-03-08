@@ -105,7 +105,7 @@ const Canvas = ({ isLeftLeg, isStarted }) => {
         lineWidth: 2
       })
       canvasCtx.save()
-      canvasCtx.translate(videoWidth * leftKneeX + 140, videoHeight * leftKneeY)
+      canvasCtx.translate(videoWidth * leftKneeX + 100, videoHeight * leftKneeY)
       canvasCtx.scale(-1, 1)
       if (leftAngle <= 180 - allowedAngleVariation || leftAngle >= 180 + allowedAngleVariation) {
         canvasCtx.fillStyle = 'FF0000'
