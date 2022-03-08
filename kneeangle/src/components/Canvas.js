@@ -122,7 +122,7 @@ const Canvas = ({ isLeftLeg, isStarted }) => {
           ran = true
           record = []
         }
-        record.push(leftLeg)
+        record.push({counter: counter, leftLeg})
         if (leftHipY >= hipAtStart * squatMargin) {
           squatted = true
         }
