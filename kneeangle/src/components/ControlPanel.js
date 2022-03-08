@@ -3,7 +3,7 @@ import Toggle from './Toggle'
 
 const ControlPanel = ({ onChange, onClick, showStart }) => {
   return (
-    <div>
+    <div className='control-panel'>
       <Toggle
         onChange={onChange}
       />

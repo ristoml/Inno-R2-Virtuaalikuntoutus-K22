@@ -1,13 +1,12 @@
 const Toggle = ({ onChange }) => {
   return (
-    <div>
-      <label for='rightleg'>Right leg:</label>
+    <label className='toggle-switch'>
       <input
         type='checkbox'
-        id='rightleg'
         onChange={onChange}
-      />      
-    </div>
+      />
+      <span className='slider' />
+    </label>
   )
 }
 

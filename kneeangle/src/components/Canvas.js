@@ -1,10 +1,14 @@
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, memo } from 'react'
 import Webcam from 'react-webcam'
 import { Pose, POSE_CONNECTIONS } from '@mediapipe/pose'
 import { drawConnectors, drawLandmarks } from '@mediapipe/drawing_utils'
 import { Camera } from '@mediapipe/camera_utils'
 
-const Canvas = ({ isLeftLeg, isStarted }) => {
+let isLeft, isStart
+
+const Canvas = ({ isLeftLeg, isStarted }) => {  
+  isLeft = isLeftLeg
+  isStart = isStarted
   const webcamRef = useRef(null)
   const canvasRef = useRef(null)
   let leftLeg, rightLeg
@@ -12,15 +16,13 @@ const Canvas = ({ isLeftLeg, isStarted }) => {
   let rightHipX, rightHipY, rightKneeX, rightKneeY, rightAnkleX, rightAnkleY, rightAngle
   var allowedAngleVariation = 10 // maximum allowed variation before printing angle with red text
 
-  // squat counter stuff
+  // squat counter and recording stuff
   var hipMargin = 1.05 // considered being in upright standing position
   var squatMargin = 1.2 // considered being in squatted position
   var hipAtStart, counter
-  let ran = false;
-  let squatted = false;
-
-  // record results
-  // let record = []
+  let ran = false
+  let squatted = false  
+  let record = []   
 
   useEffect(() => {
     const pose = new Pose({
@@ -52,7 +54,7 @@ const Canvas = ({ isLeftLeg, isStarted }) => {
     }
   })
 
-  const onResults = (results) => {
+  const onResults = (results) => {     
     const videoWidth = webcamRef.current.video.videoWidth
     const videoHeight = webcamRef.current.video.videoHeight
     canvasRef.current.width = videoWidth
@@ -73,8 +75,9 @@ const Canvas = ({ isLeftLeg, isStarted }) => {
       canvasElement.height
     )
 
-    // left knee
-    if (isLeftLeg) {
+    // left knee    
+    if (isLeft) {
+            
       if (results.poseLandmarks) {
         leftLeg = [
           results.poseLandmarks[24],
@@ -110,14 +113,16 @@ const Canvas = ({ isLeftLeg, isStarted }) => {
       canvasCtx.fillText(180 - Math.round(leftAngle), 0, 0)
       canvasCtx.restore()
 
-      // squat counter
+      // squat counter and data capture
       canvasCtx.scale(-1, 1)
-      if (isStarted) {
-        if (!ran) {
+      if (isStart) {
+        if (ran === false) {
           counter = 0
           hipAtStart = leftHipY * hipMargin
           ran = true
+          record = []
         }
+        record.push(leftLeg)
         if (leftHipY >= hipAtStart * squatMargin) {
           squatted = true
         }
@@ -126,8 +131,11 @@ const Canvas = ({ isLeftLeg, isStarted }) => {
           squatted = false
         }
         canvasCtx.fillText(counter, -40, 40)
-      } else {        
+      } else {
         squatted = false
+        if (ran === true) {          
+          console.log(record)
+        }
         ran = false
       }
       canvasCtx.restore()
@@ -169,14 +177,19 @@ const Canvas = ({ isLeftLeg, isStarted }) => {
       // canvasCtx.restore()
     }
     canvasCtx.restore()
-    // squat counter
+    
+    // squat counter and data capture
     canvasCtx.scale(-1, 1)
-    if (isStarted) {
+    if (isStart) {
       if (!ran) {
         counter = 0
         hipAtStart = rightHipY * hipMargin
         ran = true
+        record = []
       }
+      if (rightLeg) {
+        record.push(rightLeg)
+      }        
       if (rightHipY >= hipAtStart * squatMargin) {
         squatted = true
       }
@@ -185,9 +198,15 @@ const Canvas = ({ isLeftLeg, isStarted }) => {
         squatted = false
       }
       canvasCtx.fillText(counter, -40, 40)
-    } else {      
+    }  
+    if (!isStart) {
+      console.log('not running')
       squatted = false
-      ran = false
+      if (ran) {               
+        console.log(record)
+        ran = false
+      }
+      
     }
     canvasCtx.restore()
   }
@@ -196,7 +215,7 @@ const Canvas = ({ isLeftLeg, isStarted }) => {
       <Webcam
         ref={webcamRef}
         style={{
-          position: 'absolute',
+          position: 'relative',
           marginLeft: 'auto',
           marginRight: 'auto',
           textAlign: 'center',
@@ -208,7 +227,7 @@ const Canvas = ({ isLeftLeg, isStarted }) => {
       <canvas
         ref={canvasRef}
         style={{
-          position: 'absolute',
+          position: 'relative',
           marginLeft: 'auto',
           marginRight: 'auto',
           textAlign: 'center',
@@ -221,4 +240,4 @@ const Canvas = ({ isLeftLeg, isStarted }) => {
   )
 }
 
-export default Canvas
+export default memo(Canvas)
