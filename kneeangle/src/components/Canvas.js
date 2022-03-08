@@ -199,8 +199,7 @@ const Canvas = ({ isLeftLeg, isStarted }) => {
       }
       canvasCtx.fillText(counter, -40, 40)
     }  
-    if (!isStart) {
-      console.log('not running')
+    if (!isStart) {      
       squatted = false
       if (ran) {               
         console.log(record)
