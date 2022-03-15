@@ -1,20 +1,21 @@
 import { useState } from 'react'
 import Canvas from './components/Canvas'
 import ControlPanel from './components/ControlPanel'
-import Stats from './components/Stats'
-import Data from './components/Datatable'
+import Datapanel from './components/Datapanel'
 
 const App = () => {
   const [isLeftLeg, setIsLeftLeg] = useState(true)
   const [showStart, setShowStart] = useState(true)
+  
 
   const startRecording = () => {
     console.log('Start')
     setShowStart(!showStart)
   }
-  const stopRecording = () => {
+  const stopRecording = ({dataobject}) => {
     console.log('Stop')
     setShowStart(!showStart)
+
   }
 
   return (
@@ -31,10 +32,7 @@ const App = () => {
       /> 
     </div>
     <div>
-    <Stats/>
-    </div>
-    <div>
-    <Data/>
+    <Datapanel/>
     </div>
     </div>
   )
