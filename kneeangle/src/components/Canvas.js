@@ -113,9 +113,6 @@ const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
       canvasCtx.fillText(180 - Math.round(leftAngle), 0, 0)
       canvasCtx.restore()
 
-
-      canvasCtx.restore()
-
     } else { // right knee
       if (results.poseLandmarks) {
         rightLeg = [
@@ -155,17 +152,18 @@ const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
     canvasCtx.restore()
 
     // squat counter and data capture
-    canvasCtx.scale(-1, 1)
+
     if (isRunning) {
+      canvasCtx.scale(-1, 1)
       if (!ran) {
+        ran = true
         counter = 0
+        record = []
         if (isLeft) {
           hipAtStart = leftHipY * hipMargin
         } else {
           hipAtStart = rightHipY * hipMargin
         }
-        record = []
-        ran = true
       }
       if (isLeft) {
         record.push({ counter: counter, data: leftLeg })
@@ -180,17 +178,14 @@ const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
         squatted = false
       }
       canvasCtx.fillText(counter, -40, 40)
+      canvasCtx.restore()
     }
-    if (!isRunning) {
-      squatted = false
-      if (ran) {
-        console.log(record)
-        getSquatData(record)
-        ran = false
-      }
+    if (ran && !isRunning) {
       ran = false
+      squatted = false
+      console.log(record)
+      getSquatData(record)
     }
-    canvasCtx.restore()
   }
   return (
     <div className="Canvas">
