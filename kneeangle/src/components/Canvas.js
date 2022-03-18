@@ -147,14 +147,13 @@ const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
         canvasCtx.fillStyle = 'red'
       }
       canvasCtx.fillText(180 - Math.round(rightAngle), 0, 0)
-      // canvasCtx.restore()
+      canvasCtx.restore()
     }
-    canvasCtx.restore()
+    //canvasCtx.restore()
 
     // squat counter and data capture
-
-    if (isRunning) {
-      canvasCtx.scale(-1, 1)
+    canvasCtx.scale(-1, 1)
+    if (isRunning) {      
       if (!ran) {
         ran = true
         counter = 0
@@ -177,8 +176,7 @@ const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
         counter++
         squatted = false
       }
-      canvasCtx.fillText(counter, -40, 40)
-      canvasCtx.restore()
+      canvasCtx.fillText(counter, -40, 40)      
     }
     if (ran && !isRunning) {
       ran = false
@@ -186,6 +184,7 @@ const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
       console.log(record)
       getSquatData(record)
     }
+    canvasCtx.restore()
   }
   return (
     <div className="Canvas">
