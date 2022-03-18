@@ -149,8 +149,7 @@ const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
       canvasCtx.fillText(180 - Math.round(rightAngle), 0, 0)
       canvasCtx.restore()
     }
-    //canvasCtx.restore()
-
+    
     // squat counter and data capture
     canvasCtx.scale(-1, 1)
     if (isRunning) {      
