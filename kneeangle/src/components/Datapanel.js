@@ -2,12 +2,15 @@ import Button from './Button'
 import Stats from "./Stats";
 import Datatable from "./Datatable";
 
+let data = []
 const Datapanel = ({ onClick, squatData }) => {
-
+    if (squatData !== null) {
+        data = squatData
+    }    
     return (
         <div>
-        <Stats squatData={squatData}/>
-        <Datatable squatData={squatData}/>
+        <Stats data={data}/>
+        <Datatable data={data}/>
         <Button
             color={'gray'}
             onClick={onClick}

@@ -13,7 +13,7 @@ const App = () => {
     console.log('Start')
     setShowStart(!showStart)
   }
-  const stopRecording = ({dataobject}) => {
+  const stopRecording = () => {
     console.log('Stop')
     setShowStart(!showStart)
     setTimeout(function() {

@@ -1,11 +1,12 @@
 import { useState } from 'react'
 
-const Datatable = ({ squatData }) => {
+let arrayx = {0: 0}
+const Datatable = ({ data }) => {
 
   // leta x = [dataset.name[0], dataset.name[1], dataset.name[2], dataset.name[3]]
-  let arrayx = squatData
-  if (squatData === null) {
-   arrayx = [0, 1, 2]
+
+  if (data !== null) {
+    arrayx = data
   }
 
   // let x = props.returnedData
