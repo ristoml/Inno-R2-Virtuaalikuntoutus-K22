@@ -2,12 +2,12 @@ import Button from './Button'
 import Stats from "./Stats";
 import Datatable from "./Datatable";
 
-const Datapanel = ({ onClick }) => {
+const Datapanel = ({ onClick, squatData }) => {
 
     return (
         <div>
-        <Stats/>
-        <Datatable/>
+        <Stats squatData={squatData}/>
+        <Datatable squatData={squatData}/>
         <Button
             color={'gray'}
             onClick={onClick}

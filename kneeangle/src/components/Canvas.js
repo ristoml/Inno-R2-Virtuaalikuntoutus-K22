@@ -4,25 +4,25 @@ import { Pose, POSE_CONNECTIONS } from '@mediapipe/pose'
 import { drawConnectors, drawLandmarks } from '@mediapipe/drawing_utils'
 import { Camera } from '@mediapipe/camera_utils'
 
-let isLeft, isStart
+let isLeft, isRunning
+let record = []
+let leftLeg, rightLeg
+let leftHipX, leftHipY, leftKneeX, leftKneeY, leftAnkleX, leftaAnkleY, leftAngle
+let rightHipX, rightHipY, rightKneeX, rightKneeY, rightAnkleX, rightAnkleY, rightAngle
+var allowedAngleVariation = 10 // maximum allowed variation before printing angle with red text
 
-const Canvas = ({ isLeftLeg, isStarted }) => {  
+// squat counter and recording stuff
+var hipMargin = 1.05 // considered being in upright standing position
+var squatMargin = 1.2 // considered being in squatted position
+var hipAtStart, counter
+let ran = false
+let squatted = false
+
+const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
   isLeft = isLeftLeg
-  isStart = isStarted
+  isRunning = isStarted
   const webcamRef = useRef(null)
   const canvasRef = useRef(null)
-  let leftLeg, rightLeg
-  let leftHipX, leftHipY, leftKneeX, leftKneeY, leftAnkleX, leftaAnkleY, leftAngle
-  let rightHipX, rightHipY, rightKneeX, rightKneeY, rightAnkleX, rightAnkleY, rightAngle
-  var allowedAngleVariation = 10 // maximum allowed variation before printing angle with red text
-
-  // squat counter and recording stuff
-  var hipMargin = 1.05 // considered being in upright standing position
-  var squatMargin = 1.2 // considered being in squatted position
-  var hipAtStart, counter
-  let ran = false
-  let squatted = false  
-  let record = []   
 
   useEffect(() => {
     const pose = new Pose({
@@ -54,7 +54,7 @@ const Canvas = ({ isLeftLeg, isStarted }) => {
     }
   })
 
-  const onResults = (results) => {     
+  const onResults = (results) => {
     const videoWidth = webcamRef.current.video.videoWidth
     const videoHeight = webcamRef.current.video.videoHeight
     canvasRef.current.width = videoWidth
@@ -77,7 +77,7 @@ const Canvas = ({ isLeftLeg, isStarted }) => {
 
     // left knee    
     if (isLeft) {
-            
+
       if (results.poseLandmarks) {
         leftLeg = [
           results.poseLandmarks[24],
@@ -113,31 +113,7 @@ const Canvas = ({ isLeftLeg, isStarted }) => {
       canvasCtx.fillText(180 - Math.round(leftAngle), 0, 0)
       canvasCtx.restore()
 
-      // squat counter and data capture
-      canvasCtx.scale(-1, 1)
-      if (isStart) {
-        if (ran === false) {
-          counter = 0
-          hipAtStart = leftHipY * hipMargin
-          ran = true
-          record = []
-        }
-        record.push({counter: counter, leftLeg})
-        if (leftHipY >= hipAtStart * squatMargin) {
-          squatted = true
-        }
-        if (leftHipY <= hipAtStart && squatted) {
-          counter++
-          squatted = false
-        }
-        canvasCtx.fillText(counter, -40, 40)
-      } else {
-        squatted = false
-        if (ran === true) {          
-          console.log(record)
-        }
-        ran = false
-      }
+
       canvasCtx.restore()
 
     } else { // right knee
@@ -177,35 +153,42 @@ const Canvas = ({ isLeftLeg, isStarted }) => {
       // canvasCtx.restore()
     }
     canvasCtx.restore()
-    
+
     // squat counter and data capture
     canvasCtx.scale(-1, 1)
-    if (isStart) {
+    if (isRunning) {
       if (!ran) {
         counter = 0
-        hipAtStart = rightHipY * hipMargin
-        ran = true
+        if (isLeft) {
+          hipAtStart = leftHipY * hipMargin
+        } else {
+          hipAtStart = rightHipY * hipMargin
+        }
         record = []
+        ran = true
       }
-      if (rightLeg) {
-        record.push({counter: counter, rightLeg})
-      }        
-      if (rightHipY >= hipAtStart * squatMargin) {
+      if (isLeft) {
+        record.push({ counter: counter, data: leftLeg })
+      } else {
+        record.push({ counter: counter, data: rightLeg })
+      }
+      if ((isLeft && leftHipY >= hipAtStart * squatMargin) || (!isLeft && rightHipY >= hipAtStart * squatMargin)) {
         squatted = true
       }
-      if (rightHipY <= hipAtStart && squatted) {
+      if ((isLeft && leftHipY <= hipAtStart && squatted) || (!isLeft && rightHipY <= hipAtStart && squatted)) {
         counter++
         squatted = false
       }
       canvasCtx.fillText(counter, -40, 40)
-    }  
-    if (!isStart) {      
+    }
+    if (!isRunning) {
       squatted = false
-      if (ran) {               
+      if (ran) {
         console.log(record)
+        getSquatData(record)
         ran = false
       }
-      
+      ran = false
     }
     canvasCtx.restore()
   }

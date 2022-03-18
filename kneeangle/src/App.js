@@ -6,7 +6,8 @@ import Datapanel from './components/Datapanel'
 const App = () => {
   const [isLeftLeg, setIsLeftLeg] = useState(true)
   const [showCanvas, setShowCanvas] = useState(true)
-  const [showStart, setShowStart] = useState(true)  
+  const [showStart, setShowStart] = useState(true)
+  const [squatData, setSquatData] = useState({})  
 
   const startRecording = () => {
     console.log('Start')
@@ -14,8 +15,14 @@ const App = () => {
   }
   const stopRecording = ({dataobject}) => {
     console.log('Stop')
-    setShowCanvas(!showCanvas)
     setShowStart(!showStart)
+    setTimeout(function() {
+      setShowCanvas(!showCanvas)
+    }, 1000)        
+  }
+
+  const handleSquatData = (squatData) => {
+    setSquatData(squatData)
   }
 
   return (
@@ -24,7 +31,8 @@ const App = () => {
         <>
         <Canvas
           isLeftLeg={isLeftLeg}
-          isStarted={!showStart} 
+          isStarted={!showStart}
+          getSquatData={handleSquatData} 
         />
         <ControlPanel
           onChange={() => setIsLeftLeg(!isLeftLeg)}
@@ -35,6 +43,7 @@ const App = () => {
       ) : (
         <Datapanel
           onClick={() => setShowCanvas(!showCanvas)}
+          squatData = {squatData}
         />
       )}
     </div>
