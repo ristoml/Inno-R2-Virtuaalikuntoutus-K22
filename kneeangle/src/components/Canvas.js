@@ -201,9 +201,9 @@ const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
         counter = 0;
       }
       if (isLeft) {
-        record.push({ counter: counter, angle: leftAngle, data: leftLeg });
+        record.push({ leg: 'left', counter: counter, angle: leftAngle, data: leftLeg });
       } else {
-        record.push({ counter: counter, angle: rightAngle, data: rightLeg });
+        record.push({ leg: 'right', counter: counter, angle: rightAngle, data: rightLeg });
       }
       if (
         (isLeft && leftHipY >= hipAtStart * squatMargin) ||
