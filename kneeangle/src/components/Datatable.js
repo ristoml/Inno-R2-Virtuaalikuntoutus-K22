@@ -15,8 +15,7 @@ const Datatable = ({ data }) => {
 
   for(let i = 0; i < arrayx.length; i++){
       for(let j = 0; j < arrayx[i].data.lenght; j++){
-       
-        xvalues.push(arrayx[i].data[2].x)
+         xvalues.push(arrayx[i].data[2].x)
         }
         
       }
@@ -74,8 +73,6 @@ const Datatable = ({ data }) => {
       ))}
     </table>
   )
-
-
 }
 
 export default Datatable

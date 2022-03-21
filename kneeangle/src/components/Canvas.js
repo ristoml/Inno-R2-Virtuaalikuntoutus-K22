@@ -137,10 +137,12 @@ const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
       ) {
         canvasCtx.fillStyle = "FF0000";
       }
-      canvasCtx.fillText(180 - Math.round(leftAngle), 0, 0)
-      canvasCtx.restore()
+      canvasCtx.fillText(180 - Math.round(leftAngle), 0, 0);
+      canvasCtx.restore();
 
-    } else { // right knee
+      canvasCtx.restore();
+    } else {
+      // right knee
       if (results.poseLandmarks) {
         rightLeg = [
           results.poseLandmarks[23],
@@ -181,22 +183,24 @@ const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
       ) {
         canvasCtx.fillStyle = "red";
       }
-      canvasCtx.fillText(180 - Math.round(rightAngle), 0, 0)
-      canvasCtx.restore()
+      canvasCtx.fillText(180 - Math.round(rightAngle), 0, 0);
+      // canvasCtx.restore()
     }
-    
+    canvasCtx.restore();
+
     // squat counter and data capture
-    canvasCtx.scale(-1, 1)
-    if (isRunning) {      
+    canvasCtx.scale(-1, 1);
+    if (isRunning) {
       if (!ran) {
-        ran = true
-        counter = 0
-        record = []
         if (isLeft) {
           hipAtStart = leftHipY * hipMargin;
         } else {
           hipAtStart = rightHipY * hipMargin;
         }
+        endTime = timer + 120; //end time
+        record = [];
+        ran = true;
+        counter = 0;
       }
       if (isLeft) {
         record.push({ counter: counter, data: leftLeg });
@@ -216,13 +220,16 @@ const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
         counter++;
         squatted = false;
       }
-      canvasCtx.fillText(counter, -40, 40)      
+      canvasCtx.fillText(counter, -40, 40);
     }
-    if (ran && !isRunning) {
-      ran = false
-      squatted = false
-      console.log(record)
-      getSquatData(record)
+    if (!isRunning || timer === endTime) {
+      squatted = false;
+      if (ran) {
+        console.log(record);
+        getSquatData(record);
+        ran = false;
+      }
+      ran = false;
     }
     canvasCtx.restore();
   };
