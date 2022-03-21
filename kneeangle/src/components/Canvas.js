@@ -72,7 +72,7 @@ const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
       camera.start();
     }
     pose.onResults(onResults);
-  }, []);
+  }, [])
 
   const onResults = (results) => {
     const videoWidth = webcamRef.current.video.videoWidth;
@@ -140,7 +140,6 @@ const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
       canvasCtx.fillText(180 - Math.round(leftAngle), 0, 0);
       canvasCtx.restore();
 
-      canvasCtx.restore();
     } else {
       // right knee
       if (results.poseLandmarks) {
@@ -184,9 +183,8 @@ const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
         canvasCtx.fillStyle = "red";
       }
       canvasCtx.fillText(180 - Math.round(rightAngle), 0, 0);
-      // canvasCtx.restore()
-    }
-    canvasCtx.restore();
+      canvasCtx.restore()
+    }   
 
     // squat counter and data capture
     canvasCtx.scale(-1, 1);

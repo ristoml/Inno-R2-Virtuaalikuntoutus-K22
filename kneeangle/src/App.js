@@ -23,7 +23,7 @@ const App = () => {
 
   const handleSquatData = (squatData) => {
     setSquatData(squatData);
-    stopRecording();
+    //stopRecording();
   };
 
   return (
