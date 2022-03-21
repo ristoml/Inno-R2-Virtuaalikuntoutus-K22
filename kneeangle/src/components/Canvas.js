@@ -137,19 +137,10 @@ const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
       ) {
         canvasCtx.fillStyle = "FF0000";
       }
-<<<<<<< HEAD
       canvasCtx.fillText(180 - Math.round(leftAngle), 0, 0)
       canvasCtx.restore()
 
     } else { // right knee
-=======
-      canvasCtx.fillText(180 - Math.round(leftAngle), 0, 0);
-      canvasCtx.restore();
-
-      canvasCtx.restore();
-    } else {
-      // right knee
->>>>>>> dev-timer
       if (results.poseLandmarks) {
         rightLeg = [
           results.poseLandmarks[23],
@@ -190,7 +181,6 @@ const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
       ) {
         canvasCtx.fillStyle = "red";
       }
-<<<<<<< HEAD
       canvasCtx.fillText(180 - Math.round(rightAngle), 0, 0)
       canvasCtx.restore()
     }
@@ -202,29 +192,11 @@ const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
         ran = true
         counter = 0
         record = []
-=======
-      canvasCtx.fillText(180 - Math.round(rightAngle), 0, 0);
-      // canvasCtx.restore()
-    }
-    canvasCtx.restore();
-
-    // squat counter and data capture
-    canvasCtx.scale(-1, 1);
-    if (isRunning) {
-      if (!ran) {
->>>>>>> dev-timer
         if (isLeft) {
           hipAtStart = leftHipY * hipMargin;
         } else {
           hipAtStart = rightHipY * hipMargin;
         }
-<<<<<<< HEAD
-=======
-        endTime = timer + 120; //end time
-        record = [];
-        ran = true;
-        counter = 0;
->>>>>>> dev-timer
       }
       if (isLeft) {
         record.push({ counter: counter, data: leftLeg });
@@ -244,7 +216,6 @@ const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
         counter++;
         squatted = false;
       }
-<<<<<<< HEAD
       canvasCtx.fillText(counter, -40, 40)      
     }
     if (ran && !isRunning) {
@@ -252,18 +223,6 @@ const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
       squatted = false
       console.log(record)
       getSquatData(record)
-=======
-      canvasCtx.fillText(counter, -40, 40);
-    }
-    if (!isRunning || timer === endTime) {
-      squatted = false;
-      if (ran) {
-        console.log(record);
-        getSquatData(record);
-        ran = false;
-      }
-      ran = false;
->>>>>>> dev-timer
     }
     canvasCtx.restore();
   };
