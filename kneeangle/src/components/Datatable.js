@@ -3,30 +3,27 @@ import { useState } from 'react'
 let arrayx = {0: 0}
 const Datatable = ({ data }) => {
 
- 
-
-  if (data !== null) {
+   if (data !== null) {
     arrayx = data
   }
 
   let xvalues = []
+  console.log('eka',arrayx.length)
   console.log('datatablen arrayx', arrayx)
   console.log('datatablen eka 0 ja 0 arvo', arrayx[0].data[0].x)
-  console.log('datatablen counter', arrayx[0].counter)
+  console.log('datatablen counter', arrayx[arrayx.length-1].counter)
 
-  for(let i = 0; i < arrayx.lenght; i++){
-      for(let j = 0; j < arrayx.lenght[i]; j++){
-        for(let k= 0; k < arrayx.data.lenght[j]; k++){
-           xvalues += arrayx[i].data[j].x
-        }
+  for(let i = 0; i < arrayx.length; i++){
+      for(let j = 0; j < arrayx[i].data.lenght; j++){
        
+        xvalues.push(arrayx[i].data[2].x)
+        }
+        
       }
-  }
+  
+   console.log('xvalues', xvalues)
 
-  console.log('xvalues', xvalues)
-
-  // let x = props.returnedData
-  console.log(xvalues[0], xvalues.length)
+  // console.log(xvalues[0], xvalues.length)
   const minX = Math.min(xvalues[0], xvalues.length)
   console.log(minX)
   const maxX = Math.max(xvalues[0], xvalues.length)
