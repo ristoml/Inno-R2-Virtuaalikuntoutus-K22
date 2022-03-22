@@ -203,7 +203,7 @@ const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
       if (isLeft) {
         record.push({ leg: 'left', counter: counter, angle: leftAngle, data: leftLeg });
       } else {
-        record.push({ leg: 'right',counter: counter, angle: rightAngle, data: rightLeg });
+        record.push({ leg: 'right', counter: counter, angle: rightAngle, data: rightLeg });
       }
       if (
         (isLeft && leftHipY >= hipAtStart * squatMargin) ||
@@ -232,31 +232,12 @@ const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
     canvasCtx.restore();
   };
   return (
-    <div className="Canvas">
+    <div className="canvas-container">
       <Webcam
         ref={webcamRef}
-        style={{
-          position: "relative",
-          marginLeft: "auto",
-          marginRight: "auto",
-          textAlign: "center",
-          left: "0",
-          right: "0",
-          display: "none",
-        }}
+        style={{display: "none"}}
       />
-      <canvas
-        ref={canvasRef}
-        style={{
-          position: "relative",
-          marginLeft: "auto",
-          marginRight: "auto",
-          textAlign: "center",
-          left: "0",
-          right: "0",
-          zIndex: 1,
-        }}
-      ></canvas>
+      <canvas ref={canvasRef}></canvas>
     </div>
   );
 };

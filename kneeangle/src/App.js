@@ -1,54 +1,18 @@
-import { useState } from "react";
-import Canvas from "./components/Canvas";
-import ControlPanel from "./components/ControlPanel";
-import Datapanel from "./components/Datapanel";
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import Home from './pages/Home'
+import Info from './pages/Info'
 
 const App = () => {
-  const [isLeftLeg, setIsLeftLeg] = useState(true);
-  const [showCanvas, setShowCanvas] = useState(true);
-  const [showStart, setShowStart] = useState(true);
-  const [squatData, setSquatData] = useState({});
-
-  const startRecording = () => {
-    console.log("Start");
-    setShowStart(!showStart);
-  };
-  const stopRecording = () => {
-    console.log("Stop");
-    setShowStart(!showStart);
-    setTimeout(function () {
-      setShowCanvas(!showCanvas);
-    }, 1000);
-  };
-
-  const handleSquatData = (squatData) => {
-    setSquatData(squatData);
-    //stopRecording();
-  };
-
   return (
-    <div className="container">
-      {showCanvas ? (
-        <>
-          <Canvas
-            isLeftLeg={isLeftLeg}
-            isStarted={!showStart}
-            getSquatData={handleSquatData}
-          />
-          <ControlPanel
-            onChange={() => setIsLeftLeg(!isLeftLeg)}
-            onClick={showStart ? startRecording : stopRecording}
-            showStart={showStart}
-          />
-        </>
-      ) : (
-        <Datapanel
-          onClick={() => setShowCanvas(!showCanvas)}
-          squatData={squatData}
-        />
-      )}
-    </div>
-  );
-};
+    <Router>
+      <div className='container'>
+        <Routes>
+          <Route exact path='/' element={<Home />} />
+          <Route exact path='/info' element={<Info />} />
+        </Routes>
+      </div>
+    </Router>
+  )
+}
 
-export default App;
+export default App
