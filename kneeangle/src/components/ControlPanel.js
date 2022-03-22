@@ -1,4 +1,5 @@
 import Button from './Button'
+import { Link } from 'react-router-dom'
 import Toggle from './Toggle'
 
 const ControlPanel = ({ onChange, onClick, showStart }) => {
@@ -12,10 +13,12 @@ const ControlPanel = ({ onChange, onClick, showStart }) => {
         onClick={onClick}
         text={showStart ? 'Start' : 'Stop'}
       />
-      <Button
-        color={'gray'}
-        text={'?'}
-      />
+      <Link to='/info' target={'_blank'}>
+        <Button
+          color={'gray'}
+          text={'?'}
+        />
+      </Link>
     </div>
   )
 }

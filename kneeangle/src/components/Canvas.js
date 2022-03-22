@@ -232,31 +232,12 @@ const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
     canvasCtx.restore();
   };
   return (
-    <div className="Canvas">
+    <div className="canvas-container">
       <Webcam
         ref={webcamRef}
-        style={{
-          position: "relative",
-          marginLeft: "auto",
-          marginRight: "auto",
-          textAlign: "center",
-          left: "0",
-          right: "0",
-          display: "none",
-        }}
+        style={{display: "none"}}
       />
-      <canvas
-        ref={canvasRef}
-        style={{
-          position: "relative",
-          marginLeft: "auto",
-          marginRight: "auto",
-          textAlign: "center",
-          left: "0",
-          right: "0",
-          zIndex: 1,
-        }}
-      ></canvas>
+      <canvas ref={canvasRef}></canvas>
     </div>
   );
 };
