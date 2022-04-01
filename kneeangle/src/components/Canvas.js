@@ -115,7 +115,7 @@ const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
         leftAngle =
           Math.atan2(leftaAnkleY - leftKneeY, leftAnkleX - leftKneeX) -
           Math.atan2(leftHipY - leftKneeY, leftHipX - leftKneeX);
-        leftAngle = leftAngle * (180 / Math.PI);
+        leftAngle = 180 - leftAngle * (180 / Math.PI);
       }
       drawConnectors(canvasCtx, leftLeg, POSE_CONNECTIONS, {
         color: "#00FF00",
@@ -137,7 +137,7 @@ const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
       ) {
         canvasCtx.fillStyle = "FF0000";
       }
-      canvasCtx.fillText(180 - Math.round(leftAngle), 0, 0);
+      canvasCtx.fillText(Math.round(leftAngle), 0, 0);
       canvasCtx.restore();
 
     } else {
@@ -160,7 +160,7 @@ const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
         rightAngle =
           Math.atan2(rightAnkleY - rightKneeY, rightAnkleX - rightKneeX) -
           Math.atan2(rightHipY - rightKneeY, rightHipX - rightKneeX);
-        rightAngle = rightAngle * (180 / Math.PI);
+        rightAngle = 180 - rightAngle * (180 / Math.PI);
       }
       drawConnectors(canvasCtx, rightLeg, POSE_CONNECTIONS, {
         color: "#00FF00",
@@ -182,7 +182,7 @@ const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
       ) {
         canvasCtx.fillStyle = "red";
       }
-      canvasCtx.fillText(180 - Math.round(rightAngle), 0, 0);
+      canvasCtx.fillText(Math.round(rightAngle), 0, 0);
       canvasCtx.restore()
     }   
 
