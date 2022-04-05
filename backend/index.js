@@ -31,6 +31,22 @@ app.post('/api/addResult', (request, response) => {
     })
 })
 
+//yksittäinen haku
+app.get('/api/results/:id', (request, response) => {
+    Result.findById(request.params.id)
+        .then(result => {
+            if (result) {
+                response.json(result)
+            } else {
+                response.status(404).end()
+            }
+        })
+        .catch(error => {
+            console.log(error)
+            response.status(400).send({ error: 'malformatted id' })
+        })
+})
+
 //poisto
 app.delete('/api/results/:id', (request, response, next) => {
     Result.findByIdAndRemove(request.params.id)
