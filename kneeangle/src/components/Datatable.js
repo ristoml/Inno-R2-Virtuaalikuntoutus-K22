@@ -20,7 +20,7 @@ const Datatable = ({ data }) => {
  
   for(let i = 0; i < arrayx.length; i++){
          //  xvalues.push(arrayx[i].data[2].x)        
-        angleValues.push(180-arrayx[i].angle)
+        angleValues.push(arrayx[i].angle)
       }
   
   

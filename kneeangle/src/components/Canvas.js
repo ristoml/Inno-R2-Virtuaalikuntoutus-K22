@@ -26,7 +26,7 @@ var allowedAngleVariation = 10; // maximum allowed variation before printing ang
 
 // squat counter and recording stuff
 var hipMargin = 1.05; // considered being in upright standing position
-var squatMargin = 1.2; // considered being in squatted position
+var squatMargin = 1.1; // considered being in squatted position
 var hipAtStart, counter;
 let ran = false;
 let squatted = false;
