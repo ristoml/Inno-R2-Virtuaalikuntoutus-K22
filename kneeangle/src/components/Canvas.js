@@ -68,6 +68,7 @@ const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
         },
         width: 1280,
         height: 720,
+        facingMode: "environment"
       });
       camera.start();
     }
@@ -232,13 +233,13 @@ const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
     canvasCtx.restore();
   };
   return (
-    <div className="canvas-container">
+    <>
       <Webcam
         ref={webcamRef}
         style={{display: "none"}}
       />
       <canvas ref={canvasRef}></canvas>
-    </div>
+    </>
   );
 };
 

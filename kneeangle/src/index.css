@@ -1,4 +1,6 @@
 body {
+  background-color: black;
+  color: white;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -13,25 +15,15 @@ code {
 }
 
 canvas {
-  position: absolute;
-  width: 100%;
+  object-fit: contain;
+  overflow: hidden;
+  min-width: 100%;
 }
 
 .container {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
-}
-
-.canvas-container {
-  flex: 1;
-  align-items: center;
-  justify-content: center;
-  background-color: black;
-  margin: auto;
-  position: relative;
-  overflow: hidden;
-  width: 100%;
+  height: 100vh;
 }
 
 .control-panel {
@@ -40,7 +32,15 @@ canvas {
   justify-content: space-around;
   background-color: #4e068e;
   margin-top: auto;
-  width: 100%;
+  /* position: absolute;
+  bottom: 0%; */
+  width: 100vw;
+}
+
+.data-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .btn {

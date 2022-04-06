@@ -1,6 +1,7 @@
 import Button from './Button'
 import Stats from "./Stats";
 import Datatable from "./Datatable";
+import Playback from './Playback';
 
 let data = []
 const Datapanel = ({ onClick, squatData }) => {
@@ -8,7 +9,7 @@ const Datapanel = ({ onClick, squatData }) => {
         data = squatData
     }    
     return (
-        <div>
+        <div className='data-panel'>
         <Stats data={data}/>
         <Datatable data={data}/>
         <Button
