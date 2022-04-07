@@ -1,9 +1,9 @@
-
 require('dotenv').config()
 const express = require('express')
 const app = express()
 const Result = require('./models/result')
 const cors = require('cors')
+const { response } = require('express')
 
 app.use(cors())
 app.use(express.json())
@@ -12,22 +12,6 @@ app.use(express.json())
 app.get('/api/results', (request, response) => {
     Result.find({}).then(results => {
         response.json(results)
-    })
-})
-
-//lisääminen
-app.post('/api/addResult', (request, response) => {
-    const body = request.body
-    console.log(request.body)
-
-    const result = new Result({
-        date: body.date,
-        data: body.data,
-        //text: body.text
-    })
-
-    result.save().then(savedResult => {
-        response.json(savedResult)
     })
 })
 
@@ -45,6 +29,35 @@ app.get('/api/results/:id', (request, response) => {
             console.log(error)
             response.status(400).send({ error: 'malformatted id' })
         })
+})
+
+//viimeisin
+app.get('/api/getlatest', (request, response) => {
+    Result.findOne({}, {}, { sort: { 'created_at': -1 } }, function (err, result) {
+        console.log(result)
+        if (result) {
+            response.json(result)
+        } else {
+            response.json({})
+        }
+    })
+})
+
+
+//lisääminen
+app.post('/api/addResult', (request, response) => {
+    const body = request.body
+    console.log(request.body)
+
+    const result = new Result({
+        date: body.date,
+        data: body.data,
+        //text: body.text
+    })
+
+    result.save().then(savedResult => {
+        response.json(savedResult)
+    })
 })
 
 //poisto

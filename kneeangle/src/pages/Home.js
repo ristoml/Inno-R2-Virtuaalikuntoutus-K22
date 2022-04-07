@@ -2,7 +2,6 @@ import { useState } from "react"
 import Canvas from "../components/Canvas"
 import ControlPanel from "../components/ControlPanel"
 import Datapanel from "../components/Datapanel"
-// import axios from 'axios'
 
 const Home = () => {
   const [isLeftLeg, setIsLeftLeg] = useState(true)
@@ -25,36 +24,6 @@ const Home = () => {
 
   const handleSquatData = (squatData) => {
     setSquatData(squatData)
-
-    //haku
-
-    // const promise = axios.get('http://localhost:3001/api/results')
-    // promise.then(response => {
-    //   console.log(response.data)
-    // })
-
-
-    //yksittäinen
-    /*
-    const promise = axios.get('http://localhost:3001/api/results/62470ba05a6a3c2b3ad3c01f')
-    promise.then(response => {
-      console.log(response.data)
-    })
-    /*
-
-    //lisääminen
-    const resultObject = {
-      date: new Date().toISOString(),
-      data: squatData
-    }
-    /*
-        axios
-          .post('http://localhost:3001/api/addResult', resultObject)
-          .then(response => {
-            console.log(response)
-          }).catch(error => { console.error(error.response.data) })
-    */
-    //stopRecording()
   }
 
   return (
