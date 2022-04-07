@@ -2,7 +2,7 @@ import { useState } from "react"
 import Canvas from "../components/Canvas"
 import ControlPanel from "../components/ControlPanel"
 import Datapanel from "../components/Datapanel"
-import axios from 'axios'
+// import axios from 'axios'
 
 const Home = () => {
   const [isLeftLeg, setIsLeftLeg] = useState(true)
@@ -28,10 +28,10 @@ const Home = () => {
 
     //haku
 
-    const promise = axios.get('http://localhost:3001/api/results')
-    promise.then(response => {
-      console.log(response.data)
-    })
+    // const promise = axios.get('http://localhost:3001/api/results')
+    // promise.then(response => {
+    //   console.log(response.data)
+    // })
 
 
     //yksittäinen

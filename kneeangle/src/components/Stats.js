@@ -40,7 +40,10 @@ const Stats = ({ data }) => {
                 <XAxis dataKey="counter"/> 
                <YAxis />
                <CartesianGrid strokeDasharray="3 3" />
-               <Tooltip wrapperStyle={{ top: -120, left: 150 }} />
+               <Tooltip
+                    formatter={(value) => value.toFixed(2)}
+                    wrapperStyle={{ top: -120, left: 150 }}
+               />
                <defs>
           <linearGradient id="splitColor" x1="0" y1="0" x2="0" y2="1">
             <stop offset={off} stopColor="green" stopOpacity={1}/>
