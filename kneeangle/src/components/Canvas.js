@@ -116,7 +116,7 @@ const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
         leftAngle =
           Math.atan2(leftaAnkleY - leftKneeY, leftAnkleX - leftKneeX) -
           Math.atan2(leftHipY - leftKneeY, leftHipX - leftKneeX);
-        leftAngle = 180 - leftAngle * (180 / Math.PI);
+        leftAngle = -(180 - leftAngle * (180 / Math.PI));
       }
       drawConnectors(canvasCtx, leftLeg, POSE_CONNECTIONS, {
         color: "#00FF00",
@@ -133,10 +133,10 @@ const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
       );
       canvasCtx.scale(-1, 1);
       if (
-        leftAngle <= 180 - allowedAngleVariation ||
-        leftAngle >= 180 + allowedAngleVariation
+        leftAngle <= 0 - allowedAngleVariation ||
+        leftAngle >= 0 + allowedAngleVariation
       ) {
-        canvasCtx.fillStyle = "FF0000";
+        canvasCtx.fillStyle = "#FF0000";
       }
       canvasCtx.fillText(Math.round(leftAngle), 0, 0);
       canvasCtx.restore();
@@ -178,10 +178,10 @@ const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
       );
       canvasCtx.scale(-1, 1);
       if (
-        rightAngle <= 180 - allowedAngleVariation ||
-        rightAngle >= 180 + allowedAngleVariation
+        rightAngle <= 0 - allowedAngleVariation ||
+        rightAngle >= 0 + allowedAngleVariation
       ) {
-        canvasCtx.fillStyle = "red";
+        canvasCtx.fillStyle = "#FF0000";
       }
       canvasCtx.fillText(Math.round(rightAngle), 0, 0);
       canvasCtx.restore()
