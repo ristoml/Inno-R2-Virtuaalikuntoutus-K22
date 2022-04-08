@@ -1,30 +1,35 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 
-let arrayx = {0: 0}
+let arrayx = { 0: 0 }
 
 const Datatable = ({ data }) => {
+  const [sdata, setData] = useState(data);
 
-   if (data !== null) {
-    arrayx = data
+  useEffect(() => {
+    setData(data);
+  }, [data]);
+
+  if (sdata) {
+    arrayx = sdata
   }
 
-  
-  console.log('datan koko',arrayx.length)
+
+  console.log('datan koko', arrayx.length)
   console.log('datatablen arrayx', arrayx)
-  console.log('datatablen counter', arrayx[arrayx.length-1].counter)
+  console.log('datatablen counter', arrayx[arrayx.length - 1].counter)
   console.log('angle', arrayx[0].angle)
   console.log('leg', arrayx[0].leg)
 
   let angleValues = []
- 
-  for(let i = 0; i < arrayx.length; i++){
-         //  xvalues.push(arrayx[i].data[2].x)        
-        angleValues.push(arrayx[i].angle)
-      }
-  
-  
-   console.log('angelvalues', angleValues)
+
+  for (let i = 0; i < arrayx.length; i++) {
+    //  xvalues.push(arrayx[i].data[2].x)        
+    angleValues.push(arrayx[i].angle)
+  }
+
+
+  console.log('angelvalues', angleValues)
 
   console.log(angleValues[0], angleValues.length)
   const minX = Math.min.apply(Math, angleValues).toFixed(2)
@@ -38,17 +43,17 @@ const Datatable = ({ data }) => {
   })
   let sum = angleValues.reduce((a, b) => a + b, 0)
   let variance = sum / angleValues.length
-  const stdX = Math.sqrt( variance).toFixed(2)
+  const stdX = Math.sqrt(variance).toFixed(2)
   console.log('std', stdX)
 
   const tabledata = [
     {
-      name:'Leg',
+      name: 'Leg',
       value: arrayx[0].leg
     },
     {
       name: 'Rounds',
-      value: arrayx[arrayx.length-1].counter
+      value: arrayx[arrayx.length - 1].counter
     },
     {
       name: 'Minimum',
@@ -67,11 +72,11 @@ const Datatable = ({ data }) => {
       value: stdX
     },
   ]
-  
+
   const [state, setState] = useState(tabledata)
 
   return (
-      <table>
+    <table>
       <tr key={"header"}>
       </tr>
       {state.map((item) => (

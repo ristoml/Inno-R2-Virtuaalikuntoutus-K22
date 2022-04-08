@@ -12,10 +12,10 @@ const Stats = ({ data }) => {
      }, [data]); 
 
      if (sdata !== null) {
-          dataset = data
+          dataset = sdata
      }
 
-     console.log('stats', data)
+     console.log('stats', dataset)
 
      const gradientOffset = () => {
           const dataMax = Math.max(...dataset.map((i) => i.angle));
