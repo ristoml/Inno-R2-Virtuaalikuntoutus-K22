@@ -66,7 +66,7 @@ const Datapanel = ({ onClick, squatData }) => {
     const deleteResult = (resultId) => {
         console.log('delete result id: ' + resultId)
         setResultId(resultId)
-        const promise = axios.delete(`http://localhost:3001/api/results/${this.resultId}`)
+        const promise = axios.delete(`http://localhost:3001/api/results/${resultId}`)
         promise.then(response => {
             //setCurrentdata(response.data.data)
             console.log(response)
