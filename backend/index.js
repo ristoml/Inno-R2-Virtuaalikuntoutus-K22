@@ -14,8 +14,12 @@ app.get('/api/results', (request, response) => {
         response.json(results)
     })
 })
-//get id, date and possible client of every item
-
+//get id, date and client of every item
+// app.get('/api/resulttitles', (request, response) => {
+//     Result.find({}).then(results => {
+//         response.json(results)
+//     })
+// })
 
 //single search
 app.get('/api/results/:id', (request, response) => {
