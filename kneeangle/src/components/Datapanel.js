@@ -9,23 +9,12 @@ import { useEffect, useState } from 'react'
 
 const Datapanel = ({ onClick, squatData }) => {
 
-    const [data, setCurrentdata] = useState(null)
-    const [saved, setSaved] = useState(false)
+    const [data, setCurrentdata] = useState(null)    
     const [resultId, setResultId] = useState('')
+    let saved = false
 
     useEffect(() => {
         console.log(squatData)
-        const saveAndGetResult = async () => {
-            console.log('save and get result')
-            const resultObject = {
-                date: new Date().toISOString(),
-                data: squatData,
-                client: ''
-            }
-            const response = await axios.post('http://localhost:3001/api/addResult', resultObject)
-            setCurrentdata(response.data.data)
-            setSaved(true)
-        }
         if (Object.keys(squatData).length !== 0 && !saved) {
             saveAndGetResult()
         }
@@ -36,11 +25,22 @@ const Datapanel = ({ onClick, squatData }) => {
         }
     }, [resultId])
 
+    const saveAndGetResult = async () => {
+        console.log('save and get result')
+        const resultObject = {
+            date: new Date().toISOString(),
+            data: squatData,
+            client: ''
+        }
+        const response = await axios.post('http://localhost:3001/api/addResult', resultObject)
+        setCurrentdata(response.data)
+        saved = true
+    }
     const getLatestResult = () => {
         console.log('get latest')
-        const promise = axios.get('http://localhost:3001/api/getlatest')
+        const promise = axios.get('http://localhost:3001/api/getLatest')
         promise.then(response => {
-            setCurrentdata(response.data.data)
+            setCurrentdata(response.data)
         })
     }
     const getResult = (resultId) => {
@@ -48,7 +48,7 @@ const Datapanel = ({ onClick, squatData }) => {
         setResultId(resultId)
         const promise = axios.get(`http://localhost:3001/api/results/${resultId}`)
         promise.then(response => {
-            setCurrentdata(response.data.data)
+            setCurrentdata(response.data)
         })
     }
     // const saveResult = (sdata) => {
@@ -97,8 +97,8 @@ const Datapanel = ({ onClick, squatData }) => {
                         deleteResult={deleteResult}
                         updateResult={updateResult}
                     />
-                    <Stats data={data} />
-                    <Datatable data={data} />
+                    <Stats data={data.data} />
+                    <Datatable data={data.data} />
                     <Button
                         color={'gray'}
                         onClick={onClick}

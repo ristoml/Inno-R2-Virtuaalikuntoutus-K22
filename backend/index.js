@@ -38,8 +38,8 @@ app.get('/api/results/:id', (request, response) => {
 })
 
 //get latest
-app.get('/api/getlatest', (request, response) => {
-    Result.findOne({}, {}, { sort: { 'created_at': -1 } }, function (err, result) {
+app.get('/api/getLatest', (request, response) => {
+    Result.findOne({}, {}, { sort: { 'date': -1 } }, function (err, result) {
         console.log(result)
         if (result) {
             response.json(result)
