@@ -18,7 +18,7 @@ let alreadyRan = false;
 let squatted = false;
 let timer, endTime;
 
-const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
+const Canvas = ({ isLeftLeg, isStarted, getSquatData, onClick }) => {
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
   isLeft = isLeftLeg;
@@ -147,7 +147,7 @@ const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
       if (!alreadyRan) {
         isLeft ? hipAtStart = ph.getLeftHipY() * hipMargin : hipAtStart = ph.getRightHipY() * hipMargin
         endTime = timer + 120; // timeout in seconds to automatically stop recording
-        record = [];        
+        record = [];
         counter = 0;
         alreadyRan = true;
       }
@@ -177,7 +177,7 @@ const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
     canvasCtx.restore();
   };
   return (
-    <>
+    <>      
       <Webcam
         ref={webcamRef}
         style={{ display: "none" }}

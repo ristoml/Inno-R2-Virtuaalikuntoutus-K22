@@ -1,5 +1,5 @@
 body {
-  background-color: black;
+  background-color: rgb(36, 37, 41);
   color: white;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -18,6 +18,7 @@ canvas {
   object-fit: contain;
   overflow: hidden;
   min-width: 100%;
+  background-color: rgb(36, 37, 41);
 }
 
 .container {
@@ -29,12 +30,18 @@ canvas {
 .control-panel {
   display: flex;
   align-items: center;
-  justify-content: space-around;
-  background-color: #4e068e;
+  justify-content: space-evenly;
+  background-color: rgba(36, 37, 41, 0.3);
   margin-top: auto;
-  /* position: absolute;
-  bottom: 0%; */
+  position: absolute;
+  bottom: 0%;
   width: 100vw;
+}
+.control-panel2 {
+  display: block;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(36, 37, 41, 0);   
 }
 
 .data-panel {
@@ -45,14 +52,21 @@ canvas {
 
 .btn {
   border-radius: 50%;
-  margin: 20px;
-  height: 60px;
-  width: 60px;
+  margin: 10px;
+  height: 65px;
+  width: 65px;
+}
+.btn2 {
+  border-radius: 10%;
+  margin: 5px;
+  height: 30px;
+  width: 65px;
 }
 
 .toggle-switch {
   display: inline-block;
   position: relative;
+  margin: 4px;
   height: 34px;
   width: 60px;
 }
