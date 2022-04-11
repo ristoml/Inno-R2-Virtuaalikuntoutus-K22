@@ -1,7 +1,7 @@
 import { useState } from "react"
-import Canvas from "../components/Canvas"
-import ControlPanel from "../components/ControlPanel"
-import Datapanel from "../components/Datapanel"
+import Canvas from "../components/home/Canvas"
+import ControlPanel from "../components/home/ControlPanel"
+import Datapanel from "../components/results/Datapanel"
 
 
 const Home = () => {

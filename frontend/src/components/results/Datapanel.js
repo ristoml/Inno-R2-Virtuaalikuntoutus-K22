@@ -1,5 +1,5 @@
 import ResultPanel from './ResultPanel'
-import Button from './Button'
+import Button from '../home/Button'
 import Stats from "./Stats"
 import Datatable from "./Datatable"
 import Playback from './Playback'
