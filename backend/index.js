@@ -58,6 +58,7 @@ app.post('/api/addResult', (request, response) => {
     const result = new Result({
         date: body.date,
         data: body.data,
+        client: body.client
         //text: body.text
     })
 
@@ -71,6 +72,16 @@ app.delete('/api/results/:id', (request, response, next) => {
     Result.findByIdAndRemove(request.params.id)
         .then(result => {
             response.status(204).end()
+        })
+        .catch(error => next(error))
+})
+
+//update item with id
+app.put('/api/update/:id', (request, response) => {
+
+    Result.findByIdAndUpdate(request.params.id, { client: request.body.client }, { new: true })
+        .then(updatedResult => {
+            response.json(updatedResult)
         })
         .catch(error => next(error))
 })

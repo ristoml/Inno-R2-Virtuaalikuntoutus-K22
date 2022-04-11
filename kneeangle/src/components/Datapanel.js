@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react'
 
 const Datapanel = ({ onClick, squatData }) => {
 
-    const [data, setCurrentdata] = useState(null)    
+    const [data, setCurrentdata] = useState(null)
     const [resultId, setResultId] = useState('')
     let saved = false
 
@@ -36,6 +36,19 @@ const Datapanel = ({ onClick, squatData }) => {
         setCurrentdata(response.data)
         saved = true
     }
+    const updateResult = (resultId, clientName) => {
+        console.log('get result id: ' + resultId)
+        setResultId(resultId)
+
+        const client = {
+            client: clientName
+        }
+
+        const promise = axios.put(`http://localhost:3001/api/update/${resultId}`, client)
+        promise.then(response => {
+            setCurrentdata(response.data)
+        })
+    }
     const getLatestResult = () => {
         console.log('get latest')
         const promise = axios.get('http://localhost:3001/api/getLatest')
@@ -51,19 +64,7 @@ const Datapanel = ({ onClick, squatData }) => {
             setCurrentdata(response.data)
         })
     }
-    // const saveResult = (sdata) => {
-    //     console.log('save result: ' + sdata)
-    //     const resultObject = {
-    //         date: new Date().toISOString(),
-    //         data: sdata
-    //     }
-    //     axios
-    //         .post('http://localhost:3001/api/addResult', resultObject)
-    //         .then(response => {
-    //             console.log(response)
-    //         }).catch(error => { console.error(error.response.data) })
 
-    // }
     const deleteResult = (resultId) => {
         console.log('delete result id: ' + resultId)
         setResultId(resultId)
@@ -73,19 +74,6 @@ const Datapanel = ({ onClick, squatData }) => {
             console.log(response)
             getLatestResult()
         })
-    }
-    const updateResult = (sdata, resultId, clientName) => {
-        // const resultObject = {
-        //     date: new Date().toISOString(),
-        //     data: sdata
-        // }
-        // axios
-        //     .post('http://localhost:3001/api/addResult', resultObject)
-        //     .then(response => {
-        //         console.log(response)
-        //         squatData = null
-        //     }).catch(error => { console.error(error.response.data) })
-
     }
 
     return (

@@ -12,6 +12,9 @@ mongoose.connect(url)
     })
 
 const resultSchema = new mongoose.Schema({
+    client: {
+        type: String
+    },
     date: {
         type: Date
     },
