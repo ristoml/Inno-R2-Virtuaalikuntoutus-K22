@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import Home from './pages/Home'
 import Info from './pages/Info'
 
-const App = () => {
+const App = () => {  
   return (
     <Router>
       <div className='container'>
