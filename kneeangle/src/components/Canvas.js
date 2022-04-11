@@ -4,7 +4,7 @@ import { Pose, POSE_CONNECTIONS } from "@mediapipe/pose";
 import { drawConnectors, drawLandmarks } from "@mediapipe/drawing_utils";
 import { Camera } from "@mediapipe/camera_utils";
 import { useCountdown } from "./Timer";
-import { updatePoseHelperLeft, getLeftLeg, getLeftKneeX, getLeftKneeY, getLeftHipY, getLeftAngle, updatePoseHelperRight, getRightLeg, getRightKneeX, getRightKneeY, getRightHipY, getRightAngle } from "../services/PoseHelper";
+import { updatePoseHelperLeft, getLeftLeg, getLeftKneeX, getLeftKneeY, getLeftHipY, getLeftAngle, updatePoseHelperRight, getRightLeg, getRightKneeX, getRightKneeY, getRightHipY, getRightAngle } from "./PoseHelper";
 
 let isLeft, isRunning;
 let record = [];
@@ -14,7 +14,7 @@ var allowedAngleDeviation = 10; // maximum allowed angle deviation in degrees be
 var hipMargin = 1.05; // considered being in upright standing position
 var squatMargin = 1.1; // considered being in squatted position
 var hipAtStart, counter;
-let alreadyRun = false;
+let alreadyRan = false;
 let squatted = false;
 let timer, endTime;
 
@@ -80,82 +80,79 @@ const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
       canvasElement.height
     );
 
-    // left knee
-    if (isLeft) {
-      if (results.poseLandmarks) {
-        updatePoseHelperLeft(results)
-      }
-      drawConnectors(canvasCtx, getLeftLeg(), POSE_CONNECTIONS, {
-        color: "#00FF00",
-        lineWidth: 4,
-      });
-      drawLandmarks(canvasCtx, getLeftLeg(), {
-        color: "#FF0000",
-        lineWidth: 2,
-      });
-      canvasCtx.save();
-      canvasCtx.translate(
-        videoWidth * getLeftKneeX() + 100,
-        videoHeight * getLeftKneeY()
-      );
-      canvasCtx.scale(-1, 1);
-      if (
-        getLeftAngle() <= 0 - allowedAngleDeviation ||
-        getLeftAngle() >= 0 + allowedAngleDeviation
-      ) {
-        canvasCtx.fillStyle = "#FF0000";
-      }
-      canvasCtx.fillText(Math.round(getLeftAngle()), 0, 0);
-      canvasCtx.restore();
+    switch (isLeft) {
+      case true:  // left knee      
+        if (results.poseLandmarks) {
+          updatePoseHelperLeft(results)
+        }
+        drawConnectors(canvasCtx, getLeftLeg(), POSE_CONNECTIONS, {
+          color: "#00FF00",
+          lineWidth: 4,
+        });
+        drawLandmarks(canvasCtx, getLeftLeg(), {
+          color: "#FF0000",
+          lineWidth: 2,
+        });
+        canvasCtx.save();
+        canvasCtx.translate(
+          videoWidth * getLeftKneeX() + 100,
+          videoHeight * getLeftKneeY()
+        );
+        canvasCtx.scale(-1, 1);
+        if (
+          getLeftAngle() <= 0 - allowedAngleDeviation ||
+          getLeftAngle() >= 0 + allowedAngleDeviation
+        ) {
+          canvasCtx.fillStyle = "#FF0000";
+        }
+        canvasCtx.fillText(Math.round(getLeftAngle()), 0, 0);
+        canvasCtx.restore();
+        break;
 
-    } else {
-      // right knee
-      if (results.poseLandmarks) {
-        updatePoseHelperRight(results)
-      }
-      drawConnectors(canvasCtx, getRightLeg(), POSE_CONNECTIONS, {
-        color: "#00FF00",
-        lineWidth: 4,
-      });
-      drawLandmarks(canvasCtx, getRightLeg(), {
-        color: "#FF0000",
-        lineWidth: 2,
-      });
-      canvasCtx.save();
-      canvasCtx.translate(
-        videoWidth * getRightKneeX() - 50,
-        videoHeight * getRightKneeY()
-      );
-      canvasCtx.scale(-1, 1);
-      if (
-        getRightAngle() <= 0 - allowedAngleDeviation ||
-        getRightAngle() >= 0 + allowedAngleDeviation
-      ) {
-        canvasCtx.fillStyle = "#FF0000";
-      }
-      canvasCtx.fillText(Math.round(getRightAngle()), 0, 0);
-      canvasCtx.restore()
+      case false: // right knee        
+        if (results.poseLandmarks) {
+          updatePoseHelperRight(results)
+        }
+        drawConnectors(canvasCtx, getRightLeg(), POSE_CONNECTIONS, {
+          color: "#00FF00",
+          lineWidth: 4,
+        });
+        drawLandmarks(canvasCtx, getRightLeg(), {
+          color: "#FF0000",
+          lineWidth: 2,
+        });
+        canvasCtx.save();
+        canvasCtx.translate(
+          videoWidth * getRightKneeX() - 50,
+          videoHeight * getRightKneeY()
+        );
+        canvasCtx.scale(-1, 1);
+        if (
+          getRightAngle() <= 0 - allowedAngleDeviation ||
+          getRightAngle() >= 0 + allowedAngleDeviation
+        ) {
+          canvasCtx.fillStyle = "#FF0000";
+        }
+        canvasCtx.fillText(Math.round(getRightAngle()), 0, 0);
+        canvasCtx.restore()
+        break;
+
+      default:
+        console.log('no leg selected')
     }
 
     // squat counter and data capture
     canvasCtx.scale(-1, 1);
     if (isRunning) {
-      if (!alreadyRun) {
-        if (isLeft) {
-          hipAtStart = getLeftHipY() * hipMargin;
-        } else {
-          hipAtStart = getRightHipY() * hipMargin;
-        }
+      if (!alreadyRan) {
+        isLeft ? hipAtStart = getLeftHipY() * hipMargin : hipAtStart = getRightHipY() * hipMargin
         endTime = timer + 120; // timeout in seconds to automatically stop recording
         record = [];
-        alreadyRun = true;
+        alreadyRan = true;
         counter = 0;
       }
-      if (isLeft) {
-        record.push({ leg: 'left', counter: counter, angle: getLeftAngle(), data: getLeftLeg() });
-      } else {
-        record.push({ leg: 'right', counter: counter, angle: getRightAngle(), data: getRightLeg() });
-      }
+      isLeft ? record.push({ leg: 'left', counter: counter, angle: getLeftAngle(), data: getLeftLeg() }) : record.push({ leg: 'right', counter: counter, angle: getRightAngle(), data: getRightLeg() })
+
       if (
         (isLeft && getLeftHipY() >= hipAtStart * squatMargin) ||
         (!isLeft && getRightHipY() >= hipAtStart * squatMargin)
@@ -171,14 +168,11 @@ const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
       }
       canvasCtx.fillText(counter, -40, 40);
     }
-    if (!isRunning || timer === endTime) {
+    if ((!isRunning && alreadyRan) || timer === endTime) { //recording stops     
+      console.log(record);
+      getSquatData(record);
+      alreadyRan = false;
       squatted = false;
-      if (alreadyRun) {
-        console.log(record);
-        getSquatData(record);
-        alreadyRun = false;
-      }
-      alreadyRun = false;
     }
     canvasCtx.restore();
   };
