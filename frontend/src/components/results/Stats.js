@@ -55,7 +55,7 @@ const Stats = ({ data }) => {
                          </linearGradient>
                     </defs>
                     <Legend verticalAlign="top" height={50} />
-                    <Area name="knee angle" type="monotone" dataKey="angle" stroke="#E040FB" activeDot={{ r: 8 }} />
+                    <Area name="Knee angle" type="monotone" dataKey="angle" stroke="#7700bd" activeDot={{ r: 8 }} />
 
                </AreaChart>
 

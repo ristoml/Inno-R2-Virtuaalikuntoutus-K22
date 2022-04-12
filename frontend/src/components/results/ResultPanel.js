@@ -80,8 +80,8 @@ const ResultPanel = ({ getId }) => {
                     defaultValue={{ label: options[0].label }}
                 />
                 <Button2
-                    text='Enter Id'
-                    color='orange'                    
+                    text='Save'
+                    color='green'                    
                 />
                 <Button2
                     text='Delete'

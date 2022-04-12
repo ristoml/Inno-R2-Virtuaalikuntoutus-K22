@@ -13,21 +13,21 @@ const ControlPanel = ({ onChange, onClick, onClick2, isRecording, isLeft }) => {
         />
         R</div>
       <Button
-        color={isRecording ? 'red' : 'lawngreen'}
+        color={isRecording ? 'red' : '#7700bd'}
         onClick={onClick}
-        text={isRecording ? 'Stop' : 'Start'}
+        text={isRecording ? 'STOP' : 'START'}
       />
       <div className='control-panel2'>
         <Button2
-          color='grey'
+          color={'#7700bd'}
           onClick={onClick2}
-          text='Load'
+          text={'Load'}
         />
         <br></br>
         <Link to='/info' target={'_blank'}>
           <Button2
-            color={'gray'}
-            text={'Help'}
+            color={'#7700bd'}
+            text={'?'}
           />
         </Link>
       </div>

@@ -76,7 +76,7 @@ const Datatable = ({ data }) => {
   const [state, setState] = useState(tabledata)
 
   return (
-    <table>
+    <table className='data-table'>
       <tr key={"header"}>
       </tr>
       {state.map((item) => (
