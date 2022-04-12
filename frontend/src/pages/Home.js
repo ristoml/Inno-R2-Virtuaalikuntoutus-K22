@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useRef } from "react"
 import Canvas from "../components/home/Canvas"
 import ControlPanel from "../components/home/ControlPanel"
 import Datapanel from "../components/results/Datapanel"
@@ -7,29 +7,29 @@ import Datapanel from "../components/results/Datapanel"
 const Home = () => {
   const [isLeftLeg, setIsLeftLeg] = useState(true)
   const [showCanvas, setShowCanvas] = useState(true)
-  const [recording, setRecording] = useState(false)
-  const [squatData, setSquatData] = useState({})
+  const [recording, setRecording] = useState(false) 
+  const squatData = useRef({})    
 
   const startRecording = () => {
-    console.log("Start");
+    console.log("Start recording");
     setRecording(true)
     setShowCanvas(true)
   }
   const stopRecording = () => {
-    console.log("Stop");
+    console.log("Stop recording");
     setRecording(false)
     setTimeout(function () {
       setShowCanvas(false);
     }, 1000)
   }
   const showResults = () => {
-    setSquatData({})
+    squatData.current = {}
     setRecording(false)
     setShowCanvas(false)
   }
 
   const handleSquatData = (squatData) => {
-    setSquatData(squatData)
+    squatData.current = squatData
   }
 
   return (
@@ -52,7 +52,7 @@ const Home = () => {
       ) : (
         <Datapanel
           onClick={() => setShowCanvas(!showCanvas)}
-          squatData={squatData}
+          squatData={squatData.current}
         />
       )}
     </div>
