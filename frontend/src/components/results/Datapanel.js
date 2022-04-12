@@ -44,7 +44,6 @@ const Datapanel = ({ onClick, squatData }) => {
             client: ''
         }
         const promise = axios.post('http://localhost:3001/api/addResult', resultObject)
-
         promise.then(response => {
             setCurrentData(response.data)            
         })
@@ -52,11 +51,9 @@ const Datapanel = ({ onClick, squatData }) => {
     const updateResult = (resultId, clientName) => {
         console.log('get result id: ' + resultId)
         setResultId(resultId)
-
         const client = {
             client: clientName
         }
-
         const promise = axios.put(`http://localhost:3001/api/update/${resultId}`, client)
         promise.then(response => {
             setCurrentData(response.data)
