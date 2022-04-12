@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Select from 'react-select'
 import axios from 'axios'
 
 const makeOptions = (data) => {
-    const rdata = data.map((id, date, client) => [{
-        value: id,
-        label: date + ' ' + client
+    const rdata = data.map((data) => [{
+        value: data.id,
+        label: data.date + ' ' + data.client
     }])
     return rdata
 }
@@ -17,11 +17,21 @@ const ResultPanel = ({ getData }) => {
     const [allData, setAllData] = useState(null)
     const [clientName, setClientName] = useState('')
     const [date, setDate] = useState()
+    const isLoaded = useRef(false)
 
     useEffect(() => {
-        getAllData()
-        options = makeOptions(allData)
-        console.log(options)
+        switch (isLoaded.current) {
+            case false:
+                getAllData().then(response => {
+                    options = makeOptions(response.data)
+                    setSelectOptions(options)
+                    console.log(options)
+                    isLoaded.current = true
+                })
+                break
+            default:
+                console.log('default')
+        }        
     }, [resultId]);
 
     // const getResult = (resultId) => {
@@ -55,12 +65,12 @@ const ResultPanel = ({ getData }) => {
     // }
     const getAllData = () => {
         console.log('get all data')
-        const promise = axios.get('http://localhost:3001/api/results')
-        promise.then(response => {
-            setAllData(response.data)            
-        })
+        return axios.get('http://localhost:3001/api/results')
+        // promise.then(response => {
+        //     setAllData(response.data)
+        // })
     }
-    
+
 
     return (<>
         <div className='resultpanel'>
