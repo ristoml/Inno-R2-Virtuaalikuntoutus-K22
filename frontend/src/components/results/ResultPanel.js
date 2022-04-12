@@ -6,7 +6,7 @@ import Button2 from '../home/Button2'
 const makeOptions = (data) => {
     const rdata = data.map(x => ({
         value: x.id,
-        label: x.date + ': ' + x.client
+        label: new Date(x.date).toLocaleString('fi-FI') + ': ' + x.client
     }))
     return rdata
 }
