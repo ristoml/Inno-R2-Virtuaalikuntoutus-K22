@@ -15,18 +15,18 @@ const ControlPanel = ({ onChange, onClick, onClick2, isRecording, isLeft }) => {
       <Button
         color={isRecording ? 'red' : '#7700bd'}
         onClick={onClick}
-        text={isRecording ? 'STOP' : 'START'}
+        text={isRecording ? 'Stop' : 'Start'}
       />
       <div className='control-panel2'>
         <Button2
-          color={'#7700bd'}
+          color={'grey'}
           onClick={onClick2}
-          text={'Load'}
+          text={'load'}
         />
         <br></br>
         <Link to='/info' target={'_blank'}>
           <Button2
-            color={'#7700bd'}
+            color={'grey'}
             text={'?'}
           />
         </Link>

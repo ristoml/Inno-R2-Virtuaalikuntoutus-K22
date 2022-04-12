@@ -73,6 +73,7 @@ canvas {
   margin: 15px;
   height: 65px;
   width: 65px;
+  font-size: small;
   font-weight: bold;
 }
 
@@ -81,6 +82,7 @@ canvas {
   margin: 5px;
   height: 30px;
   width: 65px;
+  font-size: small;
   font-weight: bold;
 }
 
