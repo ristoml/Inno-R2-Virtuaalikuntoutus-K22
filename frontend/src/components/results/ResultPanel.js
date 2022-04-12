@@ -3,10 +3,10 @@ import Select from 'react-select'
 import axios from 'axios'
 
 const makeOptions = (data) => {
-    const rdata = data.map((data) => [{
-        value: data.id,
-        label: data.date + ' ' + data.client
-    }])
+    const rdata = data.map(x => ({
+    value: x.id, 
+    label: x.date + ': ' + x.client
+    }))
     return rdata
 }
 let options
@@ -24,8 +24,8 @@ const ResultPanel = ({ getId }) => {
                 getAllData().then(response => {
                     options = makeOptions(response.data)
                     setSelectOptions(options)
-                    console.log(options)
-                    console.log(options[0][0].label)                    
+                    console.log(options)                    
+                    setLabel(options[0].label)                    
                     isLoaded.current = true
                 })
                 break
@@ -67,14 +67,14 @@ const ResultPanel = ({ getId }) => {
 
     return (<>
         {options &&
-            <div className='resultpanel'>
-                <Select className='selectsingle'
+            <div className='result-panel'>
+                <Select className='select-single'
                     onChange={e => {
-                        setResultId(e[0].value)
-                        setLabel(e[0].label)
+                        setResultId(e.value)
+                        setLabel(e.label)
                     }}
                     options={options}
-                    defaultValue={{ label: options[0][0].label }}
+                    defaultValue={{ label: options[0].label }}
                 />
             </div>
         }
