@@ -11,12 +11,11 @@ const makeOptions = (data) => {
 }
 let options
 
-const ResultPanel = ({ getData }) => {
+const ResultPanel = ({ getId }) => {
     const [selectOptions, setSelectOptions] = useState()
     const [resultId, setResultId] = useState(null)
-    const [allData, setAllData] = useState(null)
-    const [clientName, setClientName] = useState('')
-    const [date, setDate] = useState()
+    //const [allData, setAllData] = useState(null)
+    const [label, setLabel] = useState('')
     const isLoaded = useRef(false)
 
     useEffect(() => {
@@ -26,22 +25,16 @@ const ResultPanel = ({ getData }) => {
                     options = makeOptions(response.data)
                     setSelectOptions(options)
                     console.log(options)
+                    console.log(options[0][0].label)                    
                     isLoaded.current = true
                 })
                 break
             default:
-                console.log('default')
-        }        
+                getId(resultId)
+        }
     }, [resultId]);
 
-    // const getResult = (resultId) => {
-    //     console.log('get result id: ' + resultId)
-    //     setResultId(resultId)
-    //     const promise = axios.get(`http://localhost:3001/api/results/${resultId}`)
-    //     promise.then(response => {
-    //         setCurrentData(response.data)
-    //     })
-    // }
+
     // const deleteResult = (resultId) => {
     //     console.log('delete result id: ' + resultId)
     //     setResultId(resultId)
@@ -73,10 +66,20 @@ const ResultPanel = ({ getData }) => {
 
 
     return (<>
-        <div className='resultpanel'>
-            <Select options={options} />
-        </div>
+        {options &&
+            <div className='resultpanel'>
+                <Select className='selectsingle'
+                    onChange={e => {
+                        setResultId(e[0].value)
+                        setLabel(e[0].label)
+                    }}
+                    options={options}
+                    defaultValue={{ label: options[0][0].label }}
+                />
+            </div>
+        }
     </>)
 }
+
 
 export default ResultPanel

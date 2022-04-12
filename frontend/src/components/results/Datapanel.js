@@ -8,7 +8,6 @@ import { useEffect, useState, useRef } from 'react'
 
 
 const Datapanel = ({ onClick, squatData }) => {
-
     const [data, setCurrentData] = useState(null)
     const saved = useRef(false)
     const newData = useRef(false)
@@ -31,8 +30,8 @@ const Datapanel = ({ onClick, squatData }) => {
         }
     }, [])
 
-    const getLoadedData = (loadedData) => {
-        setCurrentData(loadedData)
+    const getId = (id) => {
+        getResult(id)
     }
 
     const saveAndGetResult = (results) => {
@@ -43,6 +42,13 @@ const Datapanel = ({ onClick, squatData }) => {
             client: ''
         }
         const promise = axios.post('http://localhost:3001/api/addResult', resultObject)
+        promise.then(response => {
+            setCurrentData(response.data)
+        })
+    }
+    const getResult = (resultId) => {
+        console.log('get result id: ' + resultId)        
+        const promise = axios.get(`http://localhost:3001/api/results/${resultId}`)
         promise.then(response => {
             setCurrentData(response.data)
         })
@@ -62,7 +68,7 @@ const Datapanel = ({ onClick, squatData }) => {
             {data &&
                 <div className='data-panel'>
                     <ResultPanel
-                        getData={getLoadedData}
+                        getId={getId}
                     />
                     <Stats data={data.data} />
                     <Datatable data={data.data} />
