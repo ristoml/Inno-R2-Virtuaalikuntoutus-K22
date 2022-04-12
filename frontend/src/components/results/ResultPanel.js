@@ -32,7 +32,9 @@ const ResultPanel = ({ getId }) => {
             default:
                 getId(resultId)
         }
-    }, [resultId]);
+    }, [resultId]); 
+    let d = new Date() 
+    console.log(d.toLocaleString('fi-FI'))
 
 
     // const deleteResult = (resultId) => {
