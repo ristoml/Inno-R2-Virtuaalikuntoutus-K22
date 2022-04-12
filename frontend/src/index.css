@@ -62,10 +62,11 @@ canvas {
 }
 .select-single {
   color: #7700bd;
-  display: inline-block;  
-  font-size: 16px;  
+  display: block;  
+  font-size: 14px;
+  font-weight: 600;
   margin: 5px;
-  width: 17vw;
+  width: 100%;
 }
 
 .btn {
