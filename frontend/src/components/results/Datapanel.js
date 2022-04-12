@@ -12,7 +12,7 @@ const Datapanel = ({ onClick, squatData }) => {
     const [data, setCurrentData] = useState(null)                 
     const saved = useRef(false)
     const newData = useRef(false) 
-    Object.keys(squatData).length !== 0 ? newData.current = true : newData.current = false    
+    Object.keys(squatData).length >= 2 ? newData.current = true : newData.current = false    
 
     useEffect(() => {
         console.log(squatData)
