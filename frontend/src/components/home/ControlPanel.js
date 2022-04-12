@@ -3,12 +3,13 @@ import Button2 from './Button2'
 import { Link } from 'react-router-dom'
 import Toggle from './Toggle'
 
-const ControlPanel = ({ onChange, onClick, onClick2, isRecording }) => {
+const ControlPanel = ({ onChange, onClick, onClick2, isRecording, isLeft }) => {
   return (
     <div className='control-panel'>
       <div>L
         <Toggle
           onChange={onChange}
+          isLeft={isLeft}
         />
         R</div>
       <Button

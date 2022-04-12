@@ -31,6 +31,7 @@ const Home = () => {
   const handleSquatData = (squatData) => {
     squatData.current = squatData
   }
+  console.log(isLeftLeg)
 
   return (
     <div className="container">
@@ -46,7 +47,8 @@ const Home = () => {
             onChange={() => setIsLeftLeg(!isLeftLeg)}
             onClick={recording ? stopRecording : startRecording}
             onClick2={showResults}
-            isRecording={recording}            
+            isRecording={recording}     
+            isLeft={isLeftLeg}       
           />
         </>
       ) : (
