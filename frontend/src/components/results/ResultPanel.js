@@ -1,11 +1,12 @@
 import { useState, useEffect, useRef } from 'react'
 import Select from 'react-select'
 import axios from 'axios'
+import Button2 from '../home/Button2'
 
 const makeOptions = (data) => {
     const rdata = data.map(x => ({
-    value: x.id, 
-    label: x.date + ': ' + x.client
+        value: x.id,
+        label: x.date + ': ' + x.client
     }))
     return rdata
 }
@@ -16,7 +17,7 @@ const ResultPanel = ({ getId }) => {
     const [resultId, setResultId] = useState(null)
     //const [allData, setAllData] = useState(null)
     const [label, setLabel] = useState('')
-    const isLoaded = useRef(false)
+    const isLoaded = useRef(false)   
 
     useEffect(() => {
         switch (isLoaded.current) {
@@ -24,16 +25,16 @@ const ResultPanel = ({ getId }) => {
                 getAllData().then(response => {
                     options = makeOptions(response.data)
                     setSelectOptions(options)
-                    console.log(options)                    
-                    setLabel(options[0].label)                    
+                    console.log(options)
+                    setLabel(options[0].label)
                     isLoaded.current = true
                 })
                 break
             default:
                 getId(resultId)
         }
-    }, [resultId]); 
-    let d = new Date() 
+    }, [resultId]);
+    let d = new Date()
     console.log(d.toLocaleString('fi-FI'))
 
 
@@ -77,6 +78,14 @@ const ResultPanel = ({ getId }) => {
                     }}
                     options={options}
                     defaultValue={{ label: options[0].label }}
+                />
+                <Button2
+                    text='Enter Id'
+                    color='orange'                    
+                />
+                <Button2
+                    text='Delete'
+                    color='red'
                 />
             </div>
         }

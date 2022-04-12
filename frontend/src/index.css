@@ -53,16 +53,15 @@ canvas {
 
 .result-panel {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
 }
 .select-single {
   color: hsl(0, 0%, 0%);
-  display: inline-block;
-  align-items: center;
+  display: inline-block;  
   font-size: 16px;  
-  margin-top: 1em;
-  width: 30vw;
+  margin: 5px;
+  width: 20vw;
 }
 
 .btn {
