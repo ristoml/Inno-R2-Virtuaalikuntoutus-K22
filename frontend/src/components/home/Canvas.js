@@ -12,18 +12,18 @@ var allowedAngleDeviation = 10; // maximum allowed angle deviation in degrees be
 var hipMargin = 1.05; // considered being in upright standing position
 var squatMargin = 1.1; // considered being in squatted position
 let timer
+let record
+let isLeft 
+let isRunning = false
+let alreadyRan = false
+let squatted = false
+let hipAtStart, counter, endTime
 
-const Canvas = ({ isLeftLeg, isStarted, getSquatData, onClick }) => {
+const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
   const webcamRef = useRef(null)
-  const canvasRef = useRef(null)
-  const record = useRef(null)
-  const isLeft = useRef(isLeftLeg)
-  const isRunning = useRef(isStarted)  
-  const alreadyRan = useRef(false)
-  const squatted = useRef(false)  
-  const counter = useRef(0)
-  const endTime = useRef()
-  const hipAtStart = useRef()
+  const canvasRef = useRef(null)  
+  isRunning = isStarted
+  isLeft = isLeftLeg
 
   timer = useCountdown();
 
@@ -82,7 +82,7 @@ const Canvas = ({ isLeftLeg, isStarted, getSquatData, onClick }) => {
       canvasElement.height
     );
 
-    switch (isLeft.current) {
+    switch (isLeft) {
       case true:  // left knee      
         if (results.poseLandmarks) {
           ph.updatePoseHelperLeft(results)
@@ -145,41 +145,43 @@ const Canvas = ({ isLeftLeg, isStarted, getSquatData, onClick }) => {
 
     // squat counter and data capture
     canvasCtx.scale(-1, 1);
-    if (isRunning.current) {
-      if (!alreadyRan.current) {
-        isLeft.current ? hipAtStart.current = ph.getLeftHipY() * hipMargin : hipAtStart.current = ph.getRightHipY() * hipMargin
-        endTime.current = timer + 120; // timeout in seconds to automatically stop recording
-        record.current = []
-        counter.current = 0;
-        alreadyRan.current = true;
+    if (isRunning) {
+      if (!alreadyRan) {
+        isLeft ? hipAtStart = ph.getLeftHipY() * hipMargin : hipAtStart = ph.getRightHipY() * hipMargin
+        endTime = timer + 120; // timeout in seconds to automatically stop recording
+        record = []
+        counter = 0
+        squatted = false
+        alreadyRan = true
       }
-      isLeft.current ? record.current.push({ leg: 'left', counter: counter, angle: ph.getLeftAngle(), data: ph.getLeftLeg() }) : record.current.push({ leg: 'right', counter: counter, angle: ph.getRightAngle(), data: ph.getRightLeg() })
+      isLeft ? record.push({ leg: 'left', counter: counter, angle: ph.getLeftAngle(), data: ph.getLeftLeg() }) : record.push({ leg: 'right', counter: counter, angle: ph.getRightAngle(), data: ph.getRightLeg() })
 
       if (
-        (isLeft.current && ph.getLeftHipY() >= hipAtStart * squatMargin) || // check if squatted, left leg
-        (!isLeft.current && ph.getRightHipY() >= hipAtStart * squatMargin)  // right leg
+        (isLeft && ph.getLeftHipY() >= hipAtStart * squatMargin) || // check if squatted, left leg
+        (!isLeft && ph.getRightHipY() >= hipAtStart * squatMargin)  // right leg
       ) {
-        squatted.current = true;
+        squatted = true
+        console.log('squatted')
       }
       if (
-        (isLeft.current && ph.getLeftHipY() <= hipAtStart && squatted) || // check if back standing up after a squat, left leg
-        (!isLeft.current && ph.getRightHipY() <= hipAtStart && squatted)  // right leg
+        (isLeft && ph.getLeftHipY() <= hipAtStart && squatted) || // check if back standing up after a squat, left leg
+        (!isLeft && ph.getRightHipY() <= hipAtStart && squatted)  // right leg
       ) {
-        counter.current++;
-        squatted.current = false;
+        counter++
+        squatted = false
       }
       canvasCtx.fillText(counter, -40, 40);
     }
-    if ((!isRunning.current && alreadyRan.current) || timer === endTime.current) { // recording stops     
-      console.log(record.current);
-      getSquatData(record.current);
-      alreadyRan.current = false;
-      squatted.current = false;
+    if ((!isRunning && alreadyRan) || timer === endTime) { // recording stops     
+      console.log(record);
+      getSquatData(record);
+      alreadyRan = false;
+      squatted = false;
     }
     canvasCtx.restore();
   };
   return (
-    <>      
+    <>
       <Webcam
         ref={webcamRef}
         style={{ display: "none" }}

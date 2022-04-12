@@ -1,4 +1,4 @@
-import { useState, useRef } from "react"
+import { useState } from "react"
 import Canvas from "../components/home/Canvas"
 import ControlPanel from "../components/home/ControlPanel"
 import Datapanel from "../components/results/Datapanel"
@@ -8,7 +8,7 @@ const Home = () => {
   const [isLeftLeg, setIsLeftLeg] = useState(true)
   const [showCanvas, setShowCanvas] = useState(true)
   const [recording, setRecording] = useState(false) 
-  const squatData = useRef({})    
+  const [squatData, setSquadData] = useState({})    
 
   const startRecording = () => {
     console.log("Start recording");
@@ -29,9 +29,8 @@ const Home = () => {
   }
 
   const handleSquatData = (squatData) => {
-    squatData.current = squatData
-  }
-  console.log(isLeftLeg)
+    setSquadData(squatData)
+  } 
 
   return (
     <div className="container">
@@ -54,7 +53,7 @@ const Home = () => {
       ) : (
         <Datapanel
           onClick={() => setShowCanvas(!showCanvas)}
-          squatData={squatData.current}
+          squatData={squatData}
         />
       )}
     </div>

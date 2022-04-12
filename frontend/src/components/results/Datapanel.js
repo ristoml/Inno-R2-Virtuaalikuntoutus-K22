@@ -8,15 +8,19 @@ import { useEffect, useState, useRef } from 'react'
 
 
 const Datapanel = ({ onClick, squatData }) => {
-    const [resultId, setResultId] = useState('none')
-    const [data, setCurrentData] = useState(null)    
+    const [resultId, setResultId] = useState(null)
+    const [data, setCurrentData] = useState(null)                 
     const saved = useRef(false)
-    const newData = useRef(false)        
+    const newData = useRef(false) 
     Object.keys(squatData).length !== 0 ? newData.current = true : newData.current = false
+    console.log(newData.current)
+    console.log(Object.keys(squatData).length !== 0)
+    console.log(Object.keys(squatData).length)
+    console.log(squatData)
 
     useEffect(() => {
         console.log(squatData)
-        switch (newData) {
+        switch (newData.current) {
             case true:
                 if (!saved.current) {
                     saveAndGetResult(squatData)                    
@@ -26,7 +30,7 @@ const Datapanel = ({ onClick, squatData }) => {
                 break
             default:
                 switch (resultId) {
-                    case 'none':
+                    case null:
                         getLatestResult()
                         break
                     default:
@@ -34,7 +38,7 @@ const Datapanel = ({ onClick, squatData }) => {
                 }
                 break
         }
-    }, [resultId])
+    }, [])
 
     const saveAndGetResult = (results) => {
         console.log('save and get result')

@@ -3,7 +3,7 @@ const Toggle = ({ onChange, isLeft }) => {
     <label className='toggle-switch'>
       <input
         type='checkbox'
-        checked={isLeft}
+        checked={!isLeft}
         onChange={onChange}
       />
       <span className='slider' />
