@@ -8,11 +8,11 @@ const makeOptions = (data) => {
         value: x.id,
         label: new Date(x.date).toLocaleString('fi-FI') + ': ' + x.client
     }))
-    return rdata
+    return rdata.reverse()
 }
 let options
 
-const ResultPanel = ({ getId }) => {
+const ResultPanel = ({ getId, delId }) => {
     const [selectOptions, setSelectOptions] = useState()
     const [resultId, setResultId] = useState(null)
     //const [allData, setAllData] = useState(null)
@@ -27,6 +27,7 @@ const ResultPanel = ({ getId }) => {
                     setSelectOptions(options)
                     console.log(options)
                     setLabel(options[0].label)
+                    setResultId(options[0].value)
                     isLoaded.current = true
                 })
                 break
@@ -34,20 +35,7 @@ const ResultPanel = ({ getId }) => {
                 getId(resultId)
         }
     }, [resultId]);
-    let d = new Date()
-    console.log(d.toLocaleString('fi-FI'))
-
-
-    // const deleteResult = (resultId) => {
-    //     console.log('delete result id: ' + resultId)
-    //     setResultId(resultId)
-    //     const promise = axios.delete(`http://localhost:3001/api/results/${resultId}`)
-    //     promise.then(response => {
-    //         //setCurrentdata(response.data.data)
-    //         console.log(response)
-    //         getLatestResult()
-    //     })
-    // }
+    
     // const updateResult = (resultId, clientName) => {
     //     console.log('get result id: ' + resultId)
     //     setResultId(resultId)
@@ -86,6 +74,8 @@ const ResultPanel = ({ getId }) => {
                 <Button2
                     text='Delete'
                     color='red'
+                    onClick={delId(resultId)}
+
                 />
             </div>
         }
