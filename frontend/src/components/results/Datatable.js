@@ -62,11 +62,11 @@ let angleValues = []
         <td>{arrayx[arrayx.length - 1].counter}</td>
     </tr>
     <tr>
-        <th scope="row">Minimum</th>
+        <th scope="row">Max Valgus </th>
         <td>{minX}</td>
     </tr>
     <tr>
-        <th scope="row">Maximum</th>
+        <th scope="row">Max Varus</th>
         <td>{maxX}</td>
     </tr>
     <tr>
