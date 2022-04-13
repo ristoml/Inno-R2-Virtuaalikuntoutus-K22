@@ -120,7 +120,7 @@ const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
           lineWidth: 4,
         });
         drawLandmarks(canvasCtx, ph.getRightLeg(), {
-          color: "#bd77ff",,
+          color: "#bd77ff",
           lineWidth: 2,
         });
         canvasCtx.save();
