@@ -18,8 +18,8 @@ const Datapanel = ({ onClick, squatData }) => {
         switch (newData.current) {
             case true:
                 if (!saved.current) {
-                    //saveAndGetResult(squatData)                   
-                    getLatestResult()
+                    saveAndGetResult(squatData)                   
+                    //getLatestResult()
                     saved.current = true
                     newData.current = false
                 }
@@ -33,7 +33,7 @@ const Datapanel = ({ onClick, squatData }) => {
     const saveAndGetResult = (results) => {
         console.log('save and get result')
         const resultObject = {
-            date: new Date().toISOString,
+            date: new Date().toISOString(),
             data: results,
             client: ''
         }

@@ -69,6 +69,7 @@ const ResultPanel = ({ getId, delId, sdata }) => {
                 <Select className='select-single'
                     onChange={e => {
                         setResultId(e.value)
+                        setLabel(e.label)
                         getId(e.value)
                     }}
                     options={options}                    
