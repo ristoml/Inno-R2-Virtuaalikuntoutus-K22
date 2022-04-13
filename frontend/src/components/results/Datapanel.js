@@ -55,11 +55,12 @@ const Datapanel = ({ onClick, squatData }) => {
         console.log('get latest')
         const promise = axios.get('http://localhost:3001/api/getLatest')
         promise.then(response => {
+            console.log(response.data.id)
             setCurrentData(response.data)
         })
     }
     const deleteResult = (resultId) => {
-        console.log('delete result id: ' + resultId)        
+        console.log('delete result id: ' + resultId)
         const promise = axios.delete(`http://localhost:3001/api/results/${resultId}`)
         promise.then(response => {
             //setCurrentdata(response.data.data)
@@ -76,6 +77,7 @@ const Datapanel = ({ onClick, squatData }) => {
                     <ResultPanel
                         getId={getResult}
                         delId={deleteResult}
+                        sdata={data}
                     />
                     <Stats data={data.data} />
                     <Datatable data={data.data} />

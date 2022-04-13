@@ -12,30 +12,29 @@ const makeOptions = (data) => {
 }
 let options
 
-const ResultPanel = ({ getId, delId }) => {
-    const [selectOptions, setSelectOptions] = useState()
-    const [resultId, setResultId] = useState(null)
-    //const [allData, setAllData] = useState(null)
-    const [label, setLabel] = useState('')
-    const isLoaded = useRef(false)   
+const ResultPanel = ({ getId, delId, sdata }) => {
+    const [resultId, setResultId] = useState(null)    
+    const [allData, setAllData] = useState(sdata)
+    const [label, setLabel] = useState()
+    const isLoaded = useRef(false)
 
     useEffect(() => {
+        setAllData(sdata)
         switch (isLoaded.current) {
             case false:
                 getAllData().then(response => {
                     options = makeOptions(response.data)
-                    setSelectOptions(options)
-                    console.log(options)
                     setLabel(options[0].label)
                     setResultId(options[0].value)
+                    console.log('options recreated')                    
                     isLoaded.current = true
                 })
                 break
-            default:
-                getId(resultId)
+            default:                
+                
         }
-    }, [resultId]);
-    
+    }, [sdata]);
+
     // const updateResult = (resultId, clientName) => {
     //     console.log('get result id: ' + resultId)
     //     setResultId(resultId)
@@ -54,6 +53,14 @@ const ResultPanel = ({ getId, delId }) => {
         //     setAllData(response.data)
         // })
     }
+    // const deleteId = (rId) => {
+    //     isLoaded.current = false
+    //     if (resultId === null) {
+    //         delId(options[0].value)
+    //     } else {
+    //         delId(resultId)
+    //     }
+    // }
 
 
     return (<>
@@ -62,10 +69,11 @@ const ResultPanel = ({ getId, delId }) => {
                 <Select className='select-single'
                     onChange={e => {
                         setResultId(e.value)
-                        setLabel(e.label)
+                        getId(e.value)
                     }}
-                    options={options}
-                    defaultValue={{ label: options[0].label }}
+                    options={options}                    
+                    value={{ label: label }}
+                    
                 />
                 <Button2
                     text='Save'
@@ -74,8 +82,12 @@ const ResultPanel = ({ getId, delId }) => {
                 <Button2
                     text='Delete'
                     color='red'
-                    onClick={delId(resultId)}
-
+                    onClick={() => {
+                        isLoaded.current=false
+                        delId(resultId)
+                        
+                    }
+                    }
                 />
             </div>
         }
