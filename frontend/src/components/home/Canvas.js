@@ -36,7 +36,7 @@ const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
     });
 
     pose.setOptions({
-      modelComplexity: 1,
+      modelComplexity: 2,
       smoothLandmarks: true,
       enableSegmentation: true,
       smoothSegmentation: true,
