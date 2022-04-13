@@ -81,11 +81,11 @@ const ResultPanel = ({ getId }) => {
                 />
                 <Button2
                     text='Save'
-                    color='green'                    
+                    color='#bd77ff'                    
                 />
                 <Button2
                     text='Delete'
-                    color='red'
+                    color='#bdffff'
                 />
             </div>
         }
