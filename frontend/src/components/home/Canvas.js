@@ -73,7 +73,7 @@ const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
     canvasCtx.translate(videoWidth, 0);
     canvasCtx.scale(-1, 1);
     canvasCtx.font = "40px Verdana";
-    canvasCtx.fillStyle = "#00FF00";
+    canvasCtx.fillStyle = "#bdffff";
     canvasCtx.drawImage(
       results.image,
       0,
@@ -88,11 +88,11 @@ const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
           ph.updatePoseHelperLeft(results)
         }
         drawConnectors(canvasCtx, ph.getLeftLeg(), POSE_CONNECTIONS, {
-          color: "#00FF00",
+          color: "#77bdff",
           lineWidth: 4,
         });
         drawLandmarks(canvasCtx, ph.getLeftLeg(), {
-          color: "#FF0000",
+          color: "#bd77ff",
           lineWidth: 2,
         });
         canvasCtx.save();
@@ -116,11 +116,11 @@ const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
           ph.updatePoseHelperRight(results)
         }
         drawConnectors(canvasCtx, ph.getRightLeg(), POSE_CONNECTIONS, {
-          color: "#00FF00",
+          color: "#77bdff",
           lineWidth: 4,
         });
         drawLandmarks(canvasCtx, ph.getRightLeg(), {
-          color: "#FF0000",
+          color: "#bd77ff",,
           lineWidth: 2,
         });
         canvasCtx.save();
@@ -133,7 +133,7 @@ const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
           ph.getRightAngle() <= 0 - allowedAngleDeviation ||
           ph.getRightAngle() >= 0 + allowedAngleDeviation
         ) {
-          canvasCtx.fillStyle = "#FF0000";
+          canvasCtx.fillStyle = "#77bdff";
         }
         canvasCtx.fillText(Math.round(ph.getRightAngle()), 0, 0);
         canvasCtx.restore()
