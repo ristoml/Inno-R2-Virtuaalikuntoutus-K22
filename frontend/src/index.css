@@ -128,3 +128,7 @@ canvas {
 input:checked+.slider:before {
   transform: translateX(26px);
 }
+
+.info-page {
+  color: #7700bd;
+}
