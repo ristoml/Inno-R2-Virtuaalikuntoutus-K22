@@ -13,7 +13,7 @@ const ControlPanel = ({ onChange, onClick, onClick2, isRecording, isLeft }) => {
         />
         R</div>
       <Button
-        color={isRecording ? 'red' : '#7700bd'}
+        color={isRecording ? '#bdffff' : '#7700bd'}
         onClick={onClick}
         text={isRecording ? 'Stop' : 'Start'}
       />
