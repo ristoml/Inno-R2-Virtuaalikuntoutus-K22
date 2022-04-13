@@ -49,8 +49,7 @@ let angleValues = []
   const stdX = Math.sqrt(variance).toFixed(2)
   console.log('std', stdX)
 
-
-  return (
+   return (
     <table className='data-table'>
     
     <tr>
