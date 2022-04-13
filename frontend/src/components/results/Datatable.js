@@ -46,46 +46,34 @@ const Datatable = ({ data }) => {
   const stdX = Math.sqrt(variance).toFixed(2)
   console.log('std', stdX)
 
-  const tabledata = [
-    {
-      name: 'Leg',
-      value: arrayx[0].leg
-    },
-    {
-      name: 'Rounds',
-      value: arrayx[arrayx.length - 1].counter
-    },
-    {
-      name: 'Minimum',
-      value: minX
-    },
-    {
-      name: 'Maximum',
-      value: maxX
-    },
-    {
-      name: 'Average',
-      value: meanX
-    },
-    {
-      name: 'Standard deviation',
-      value: stdX
-    },
-  ]
-
-  const [state, setState] = useState(tabledata)
-
-  return (
+   return (
     <table className='data-table'>
-      <tr key={"header"}>
-      </tr>
-      {state.map((item) => (
-        <tr key={item.id}>
-          {Object.values(item).map((val) => (
-            <td>{val}</td>
-          ))}
-        </tr>
-      ))}
+    
+    <tr>
+        <th scope="row">Leg</th>
+        <td>{arrayx[0].leg}</td>
+        
+    </tr>
+    <tr>
+        <th scope="row">Rounds</th>
+        <td>{arrayx[arrayx.length - 1].counter}</td>
+    </tr>
+    <tr>
+        <th scope="row">Minimum</th>
+        <td>{minX}</td>
+    </tr>
+    <tr>
+        <th scope="row">Maximum</th>
+        <td>{maxX}</td>
+    </tr>
+    <tr>
+        <th scope="row">Average</th>
+        <td>{meanX}</td>
+    </tr>
+    <tr>
+        <th scope="row">Standard deviation</th>
+        <td>{stdX}</td>
+    </tr>
     </table>
   )
 }
