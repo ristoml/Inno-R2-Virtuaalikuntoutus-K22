@@ -21,10 +21,9 @@ const Stats = ({ data }) => {
           record2[i].push(data[j].angle)
       }
       record2[i] = resampleData(record2[i], samples)
-    }
-    console.log(record2)
+    }    
 
-    for (let i = 0; i < 15; i++) { // create recharts-dataset
+    for (let i = 0; i < samples; i++) { // create recharts-dataset
       record3.push({ name: i, first: record2[0][i], second: record2[1][i], third: record2[2][i] })
     }
     setData(record3)
