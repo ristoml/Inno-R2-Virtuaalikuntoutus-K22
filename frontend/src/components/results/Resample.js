@@ -1,6 +1,6 @@
-const resampleData = (data, samples) => {
+const resampleData = (data, target) => {
     console.log(data)
-    return largestTriangleThreeBuckets(data, samples)
+    return largestTriangleThreeBuckets(data, target)
 }
 
 /*
