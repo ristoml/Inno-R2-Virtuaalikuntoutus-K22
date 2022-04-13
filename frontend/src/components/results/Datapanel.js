@@ -37,7 +37,7 @@ const Datapanel = ({ onClick, squatData }) => {
     const saveAndGetResult = (results) => {
         console.log('save and get result')        
         const resultObject = {
-            date: new Date().toISOString,
+            date: new Date().toISOString(),
             data: results,
             client: ''
         }
