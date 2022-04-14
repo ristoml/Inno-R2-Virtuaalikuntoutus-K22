@@ -78,7 +78,7 @@ const ResultPanel = ({ getId, delId, sdata }) => {
                 />
                 <Button2
                     text='Delete'
-                    color='red'
+                    color='#bdffff'
                     onClick={() => {
                         isLoaded.current = false
                         delId(resultId)
