@@ -10,9 +10,11 @@ import { useEffect, useState, useRef } from 'react'
 const Datapanel = ({ onClick, squatData }) => {
     const [data, setCurrentData] = useState(null)
     const saved = useRef(false)
+
     const newData = useRef(false)
     Object.keys(squatData).length >= 2 ? newData.current = true : newData.current = false
     console.log(Object.keys(squatData).length)
+
 
     useEffect(() => {
         console.log(squatData)
