@@ -12,12 +12,11 @@ const Datapanel = ({ onClick, squatData }) => {
     const saved = useRef(false)
 
     const newData = useRef(false)
-    Object.keys(squatData).length >= 2 ? newData.current = true : newData.current = false
-    console.log(Object.keys(squatData).length)
+    Object.keys(squatData).length > 1 ? newData.current = true : newData.current = false    
 
 
     useEffect(() => {
-        console.log(squatData)
+        console.log(squatData) // REMOVE
         switch (newData.current) {
             case true:
                 if (!saved.current) {
@@ -32,12 +31,9 @@ const Datapanel = ({ onClick, squatData }) => {
         }
     }, [])
 
-    const getId = (id) => {
-        getResult(id)
-    }
 
     const saveAndGetResult = (results) => {
-        console.log('save and get result')        
+        console.log('save and get result')
         const resultObject = {
             date: new Date().toISOString(),
             data: results,
@@ -49,7 +45,7 @@ const Datapanel = ({ onClick, squatData }) => {
         })
     }
     const getResult = (resultId) => {
-        console.log('get result id: ' + resultId)        
+        console.log('get result id: ' + resultId)
         const promise = axios.get(`http://localhost:3001/api/results/${resultId}`)
         promise.then(response => {
             setCurrentData(response.data)
@@ -60,7 +56,17 @@ const Datapanel = ({ onClick, squatData }) => {
         console.log('get latest')
         const promise = axios.get('http://localhost:3001/api/getLatest')
         promise.then(response => {
+            console.log(response.data.id)
             setCurrentData(response.data)
+        })
+    }
+    const deleteResult = (resultId) => {
+        console.log('delete result id: ' + resultId)
+        const promise = axios.delete(`http://localhost:3001/api/results/${resultId}`)
+        promise.then(response => {
+            //setCurrentdata(response.data.data)
+            console.log(response)
+            getLatestResult()
         })
     }
 
@@ -70,7 +76,9 @@ const Datapanel = ({ onClick, squatData }) => {
             {data &&
                 <div className='data-panel'>
                     <ResultPanel
-                        getId={getId}
+                        getId={getResult}
+                        delId={deleteResult}
+                        sdata={data}
                     />
                     <Stats data={data.data} />
                     <Datatable data={data.data} />
