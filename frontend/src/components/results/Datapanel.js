@@ -19,8 +19,8 @@ const Datapanel = ({ onClick, squatData }) => {
         switch (newData.current) {
             case true:
                 if (!saved.current) {
-                    saveAndGetResult(squatData)                   
-                    //getLatestResult()
+                    //saveAndGetResult(squatData)                   
+                    getLatestResult()
                     saved.current = true
                     newData.current = false
                 }
