@@ -21,7 +21,8 @@ const Datatable = ({ data }) => {
   console.log('angle', arrayx[0].angle)
   console.log('leg', arrayx[0].leg)
 
-  let angleValues = []
+
+let angleValues = []
 
   for (let i = 0; i < arrayx.length; i++) {
     //  xvalues.push(arrayx[i].data[2].x)        
@@ -30,6 +31,8 @@ const Datatable = ({ data }) => {
 
 
   console.log('angelvalues', angleValues)
+
+
 
   console.log(angleValues[0], angleValues.length)
   const minX = Math.min.apply(Math, angleValues).toFixed(2)
@@ -46,46 +49,34 @@ const Datatable = ({ data }) => {
   const stdX = Math.sqrt(variance).toFixed(2)
   console.log('std', stdX)
 
-  const tabledata = [
-    {
-      name: 'Leg',
-      value: arrayx[0].leg
-    },
-    {
-      name: 'Rounds',
-      value: arrayx[arrayx.length - 1].counter
-    },
-    {
-      name: 'Minimum',
-      value: minX
-    },
-    {
-      name: 'Maximum',
-      value: maxX
-    },
-    {
-      name: 'Average',
-      value: meanX
-    },
-    {
-      name: 'Standard deviation',
-      value: stdX
-    },
-  ]
-
-  const [state, setState] = useState(tabledata)
-
-  return (
-    <table>
-      <tr key={"header"}>
-      </tr>
-      {state.map((item) => (
-        <tr key={item.id}>
-          {Object.values(item).map((val) => (
-            <td>{val}</td>
-          ))}
-        </tr>
-      ))}
+   return (
+    <table className='data-table'>
+    
+    <tr>
+        <th scope="row">Leg</th>
+        <td>{arrayx[0].leg}</td>
+        
+    </tr>
+    <tr>
+        <th scope="row">Rounds</th>
+        <td>{arrayx[arrayx.length - 1].counter}</td>
+    </tr>
+    <tr>
+        <th scope="row">Max Valgus </th>
+        <td>{minX}</td>
+    </tr>
+    <tr>
+        <th scope="row">Max Varus</th>
+        <td>{maxX}</td>
+    </tr>
+    <tr>
+        <th scope="row">Average</th>
+        <td>{meanX}</td>
+    </tr>
+    <tr>
+        <th scope="row">Standard deviation</th>
+        <td>{stdX}</td>
+    </tr>
     </table>
   )
 }

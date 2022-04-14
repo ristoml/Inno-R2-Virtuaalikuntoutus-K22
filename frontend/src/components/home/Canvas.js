@@ -1,10 +1,13 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import Webcam from "react-webcam";
 import { Pose, POSE_CONNECTIONS } from "@mediapipe/pose";
 import { drawConnectors, drawLandmarks } from "@mediapipe/drawing_utils";
 import { Camera } from "@mediapipe/camera_utils";
 import { useCountdown } from "./Timer";
 import * as ph from "./PoseHelper";
+// import useSound from 'use-sound';
+// import sound from "./sounds/mixkit-alarm-clock-beep-988.wav"
+
 
 var allowedAngleDeviation = 10; // maximum allowed angle deviation in degrees before printing angle with red text
 
@@ -17,7 +20,15 @@ let isLeft
 let isRunning = false
 let alreadyRan = false
 let squatted = false
-let hipAtStart, counter, endTime
+let hipAtStart, counter, endTime, squattedText
+squattedText = 'squatted'
+
+// const Playsound = () => {
+//   const [play] = useSound(sound);
+//   return (
+//     play()
+//     );
+// };
 
 const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
   const webcamRef = useRef(null)
@@ -25,6 +36,10 @@ const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
   isRunning = isStarted
   isLeft = isLeftLeg
 
+  
+
+
+ 
   timer = useCountdown();
 
   useEffect(() => {
@@ -36,7 +51,7 @@ const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
     });
 
     pose.setOptions({
-      modelComplexity: 1,
+      modelComplexity: 2,
       smoothLandmarks: true,
       enableSegmentation: true,
       smoothSegmentation: true,
@@ -73,7 +88,7 @@ const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
     canvasCtx.translate(videoWidth, 0);
     canvasCtx.scale(-1, 1);
     canvasCtx.font = "40px Verdana";
-    canvasCtx.fillStyle = "#00FF00";
+    canvasCtx.fillStyle = "#bdffff";
     canvasCtx.drawImage(
       results.image,
       0,
@@ -88,11 +103,11 @@ const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
           ph.updatePoseHelperLeft(results)
         }
         drawConnectors(canvasCtx, ph.getLeftLeg(), POSE_CONNECTIONS, {
-          color: "#00FF00",
+          color: "#77bdff",
           lineWidth: 4,
         });
         drawLandmarks(canvasCtx, ph.getLeftLeg(), {
-          color: "#FF0000",
+          color: "#bd77ff",
           lineWidth: 2,
         });
         canvasCtx.save();
@@ -105,7 +120,7 @@ const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
           ph.getLeftAngle() <= 0 - allowedAngleDeviation ||
           ph.getLeftAngle() >= 0 + allowedAngleDeviation
         ) {
-          canvasCtx.fillStyle = "#FF0000";
+          canvasCtx.fillStyle = "#77bdff";
         }
         canvasCtx.fillText(Math.round(ph.getLeftAngle()), 0, 0);
         canvasCtx.restore();
@@ -116,11 +131,11 @@ const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
           ph.updatePoseHelperRight(results)
         }
         drawConnectors(canvasCtx, ph.getRightLeg(), POSE_CONNECTIONS, {
-          color: "#00FF00",
+          color: "#77bdff",
           lineWidth: 4,
         });
         drawLandmarks(canvasCtx, ph.getRightLeg(), {
-          color: "#FF0000",
+          color: "#bd77ff",
           lineWidth: 2,
         });
         canvasCtx.save();
@@ -133,7 +148,7 @@ const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
           ph.getRightAngle() <= 0 - allowedAngleDeviation ||
           ph.getRightAngle() >= 0 + allowedAngleDeviation
         ) {
-          canvasCtx.fillStyle = "#FF0000";
+          canvasCtx.fillStyle = "#77bdff";
         }
         canvasCtx.fillText(Math.round(ph.getRightAngle()), 0, 0);
         canvasCtx.restore()
@@ -160,8 +175,11 @@ const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
         (isLeft && ph.getLeftHipY() >= hipAtStart * squatMargin) || // check if squatted, left leg
         (!isLeft && ph.getRightHipY() >= hipAtStart * squatMargin)  // right leg
       ) {
-        squatted = true
+        squatted = true //äänimerkki tähän
         console.log('squatted')
+        // eslint-disable-next-line no-lone-blocks
+        // Playsound()
+        canvasCtx.fillText(squattedText, -200, 450); 
       }
       if (
         (isLeft && ph.getLeftHipY() <= hipAtStart && squatted) || // check if back standing up after a squat, left leg
@@ -170,7 +188,7 @@ const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
         counter++
         squatted = false
       }
-      canvasCtx.fillText(counter, -40, 40);
+      canvasCtx.fillText(counter, -40, 40); //KOKEILETÄTÄ
     }
     if ((!isRunning && alreadyRan) || timer === endTime) { // recording stops     
       console.log(record);
