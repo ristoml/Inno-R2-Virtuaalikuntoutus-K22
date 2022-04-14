@@ -6,7 +6,7 @@ import Button2 from '../home/Button2'
 const makeOptions = (data) => {
     const rdata = data.map(x => ({
         value: x.id,
-        label: new Date(x.date).toLocaleString('fi-FI') + ': ' + x.client
+        label: new Date(x.date).toLocaleString('en-GB') + ': ' + x.client
     }))
     return rdata.reverse()
 }
