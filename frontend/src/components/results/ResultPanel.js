@@ -8,7 +8,7 @@ const makeOptions = (data) => {
         value: x.id,
         label: new Date(x.date).toLocaleString('fi-FI') + ': ' + x.client
     }))
-    return rdata
+    return rdata.reverse()
 }
 let options
 
