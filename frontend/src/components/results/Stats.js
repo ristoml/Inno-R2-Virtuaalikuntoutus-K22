@@ -2,7 +2,8 @@ import { XAxis, YAxis, CartesianGrid, Tooltip, Legend, LineChart, Line, Referenc
 import { useEffect, useState } from 'react';
 import { resampleData } from './Resample';
 
-let samples = 15; // resample target
+let squats = 3 // number of performed squats
+let samples = 15 // resample target
 
 const Stats = ({ data }) => {
   const [sdata, setData] = useState(data);
@@ -11,11 +12,11 @@ const Stats = ({ data }) => {
     let record3 = []
     console.log(sdata)
 
-    for (let i = 0; i < 3; i++) { // form new 2d array based on no. of squats
+    for (let i = 0; i < squats; i++) { // form new 2d array based on no. of squats
       record2[i] = []
     }
 
-    for (let i = 0; i < 3; i++) { // assign and resample the data of individual squats to their own indexes
+    for (let i = 0; i < squats; i++) { // assign and resample the data of individual squats to their own indexes
       for (let j = 0; j < data.length; j++) {
         if (data[j].counter === i)
           record2[i].push(data[j].angle)
@@ -23,7 +24,7 @@ const Stats = ({ data }) => {
       record2[i] = resampleData(record2[i], samples)
     }    
 
-    for (let i = 0; i < samples; i++) { // create recharts-dataset
+    for (let i = 0; i < samples; i++) { // create recharts-dataset, only works with three squats for now
       record3.push({ name: i, first: record2[0][i], second: record2[1][i], third: record2[2][i] })
     }
     setData(record3)
