@@ -60,7 +60,7 @@ const Stats = ({ data }) => {
           dataKey='first'
           dot={false}
           stroke='#a340d9'
-          activeDot={{ r: 8 }}
+          activeDot={{ r: 5 }}
         />
         <Line
           name='2nd'
@@ -68,7 +68,7 @@ const Stats = ({ data }) => {
           dataKey='second'
           dot={false}
           stroke='#2ba14b'
-          activeDot={{ r: 8 }}
+          activeDot={{ r: 5 }}
         />
         <Line
           name='3rd'
@@ -76,7 +76,7 @@ const Stats = ({ data }) => {
           dataKey='third'
           dot={false}
           stroke='#0800ff'
-          activeDot={{ r: 8 }}
+          activeDot={{ r: 5 }}
         />
       </LineChart>
     </div>
