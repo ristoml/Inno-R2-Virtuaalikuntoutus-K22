@@ -75,11 +75,7 @@ const ResultPanel = ({ getId, delId, sdata }) => {
                     options={options}                    
                     value={{ label: label }}
                     
-                />
-                <Button2
-                    text='Save'
-                    color='green'                    
-                />
+                />               
                 <Button2
                     text='Delete'
                     color='red'
