@@ -6,48 +6,35 @@ import Button2 from '../home/Button2'
 const makeOptions = (data) => {
     const rdata = data.map(x => ({
         value: x.id,
-        label: new Date(x.date).toLocaleString('fi-FI') + ': ' + x.client
+        label: new Date(x.date).toLocaleString('en-GB') + ': ' + x.client
     }))
     return rdata.reverse()
 }
 let options
 
-const ResultPanel = ({ getId }) => {
-    const [selectOptions, setSelectOptions] = useState()
+const ResultPanel = ({ getId, delId, sdata }) => {
     const [resultId, setResultId] = useState(null)
-    //const [allData, setAllData] = useState(null)
-    const [label, setLabel] = useState('')
-    const isLoaded = useRef(false)   
+    const [allData, setAllData] = useState(sdata)
+    const [label, setLabel] = useState()
+    const isLoaded = useRef(false)
 
     useEffect(() => {
+        setAllData(sdata)
         switch (isLoaded.current) {
             case false:
                 getAllData().then(response => {
                     options = makeOptions(response.data)
-                    setSelectOptions(options)
-                    console.log(options)
                     setLabel(options[0].label)
+                    setResultId(options[0].value)
+                    console.log('options recreated')
                     isLoaded.current = true
                 })
                 break
             default:
-                getId(resultId)
+
         }
-    }, [resultId]);
-    let d = new Date()
-    console.log(d.toLocaleString('fi-FI'))
+    }, [sdata]);
 
-
-    // const deleteResult = (resultId) => {
-    //     console.log('delete result id: ' + resultId)
-    //     setResultId(resultId)
-    //     const promise = axios.delete(`http://localhost:3001/api/results/${resultId}`)
-    //     promise.then(response => {
-    //         //setCurrentdata(response.data.data)
-    //         console.log(response)
-    //         getLatestResult()
-    //     })
-    // }
     // const updateResult = (resultId, clientName) => {
     //     console.log('get result id: ' + resultId)
     //     setResultId(resultId)
@@ -66,6 +53,14 @@ const ResultPanel = ({ getId }) => {
         //     setAllData(response.data)
         // })
     }
+    // const deleteId = (rId) => {
+    //     isLoaded.current = false
+    //     if (resultId === null) {
+    //         delId(options[0].value)
+    //     } else {
+    //         delId(resultId)
+    //     }
+    // }
 
 
     return (<>
@@ -75,17 +70,21 @@ const ResultPanel = ({ getId }) => {
                     onChange={e => {
                         setResultId(e.value)
                         setLabel(e.label)
+                        getId(e.value)
                     }}
                     options={options}
-                    defaultValue={{ label: options[0].label }}
-                />
-                <Button2
-                    text='Save'
-                    color='#bd77ff'                    
+                    value={{ label: label }}
+
                 />
                 <Button2
                     text='Delete'
                     color='#bdffff'
+                    onClick={() => {
+                        isLoaded.current = false
+                        delId(resultId)
+
+                    }
+                    }
                 />
             </div>
         }
