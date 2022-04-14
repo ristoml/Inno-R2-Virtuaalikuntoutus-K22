@@ -1,12 +1,12 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import Webcam from "react-webcam";
 import { Pose, POSE_CONNECTIONS } from "@mediapipe/pose";
 import { drawConnectors, drawLandmarks } from "@mediapipe/drawing_utils";
 import { Camera } from "@mediapipe/camera_utils";
 import { useCountdown } from "./Timer";
 import * as ph from "./PoseHelper";
-// import useSound from 'use-sound';
-// import sound from "./sounds/mixkit-alarm-clock-beep-988.wav"
+import useSound from 'use-sound';
+import sound from "./sounds/mixkit-alarm-clock-beep-988.wav"
 
 
 var allowedAngleDeviation = 10; // maximum allowed angle deviation in degrees before printing angle with red text
@@ -23,16 +23,22 @@ let squatted = false
 let hipAtStart, counter, endTime, squattedText
 squattedText = 'squatted'
 
+const Playsound = () => {
+  const [play] = useSound(sound);
+  return (
+    play()
+    );
+};
+
 const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
   const webcamRef = useRef(null)
   const canvasRef = useRef(null)  
   isRunning = isStarted
   isLeft = isLeftLeg
 
-  // const Play = () => {
-  // let playsound = useSound(sound); 
-  // return playsound
-  // }
+  
+
+
  
   timer = useCountdown();
 
@@ -171,7 +177,8 @@ const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
       ) {
         squatted = true //äänimerkki tähän
         console.log('squatted')
-        // Play()
+        // eslint-disable-next-line no-lone-blocks
+        Playsound()
         canvasCtx.fillText(squattedText, -200, 450); 
       }
       if (
