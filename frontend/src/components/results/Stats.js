@@ -67,7 +67,7 @@ const Stats = ({ data }) => {
           type='monotone'
           dataKey='second'
           dot={false}
-          stroke='#a340d9'
+          stroke='#2ba14b'
           activeDot={{ r: 8 }}
         />
         <Line
@@ -75,7 +75,7 @@ const Stats = ({ data }) => {
           type='monotone'
           dataKey='third'
           dot={false}
-          stroke='#a340d9'
+          stroke='#0800ff'
           activeDot={{ r: 8 }}
         />
       </LineChart>
