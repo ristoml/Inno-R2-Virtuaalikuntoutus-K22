@@ -2,7 +2,7 @@ import { XAxis, YAxis, CartesianGrid, Tooltip, Legend, LineChart, Line, Referenc
 import { useEffect, useState, useRef } from 'react';
 import { resampleData } from './Resample';
 
-let samples = 15 // resample target
+let samples = 19 // resample target
 let sindexArray = []
 
 const Stats = ({ data }) => {
@@ -45,7 +45,7 @@ const Stats = ({ data }) => {
       rechartsData.current.push({ sample: i, first: sindexArray[0][i], second: sindexArray[1][i], third: sindexArray[2][i], fourth: sindexArray[3][i], fifth: sindexArray[4][i] })
     }
     
-    setRdata(rechartsData.current)
+    setRdata(rechartsData.current)    
 
   }, [data, sdata]);
 
@@ -62,7 +62,7 @@ const Stats = ({ data }) => {
 
   return (
     <div>
-      <LineChart width={600} height={380} data={rdata}
+      <LineChart width={590} height={380} data={rdata}
         margin={{ top: 5, right: 2, left: 2, bottom: 10 }}>
         <XAxis dataKey='sample' />
         <YAxis domain={[-25, 25]} allowDataOverflow={true} ticks={[-25, -20, -15, -10, -5, 0, 5, 10, 15, 20, 25]} />

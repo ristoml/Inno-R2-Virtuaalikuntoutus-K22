@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect } from "react";
 import Webcam from "react-webcam";
 import { Pose, POSE_CONNECTIONS } from "@mediapipe/pose";
 import { drawConnectors, drawLandmarks } from "@mediapipe/drawing_utils";
@@ -36,10 +36,6 @@ const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
   isRunning = isStarted
   isLeft = isLeftLeg
 
-  
-
-
- 
   timer = useCountdown();
 
   useEffect(() => {

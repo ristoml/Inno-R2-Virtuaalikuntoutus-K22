@@ -16,7 +16,7 @@ const Datapanel = ({ onClick, squatData }) => {
 
 
     useEffect(() => {
-        console.log(squatData) // REMOVE
+        console.log(data) // REMOVE
         switch (newData.current) {
             case true:
                 if (!saved.current) {
