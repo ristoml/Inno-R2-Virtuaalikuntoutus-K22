@@ -1,33 +1,44 @@
 import { XAxis, YAxis, CartesianGrid, Tooltip, Legend, LineChart, Line, ReferenceLine } from 'recharts';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { resampleData } from './Resample';
 
-let squats = 3 // number of performed squats
+// let squats = 3 // number of performed squats
 let samples = 15 // resample target
 
 const Stats = ({ data }) => {
   const [sdata, setData] = useState(data);
-  useEffect(() => {
-    let record2 = []
-    let record3 = []
+  const squats = useRef(0)
+  const sindexArray = useRef(null) // array for storing individual squats to theiry own indexes and then resampled
+  const rechartsArray = useRef(null) // array which is built from sindexArray and passed to recharts
+
+  useEffect(() => {   
+    setData(data)
     console.log(sdata)
-
-    for (let i = 0; i < squats; i++) { // form new 2d array based on no. of squats
-      record2[i] = []
-    }
-
-    for (let i = 0; i < squats; i++) { // assign and resample the data of individual squats to their own indexes
-      for (let j = 0; j < data.length; j++) {
-        if (data[j].counter === i)
-          record2[i].push(data[j].angle)
+    
+    for (let i = 0; i < sdata.length; i++) { // find the number of squats      
+      if (sdata[i].counter > squats.current) {
+        squats.current = sdata[i].counter
       }
-      record2[i] = resampleData(record2[i], samples)
-    }    
-
-    for (let i = 0; i < samples; i++) { // create recharts-dataset, only works with three squats for now
-      record3.push({ name: i, first: record2[0][i], second: record2[1][i], third: record2[2][i] })
     }
-    setData(record3)
+    console.log(squats.current)
+
+    // for (let i = 0; i < squats; i++) { // form new 2d array based on no. of squats
+    //   record2[i] = []
+    // }
+
+    // for (let i = 0; i < squats; i++) { // assign and resample the data of individual squats to their own indexes
+    //   for (let j = 0; j < data.length; j++) {
+    //     if (data[j].counter === i)
+    //       record2[i].push(data[j].angle)
+    //   }
+    //   record2[i] = resampleData(record2[i], samples)
+    // }    
+    // console.log(record2)
+
+    // for (let i = 0; i < samples; i++) { // create recharts-dataset, only works with three squats for now
+    //   record3.push({ name: i, first: record2[0][i], second: record2[1][i], third: record2[2][i] })
+    // }
+    // setData(record3)
   }, [data]);
 
 
