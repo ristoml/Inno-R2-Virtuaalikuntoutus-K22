@@ -2,7 +2,6 @@ import { XAxis, YAxis, CartesianGrid, Tooltip, Legend, LineChart, Line, Referenc
 import { useEffect, useState, useRef } from 'react';
 import { resampleData } from './Resample';
 
-// let squats = 3 // number of performed squats
 let samples = 15 // resample target
 let sindexArray = []
 
