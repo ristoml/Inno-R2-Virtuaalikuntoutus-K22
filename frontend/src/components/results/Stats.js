@@ -13,8 +13,7 @@ const Stats = ({ data }) => {
   const rechartsData = useRef([]) // array which is built from sindexArray and finally set as rdata
 
   useEffect(() => {
-    setData(data)
-    console.log(sdata)
+    setData(data)    
     rechartsData.current = []
     squats.current = 0
     sindexArray = []
@@ -117,7 +116,7 @@ const Stats = ({ data }) => {
             type='monotone'
             dataKey='fourth'
             dot={false}
-            stroke='#0800ff'
+            stroke='#f5a742'
             activeDot={{ r: 5 }}
           />)}
         {squats.current >= 4 && (
@@ -126,7 +125,7 @@ const Stats = ({ data }) => {
             type='monotone'
             dataKey='fifth'
             dot={false}
-            stroke='#0800ff'
+            stroke='#00fffb'
             activeDot={{ r: 5 }}
           />)}
       </LineChart>
