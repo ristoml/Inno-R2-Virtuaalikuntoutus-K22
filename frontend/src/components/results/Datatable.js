@@ -1,4 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
+import { CSVLink } from "react-csv"
+
 
 const Datatable = ({ data }) => {
   const [sdata, setData] = useState(data);
@@ -38,9 +40,33 @@ const Datatable = ({ data }) => {
   const stdX = Math.sqrt(variance).toFixed(2)
   // console.log('std', stdX)
 
+  const csvData = [
+    {
+      leg: sdata[0].leg,
+      squatted: sdata[sdata.length - 1].counter,
+      maxValgus: minX,
+      maxVarus: maxX,
+      angle: angleValues,
+    },
+
+  ]
+
+  const headers = [
+    { label: 'Leg', key: 'leg' },
+    { label: 'Squats', key: 'squatted' },
+    { label: 'MaxValgus', key: 'maxValgus' },
+    { label: 'MaxVarus', key: 'maxVarus' },
+    { label: 'Anglevalues', key: 'angle' },
+  ]
+
+  const csvReport = {
+    filename: 'Report.csv',
+    headers: headers,
+    data: csvData
+  }
+
   return (
     <table className='data-table'>
-
       <tr>
         <th scope="row">Leg</th>
         <td>{sdata[0].leg}</td>
@@ -66,6 +92,9 @@ const Datatable = ({ data }) => {
         <th scope="row">Standard deviation</th>
         <td>{stdX}</td>
       </tr>
+      <div className='csv-link'>
+        <CSVLink{...csvReport}>Export to CSV</CSVLink>
+      </div>
     </table>
   )
 }

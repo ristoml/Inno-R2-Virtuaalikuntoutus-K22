@@ -59,7 +59,7 @@ canvas {
 .result-panel {
   display: flex;
   flex-direction: row;
-  align-items: center;  
+  align-items: center;
 }
 
 .select-single {
@@ -165,4 +165,12 @@ table {
   letter-spacing: 1px;
   font-family: Roboto, sans-serif;
   font-size: .8rem;
+}
+
+.csv-link {
+  padding: 10px;
+  font-family: Roboto, sans-serif;
+  font-size: .8rem;
+  letter-spacing: 1px;
+  text-align: center
 }
