@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import Webcam from "react-webcam";
 import { Pose, POSE_CONNECTIONS } from "@mediapipe/pose";
 import { drawConnectors, drawLandmarks } from "@mediapipe/drawing_utils";
@@ -16,12 +16,13 @@ var hipMargin = 1.05; // considered being in upright standing position
 var squatMargin = 1.1; // considered being in squatted position
 let timer
 let record
-let isLeft 
+let isLeft
 let isRunning = false
 let alreadyRan = false
 let squatted = false
 let hipAtStart, counter, endTime, squattedText
 squattedText = 'squatted'
+let startTime = 0
 
 // const Playsound = () => {
 //   const [play] = useSound(sound);
@@ -32,9 +33,13 @@ squattedText = 'squatted'
 
 const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
   const webcamRef = useRef(null)
-  const canvasRef = useRef(null)  
+  const canvasRef = useRef(null)
   isRunning = isStarted
   isLeft = isLeftLeg
+
+
+
+
 
   timer = useCountdown();
 
@@ -157,34 +162,39 @@ const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
     // squat counter and data capture
     canvasCtx.scale(-1, 1);
     if (isRunning) {
-      if (!alreadyRan) {
-        isLeft ? hipAtStart = ph.getLeftHipY() * hipMargin : hipAtStart = ph.getRightHipY() * hipMargin
-        endTime = timer + 120; // timeout in seconds to automatically stop recording
-        record = []
-        counter = 0
-        squatted = false
-        alreadyRan = true
-      }
-      isLeft ? record.push({ leg: 'left', counter: counter, angle: ph.getLeftAngle(), data: ph.getLeftLeg() }) : record.push({ leg: 'right', counter: counter, angle: ph.getRightAngle(), data: ph.getRightLeg() })
+      if (startTime === 0) startTime = timer + 3
+      if (timer < startTime) {
+        canvasCtx.fillText(startTime - timer, -350, 250);
+      } else {
+        if (!alreadyRan) {
+          isLeft ? hipAtStart = ph.getLeftHipY() * hipMargin : hipAtStart = ph.getRightHipY() * hipMargin
+          endTime = timer + 120; // timeout in seconds to automatically stop recording
+          record = []
+          counter = 0
+          squatted = false
+          alreadyRan = true
+        }
+        isLeft ? record.push({ leg: 'left', counter: counter, angle: ph.getLeftAngle(), data: ph.getLeftLeg() }) : record.push({ leg: 'right', counter: counter, angle: ph.getRightAngle(), data: ph.getRightLeg() })
 
-      if (
-        (isLeft && ph.getLeftHipY() >= hipAtStart * squatMargin) || // check if squatted, left leg
-        (!isLeft && ph.getRightHipY() >= hipAtStart * squatMargin)  // right leg
-      ) {
-        squatted = true //äänimerkki tähän
-        console.log('squatted')
-        // eslint-disable-next-line no-lone-blocks
-        // Playsound()
-        canvasCtx.fillText(squattedText, -200, 450); 
+        if (
+          (isLeft && ph.getLeftHipY() >= hipAtStart * squatMargin) || // check if squatted, left leg
+          (!isLeft && ph.getRightHipY() >= hipAtStart * squatMargin)  // right leg
+        ) {
+          squatted = true //äänimerkki tähän
+          console.log('squatted')
+          // eslint-disable-next-line no-lone-blocks
+          // Playsound()
+          canvasCtx.fillText(squattedText, -200, 450);
+        }
+        if (
+          (isLeft && ph.getLeftHipY() <= hipAtStart && squatted) || // check if back standing up after a squat, left leg
+          (!isLeft && ph.getRightHipY() <= hipAtStart && squatted)  // right leg
+        ) {
+          counter++
+          squatted = false
+        }
+        canvasCtx.fillText(counter, -40, 40); //KOKEILETÄTÄ
       }
-      if (
-        (isLeft && ph.getLeftHipY() <= hipAtStart && squatted) || // check if back standing up after a squat, left leg
-        (!isLeft && ph.getRightHipY() <= hipAtStart && squatted)  // right leg
-      ) {
-        counter++
-        squatted = false
-      }
-      canvasCtx.fillText(counter, -40, 40); //KOKEILETÄTÄ
     }
     if ((!isRunning && alreadyRan) || timer === endTime) { // recording stops     
       console.log(record);
