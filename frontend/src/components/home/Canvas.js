@@ -20,6 +20,7 @@ let isLeft
 let isRunning = false
 let alreadyRan = false
 let squatted = false
+let enableTimer = false
 let hipAtStart, counter, endTime, squattedText
 squattedText = 'squatted'
 let startTime = 0
@@ -31,15 +32,12 @@ let startTime = 0
 //     );
 // };
 
-const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
+const Canvas = ({ isLeftLeg, isStarted, useTimer, getSquatData }) => {
   const webcamRef = useRef(null)
   const canvasRef = useRef(null)
   isRunning = isStarted
   isLeft = isLeftLeg
-
-
-
-
+  enableTimer = useTimer  
 
   timer = useCountdown();
 
@@ -163,7 +161,7 @@ const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
     canvasCtx.scale(-1, 1);
     if (isRunning) {
       if (startTime === 0) startTime = timer + 3
-      if (timer < startTime) {
+      if (timer < startTime && enableTimer) {
         canvasCtx.fillText(startTime - timer, -350, 250);
       } else {
         if (!alreadyRan) {
@@ -201,6 +199,7 @@ const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
       getSquatData(record);
       alreadyRan = false;
       squatted = false;
+      startTime = 0
     }
     canvasCtx.restore();
   };

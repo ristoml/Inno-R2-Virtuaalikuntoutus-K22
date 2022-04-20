@@ -7,8 +7,9 @@ import Datapanel from "../components/results/Datapanel"
 const Home = () => {
   const [isLeftLeg, setIsLeftLeg] = useState(true)
   const [showCanvas, setShowCanvas] = useState(true)
-  const [recording, setRecording] = useState(false) 
-  const [squatData, setSquadData] = useState({})    
+  const [recording, setRecording] = useState(false)
+  const [squatData, setSquadData] = useState({})
+  const [useTimer, setUseTimer] = useState(false)
 
   const startRecording = () => {
     console.log("Start recording");
@@ -30,7 +31,11 @@ const Home = () => {
 
   const handleSquatData = (squatData) => {
     setSquadData(squatData)
-  } 
+  }
+
+  const handleTimerChange = () => {
+    setUseTimer(!useTimer)
+  }
 
   return (
     <div className="container">
@@ -41,13 +46,16 @@ const Home = () => {
             isStarted={recording}
             getSquatData={handleSquatData}
             onClick={showResults}
-          />          
+            useTimer={useTimer}
+          />
           <ControlPanel
             onChange={() => setIsLeftLeg(!isLeftLeg)}
             onClick={recording ? stopRecording : startRecording}
             onClick2={showResults}
-            isRecording={recording}     
-            isLeft={isLeftLeg}       
+            isRecording={recording}
+            isLeft={isLeftLeg}
+            handleTimer={handleTimerChange}
+            useTimer={useTimer}
           />
         </>
       ) : (

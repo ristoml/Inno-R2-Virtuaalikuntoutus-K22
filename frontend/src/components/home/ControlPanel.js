@@ -3,7 +3,7 @@ import Button2 from './Button2'
 import { Link } from 'react-router-dom'
 import Toggle from './Toggle'
 
-const ControlPanel = ({ onChange, onClick, onClick2, isRecording, isLeft }) => {
+const ControlPanel = ({ onChange, onClick, onClick2, isRecording, isLeft, handleTimer, useTimer }) => {
   return (
     <div className='control-panel'>
       <div>L
@@ -11,12 +11,18 @@ const ControlPanel = ({ onChange, onClick, onClick2, isRecording, isLeft }) => {
           onChange={onChange}
           isLeft={isLeft}
         />
-        R</div>
-      <Button
-        color={isRecording ? '#bdffff' : '#7700bd'}
-        onClick={onClick}
-        text={isRecording ? 'Stop' : 'Start'}
-      />
+        R</div><div>
+        <Button
+          color={isRecording ? '#bdffff' : '#7700bd'}
+          onClick={onClick}
+          text={isRecording ? 'Stop' : 'Start'}
+        />
+
+        <input type='checkbox'
+          id='usetimer'
+          name='usetimer'
+          checked={useTimer}
+          onChange={handleTimer} /><label>timer</label></div>
       <div className='control-panel2'>
         <Button2
           color={'grey'}
