@@ -181,7 +181,7 @@ const Canvas = ({ isLeftLeg, isStarted, useTimer, getSquatData }) => {
           console.log('squatted')
           // eslint-disable-next-line no-lone-blocks
           // Playsound()
-          canvasCtx.fillText(squattedText, -200, 450);
+          // canvasCtx.fillText(squattedText, -200, 450);
         }
         if (
           (isLeft && ph.getLeftHipY() <= hipAtStart && squatted) || // check if back standing up after a squat, left leg
