@@ -8,6 +8,7 @@ const ControlPanel = ({ onChange, onClick, onClick2, isRecording, isLeft, handle
     <div className='control-panel'>
       <div>L
         <Toggle
+          disabled={isRecording ? true : false}
           onChange={onChange}
           isLeft={isLeft}
         />
