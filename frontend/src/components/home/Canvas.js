@@ -21,7 +21,7 @@ let alreadyRan = false
 let squatted = false
 let enableTimer = false
 let hipAtStart, counter, endTime, squattedText
-squattedText = 'squatted'
+squattedText = 'Ok!'
 let startTime = 0
 
 const Canvas = ({ isLeftLeg, isStarted, useTimer, getSquatData }) => {
@@ -36,7 +36,7 @@ const Canvas = ({ isLeftLeg, isStarted, useTimer, getSquatData }) => {
   const [play] = useSound(sound, {
     sprite: {
       true: [500, 1000],
-      false: [1500,2000]
+      false: ''
     }
   });
 
