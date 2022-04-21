@@ -25,7 +25,7 @@ const Datatable = ({ data }) => {
     angleValues.push(sdata[i].angle)
   }
 
-  console.log('angelvalues', angleValues)
+  console.log('angelvalues', angleValues.current)
 
   // console.log(angleValues.current[0], angleValues.current.length)
   // const minX = Math.min.apply(Math, angleValues.current).toFixed(2)
@@ -38,17 +38,19 @@ const Datatable = ({ data }) => {
     // console.log('max', maxX)
     const meanX = (angleValues.reduce((a, b) => a + b, 0) / angleValues.length).toFixed(2)
   // console.log('mean', meanX)
-  // angleValues.current = angleValues.current.map((k)
-  angleValues = angleValues.map((k) => {
+  // let angleValues2 = angleValues.current.map((k)
+  let angleValues2 = angleValues.map((k) => {
     return (k - meanX) ** 2
   })
 
-  // let sum = angleValues.current.reduce((a, b) => a + b, 0)
-  let sum = angleValues.reduce((a, b) => a + b, 0)
-  // let variance = sum / angleValues.current.length
-  let variance = sum / angleValues.length
+  let sum = angleValues2.reduce((a, b) => a + b, 0)
+  // let sum = angleValues.reduce((a, b) => a + b, 0)
+  let variance = sum / angleValues2.length
+  // let variance = sum / angleValues.length
   const stdX = Math.sqrt(variance).toFixed(2)
   // console.log('std', stdX)
+
+  angleValues.toFixed(2)
 
   const csvData = [
     {
