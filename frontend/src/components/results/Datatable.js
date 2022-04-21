@@ -46,7 +46,7 @@ const Datatable = ({ data }) => {
       squatted: sdata[sdata.length - 1].counter,
       maxValgus: minX,
       maxVarus: maxX,
-      angle: angleValues,
+      angle: angleValues.current,
     },
 
   ]
