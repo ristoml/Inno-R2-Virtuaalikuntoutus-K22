@@ -36,7 +36,7 @@ const Canvas = ({ isLeftLeg, isStarted, useTimer, getSquatData }) => {
   const [play] = useSound(sound, {
     sprite: {
       true: [500, 1000],
-      false: ''
+      false: [1500,2000]
     }
   });
 
@@ -179,9 +179,7 @@ const Canvas = ({ isLeftLeg, isStarted, useTimer, getSquatData }) => {
         ) {
           squatted = true //äänimerkki tähän
           console.log('squatted')
-          // eslint-disable-next-line no-lone-blocks
-          // Playsound()
-          // canvasCtx.fillText(squattedText, -200, 450);
+          canvasCtx.fillText(squattedText, -200, 450);
         }
         if (
           (isLeft && ph.getLeftHipY() <= hipAtStart && squatted) || // check if back standing up after a squat, left leg
@@ -190,7 +188,7 @@ const Canvas = ({ isLeftLeg, isStarted, useTimer, getSquatData }) => {
           counter++
           squatted = false
         }
-        canvasCtx.fillText(counter, -40, 40); //KOKEILETÄTÄ
+        canvasCtx.fillText(counter, -40, 40);
       }
     }
     if ((!isRunning && alreadyRan) || timer === endTime) { // recording stops     
