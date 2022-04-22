@@ -31,7 +31,6 @@ const Stats = ({ data }) => {
       }
     }
 
-
     if (discardLastSquat(sdata, squats.current) && squats.current > 0) squats.current-- // check the number of samples of the last squat and discard it if necessary
 
     if (squats.current > maxSquats) squats.current = maxSquats // discard excessive squats
@@ -54,7 +53,6 @@ const Stats = ({ data }) => {
 
     setRdata(rechartsData.current)
   }, [data, sdata]);
-
 
   const discardLastSquat = (array, squat) => {
     let minSamples = 15
