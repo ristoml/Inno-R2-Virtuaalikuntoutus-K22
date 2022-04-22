@@ -1,10 +1,11 @@
-import { useState, useEffect, useRef } from 'react'
+// import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect} from 'react'
 import { CSVLink } from "react-csv"
 
 
 const Datatable = ({ data }) => {
   const [sdata, setData] = useState(data);
-  const angleValues = useRef(null)
+  // const angleValues = useRef(null)
 
   useEffect(() => {
     setData(data);
@@ -16,29 +17,40 @@ const Datatable = ({ data }) => {
   // console.log('angle', sdata[0].angle)
   // console.log('leg', sdata[0].leg)
 
-  angleValues.current = []
+  // angleValues.current = []
+  let angleValues = []
 
   for (let i = 0; i < sdata.length; i++) {
-    angleValues.current.push(sdata[i].angle)
+    // angleValues.current.push(sdata[i].angle)
+    angleValues.push(sdata[i].angle)
   }
 
-  // console.log('angelvalues', angleValues.current)
+  console.log('angelvalues', angleValues.current)
 
   // console.log(angleValues.current[0], angleValues.current.length)
-  const minX = Math.min.apply(Math, angleValues.current).toFixed(2)
+  // const minX = Math.min.apply(Math, angleValues.current).toFixed(2)
+  const minX = Math.min.apply(Math, angleValues).toFixed(2)
   // console.log('min', minX)
-  const maxX = Math.max.apply(Math, angleValues.current).toFixed(2)
+  // const maxX = Math.max.apply(Math, angleValues.current).toFixed(2)
+  const maxX = Math.max.apply(Math, angleValues).toFixed(2)
   // console.log('max', maxX)
-  const meanX = (angleValues.current.reduce((a, b) => a + b, 0) / angleValues.current.length).toFixed(2)
+  // const meanX = (angleValues.current.reduce((a, b) => a + b, 0) / angleValues.current.length).toFixed(2)
+    // console.log('max', maxX)
+    const meanX = (angleValues.reduce((a, b) => a + b, 0) / angleValues.length).toFixed(2)
   // console.log('mean', meanX)
-  angleValues.current = angleValues.current.map((k) => {
+  // let angleValues2 = angleValues.current.map((k)
+  let angleValues2 = angleValues.map((k) => {
     return (k - meanX) ** 2
   })
 
-  let sum = angleValues.current.reduce((a, b) => a + b, 0)
-  let variance = sum / angleValues.current.length
+  let sum = angleValues2.reduce((a, b) => a + b, 0)
+  // let sum = angleValues.reduce((a, b) => a + b, 0)
+  let variance = sum / angleValues2.length
+  // let variance = sum / angleValues.length
   const stdX = Math.sqrt(variance).toFixed(2)
   // console.log('std', stdX)
+
+  angleValues.toFixed(2)
 
   const csvData = [
     {

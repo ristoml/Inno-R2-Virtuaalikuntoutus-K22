@@ -6,13 +6,13 @@ import Toggle from './Toggle'
 const ControlPanel = ({ onChange, onClick, onClick2, isRecording, isLeft, handleTimer, useTimer }) => {
   return (
     <div className='control-panel'>
-      <div>L
+      <div>Left 
         <Toggle
           disabled={isRecording ? true : false}
           onChange={onChange}
           isLeft={isLeft}
         />
-        R</div><div>
+        Right</div><div>
         <Button
           color={isRecording ? '#bdffff' : '#7700bd'}
           onClick={onClick}
@@ -34,7 +34,7 @@ const ControlPanel = ({ onChange, onClick, onClick2, isRecording, isLeft, handle
         <Link to='/info' target={'_blank'}>
           <Button2
             color={'grey'}
-            text={'?'}
+            text={'info'}
           />
         </Link>
       </div>
