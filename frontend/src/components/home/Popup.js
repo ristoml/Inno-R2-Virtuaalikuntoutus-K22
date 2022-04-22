@@ -35,9 +35,7 @@ const Popup = props => {
                                 props.handlePopup(false, '')
                             }} />
                     </>
-                )}
-
-                {/* {props.content} */}
+                )}               
             </div>
         </div>
     );
