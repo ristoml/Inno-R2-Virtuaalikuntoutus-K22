@@ -7,7 +7,7 @@ let maxSquats = 4 // squat/(array index) numbering starts at 0, so maximum numbe
 let sindexArray = []
 const lineNames = ['1st', '2nd', '3rd', '4th', '5th']
 const dataNames = ['first', 'second', 'third', 'fourth', 'fifth']
-const lineColours = ['#a340d9', '#2ba14b', '#2ba14b', '#f5a742', '#00fffb']
+const lineColours = ['#a340d9', '#2ba14b', '#0800ff', '#f5a742', '#00fffb']
 
 const Stats = ({ data }) => {
   const [sdata, setData] = useState(data)
