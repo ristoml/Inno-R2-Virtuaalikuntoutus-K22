@@ -7,7 +7,7 @@ import axios from 'axios'
 import { useEffect, useState, useRef } from 'react'
 
 
-const Datapanel = ({ onClick, squatData }) => {
+const Datapanel = ({ onClick, squatData, clientName }) => {
     const [data, setCurrentData] = useState(null)
     const saved = useRef(false)
 
@@ -37,7 +37,7 @@ const Datapanel = ({ onClick, squatData }) => {
         const resultObject = {
             date: new Date().toISOString(),
             data: results,
-            client: ''
+            client: clientName
         }
         const promise = axios.post('http://localhost:3001/api/addResult', resultObject)
         promise.then(response => {

@@ -50,7 +50,7 @@ const Datatable = ({ data }) => {
   const stdX = Math.sqrt(variance).toFixed(2)
   // console.log('std', stdX)
 
-  angleValues.toFixed(2)
+  //angleValues.toFixed(2)
 
   const csvData = [
     {
