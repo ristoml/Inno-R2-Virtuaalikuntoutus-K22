@@ -11,6 +11,8 @@ const Stats = ({ data }) => {
   const squats = useRef(0)  
   const rechartsData = useRef([]) // array which is built from sindexArray and finally set as rdata
 
+ 
+
   useEffect(() => {
     setData(data)    
     rechartsData.current = []
@@ -24,6 +26,7 @@ const Stats = ({ data }) => {
     for (let i = 0; i < sdata.length; i++) { // find the number of squats      
       if (sdata[i].counter > squats.current) {
         squats.current = sdata[i].counter
+        // console.log('statssquats', squats.current )
       }
     }
    
@@ -34,6 +37,7 @@ const Stats = ({ data }) => {
         if (sdata[j].counter === i)
           sindexArray[i].push(sdata[j].angle)
       }
+      // console.log('sindexArray', sindexArray)
       sindexArray[i] = resampleData(sindexArray[i], samples)
     }
 

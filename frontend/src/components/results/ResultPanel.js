@@ -80,6 +80,7 @@ const ResultPanel = ({ getId, delId, sdata }) => {
                     text='Delete'
                     color='#bdffff'
                     onClick={() => {
+                        window.confirm(`Delete result '${label}' ?`)
                         isLoaded.current = false
                         delId(resultId)
 

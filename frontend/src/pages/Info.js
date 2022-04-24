@@ -1,9 +1,15 @@
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 
 const Info = () => {
 
+   const closeTab = () => {
+          window.opener = null;
+          window.open("", "_self");
+          window.close()
+      }
 
   return (
+    <div>
     <div className='info-page'>
       <h1>Info</h1>
       <h2>Welcome</h2>
@@ -14,11 +20,16 @@ const Info = () => {
       <h2>Close this page</h2>
       <p>You can close this page by clicking the x next to the page name above or by clickig the button below. </p>
         <p>Please note that by clicking the Home button you will have two active pages open. </p>
-      <button className="btn">
+      {/* <button className="btn">
       <Link to="/">Home</Link>
-      </button>
+      </button> */}
+   </div>
+   <div>
+    <button color='gray' className="btn"  onClick={closeTab}>Home</button>
+  </div>
+  </div>
                   
-    </div>
+    
   )
 }
 

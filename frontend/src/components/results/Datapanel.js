@@ -85,7 +85,7 @@ const Datapanel = ({ onClick, squatData }) => {
                     <Button
                         color={'gray'}
                         onClick={onClick}
-                        text={'Close'}
+                        text={'Home'}
                     />
                 </div>
             }

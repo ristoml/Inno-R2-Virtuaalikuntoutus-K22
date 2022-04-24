@@ -135,6 +135,11 @@ input:checked+.slider:before {
   color: #7700bd;
 }
 
+
+p {
+  color: black
+}
+
 td,
 th {
   border: 1px solid rgb(190, 190, 190);
@@ -168,6 +173,7 @@ table {
 }
 
 .csv-link {
+  border: 1px solid rgb(190, 190, 190);
   padding: 10px;
   font-family: Roboto, sans-serif;
   font-size: .8rem;
