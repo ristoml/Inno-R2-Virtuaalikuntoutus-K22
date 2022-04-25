@@ -13,9 +13,7 @@ const Stats = ({ data }) => {
   const [sdata, setData] = useState(data)
   const [rdata, setRdata] = useState({})
   const squats = useRef(0)
-  const rechartsData = useRef([]) // array which is built from sindexArray and finally set as rdata
-
- 
+  const rechartsData = useRef([]) // array which is built from sindexArray and finally set as rdata 
 
   useEffect(() => {
     setData(data)
@@ -32,9 +30,7 @@ const Stats = ({ data }) => {
         squats.current = sdata[i].counter
         // console.log('statssquats', squats.current )
       }
-    }
-
-    if (discardLastSquat(sdata, squats.current) && squats.current > 0) squats.current-- // check the number of samples of the last squat and discard it if necessary
+    }    
 
     if (squats.current > maxSquats) squats.current = maxSquats // discard excessive squats
 
@@ -56,17 +52,11 @@ const Stats = ({ data }) => {
     }
 
     setRdata(rechartsData.current)
-  }, [data, sdata]);
+    console.log(squats.current)
+    console.log(rechartsData.current)
 
-  const discardLastSquat = (array, squat) => {
-    let minSamples = 15
-    let samples = 0
-    for (let i = 0; i < array.length; i++) {
-      if (array[i].counter === squat)
-        samples++
-    }
-    return samples < minSamples
-  }
+  }, [data, sdata]);
+  
 
   return (
     <div>
@@ -93,8 +83,9 @@ const Stats = ({ data }) => {
           <Legend verticalAlign='top' height={50} />
           {(() => {
             let rows = [];
-            for (let i = 0; i <= squats.current; i++) {
-              rows.push(<Line name={lineNames[i]}
+            for (let i = 0; i < squats.current; i++) {
+              rows.push(<Line key={lineNames[i]} 
+                name={lineNames[i]}
                 type='monotone'
                 dataKey={dataNames[i]}
                 dot={false}
