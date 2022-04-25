@@ -3,7 +3,6 @@ import Webcam from "react-webcam";
 import { Pose, POSE_CONNECTIONS } from "@mediapipe/pose";
 import { drawConnectors, drawLandmarks } from "@mediapipe/drawing_utils";
 import { Camera } from "@mediapipe/camera_utils";
-import { useCountdown } from "./Timer";
 import * as ph from "./PoseHelper";
 import useSound from 'use-sound';
 import sound from "../../assets/sounds/squatBeep.wav"
@@ -13,25 +12,21 @@ var allowedAngleDeviation = 10; // maximum allowed angle deviation in degrees be
 // squat counter and recording stuff
 var hipMargin = 1.05; // considered being in upright standing position
 var squatMargin = 1.1; // considered being in squatted position
-let timer
+
 let record
+let maxDataSize = 1000 // maximum length of recorded data before discarding the rest
 let isLeft
 let isRunning = false
 let alreadyRan = false
 let squatted = false
-let enableTimer = false
-let hipAtStart, counter, endTime, squattedText
+let hipAtStart, counter, squattedText
 squattedText = 'Ok!'
-let startTime = 0
 
-const Canvas = ({ isLeftLeg, isStarted, useTimer, getSquatData }) => {
+const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
   const webcamRef = useRef(null)
   const canvasRef = useRef(null)
   isRunning = isStarted
   isLeft = isLeftLeg
-  enableTimer = useTimer
-
-  timer = useCountdown();
 
   const [play] = useSound(sound, {
     sprite: {
@@ -159,44 +154,40 @@ const Canvas = ({ isLeftLeg, isStarted, useTimer, getSquatData }) => {
     // squat counter and data capture
     canvasCtx.scale(-1, 1);
     if (isRunning) {
-      if (startTime === 0) startTime = timer + 3
-      if (timer < startTime && enableTimer) {
-        canvasCtx.fillText(startTime - timer, -350, 250);
-      } else {
-        if (!alreadyRan) {
-          isLeft ? hipAtStart = ph.getLeftHipY() * hipMargin : hipAtStart = ph.getRightHipY() * hipMargin
-          endTime = timer + 120; // timeout in seconds to automatically stop recording
-          record = []
-          counter = 0
-          squatted = false
-          alreadyRan = true
-        }
-        isLeft ? record.push({ leg: 'left', counter: counter, angle: ph.getLeftAngle(), data: ph.getLeftLeg() }) : record.push({ leg: 'right', counter: counter, angle: ph.getRightAngle(), data: ph.getRightLeg() })
-
-        if (
-          (isLeft && ph.getLeftHipY() >= hipAtStart * squatMargin) || // check if squatted, left leg
-          (!isLeft && ph.getRightHipY() >= hipAtStart * squatMargin)  // right leg
-        ) {
-          squatted = true //äänimerkki tähän
-          console.log('squatted')
-          canvasCtx.fillText(squattedText, -200, 450);
-        }
-        if (
-          (isLeft && ph.getLeftHipY() <= hipAtStart && squatted) || // check if back standing up after a squat, left leg
-          (!isLeft && ph.getRightHipY() <= hipAtStart && squatted)  // right leg
-        ) {
-          counter++
-          squatted = false
-        }
-        canvasCtx.fillText(counter, -40, 40);
+      if (!alreadyRan) {
+        isLeft ? hipAtStart = ph.getLeftHipY() * hipMargin : hipAtStart = ph.getRightHipY() * hipMargin
+        record = []
+        counter = 0
+        squatted = false
+        alreadyRan = true
       }
+      if (record.length < maxDataSize) {
+        isLeft ? record.push({ leg: 'left', counter: counter, angle: ph.getLeftAngle(), data: ph.getLeftLeg() }) : record.push({ leg: 'right', counter: counter, angle: ph.getRightAngle(), data: ph.getRightLeg() })
+      }
+
+      if (
+        (isLeft && ph.getLeftHipY() >= hipAtStart * squatMargin) || // check if squatted, left leg
+        (!isLeft && ph.getRightHipY() >= hipAtStart * squatMargin)  // right leg
+      ) {
+        squatted = true //äänimerkki tähän
+        console.log('squatted')
+        canvasCtx.fillText(squattedText, -200, 450);
+      }
+      if (
+        (isLeft && ph.getLeftHipY() <= hipAtStart && squatted) || // check if back standing up after a squat, left leg
+        (!isLeft && ph.getRightHipY() <= hipAtStart && squatted)  // right leg
+      ) {
+        counter++
+        squatted = false
+      }
+      canvasCtx.fillText(counter, -40, 40);
+
     }
-    if ((!isRunning && alreadyRan) || timer === endTime) { // recording stops     
+    if (!isRunning && alreadyRan) { // recording stops     
       console.log(record);
       getSquatData(record);
       alreadyRan = false;
       squatted = false;
-      startTime = 0
     }
     canvasCtx.restore();
   };

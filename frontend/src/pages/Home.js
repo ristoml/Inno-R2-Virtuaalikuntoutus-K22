@@ -3,7 +3,7 @@ import Canvas from "../components/home/Canvas"
 import ControlPanel from "../components/home/ControlPanel"
 import Datapanel from "../components/results/Datapanel"
 import Popup from "../components/home/Popup"
-
+import Countdown from "react-countdown";
 
 const Home = () => {
   const [isLeftLeg, setIsLeftLeg] = useState(true)
@@ -14,11 +14,16 @@ const Home = () => {
   const dataOk = useRef(true)
   const [showPopup, setShowPopup] = useState(false)
   const [useTimer, setUseTimer] = useState(false)
+  const [showTimer, setShowTimer] = useState(false)
 
   const startRecording = () => {
     console.log("Start recording");
-    setRecording(true)
-    setShowCanvas(true)
+    if (useTimer) {
+      setShowTimer(true)
+    } else {
+      setRecording(true)
+      setShowCanvas(true)
+    }
   }
 
   const stopRecording = () => {
@@ -57,6 +62,27 @@ const Home = () => {
     }
   }
 
+  // Random component
+  const Completionist = () => <span>Go!</span>;
+
+  // Renderer callback with condition
+  const renderer = ({ hours, minutes, seconds, completed }) => {
+    if (completed) {
+      // Render a complete state
+      setRecording(true)
+      setShowCanvas(true)
+      setShowTimer(false)
+      return <Completionist />;
+    } else {
+      // Render a countdown
+      return (
+        <span>
+          {seconds}
+        </span>
+      );
+    }
+  };
+
   return (
     <div className="container">
       {showCanvas ? (
@@ -65,8 +91,7 @@ const Home = () => {
             isLeftLeg={isLeftLeg}
             isStarted={recording}
             getSquatData={handleSquatData}
-            onClick={showResults}
-            useTimer={useTimer}
+            onClick={showResults}            
           />
           <ControlPanel
             onChange={() => setIsLeftLeg(!isLeftLeg)}
@@ -82,6 +107,13 @@ const Home = () => {
               dataOk={dataOk.current}
               handlePopup={handlePopup}
             />
+          }
+          {showTimer &&
+            <div className="countdown-popup-box">
+              <div className="countdown-box">
+                <Countdown date={Date.now() + 5000} renderer={renderer} />
+              </div>
+            </div>
           }
         </>
       ) : (
