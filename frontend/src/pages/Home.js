@@ -62,19 +62,17 @@ const Home = () => {
     }
   }
 
-  // Random component
   const Completionist = () => <span>Go!</span>;
 
-  // Renderer callback with condition
   const renderer = ({ hours, minutes, seconds, completed }) => {
     if (completed) {
-      // Render a complete state
-      setRecording(true)
-      setShowCanvas(true)
-      setShowTimer(false)
+      setTimeout(() => {
+        setRecording(true)
+        setShowCanvas(true)
+        setShowTimer(false)
+      }, 500)
       return <Completionist />;
     } else {
-      // Render a countdown
       return (
         <span>
           {seconds}
@@ -91,7 +89,7 @@ const Home = () => {
             isLeftLeg={isLeftLeg}
             isStarted={recording}
             getSquatData={handleSquatData}
-            onClick={showResults}            
+            onClick={showResults}
           />
           <ControlPanel
             onChange={() => setIsLeftLeg(!isLeftLeg)}
