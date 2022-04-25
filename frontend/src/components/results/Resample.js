@@ -1,5 +1,4 @@
-const resampleData = (data, target) => {
-    // console.log(data) //REMOVE
+const resampleData = (data, target) => {    
     return largestTriangleThreeBuckets(data, target)
 }
 
