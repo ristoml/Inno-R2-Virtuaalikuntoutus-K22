@@ -52,9 +52,6 @@ const Stats = ({ data }) => {
     }
 
     setRdata(rechartsData.current)
-    console.log(squats.current)
-    console.log(rechartsData.current)
-
   }, [data, sdata]);
   
 
