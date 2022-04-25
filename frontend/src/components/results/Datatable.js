@@ -53,7 +53,7 @@ console.log('splitdata', splitAnglevalues)
     minvalues.push(minX)
     maxvalues.push(maxX)
   }
-//  console.log('minvalues', minvalues, maxvalues)
+ console.log('minvalues', minvalues, maxvalues)
  
   const meanMin= (minvalues.reduce((a, b) => a + b, 0) / minvalues.length).toFixed(2)
   let minvalues2 = minvalues.map((k) => {
@@ -76,13 +76,11 @@ console.log('splitdata', splitAnglevalues)
   let csvData = []
   let squatcount = data[data.length - 1].counter
 
-  data.slice(0,squatcount).map((csvobj) => { //discard last index = not finished squat
+  data.slice(0,squatcount).map((csvobj) => { //discard last counter index => not finished squat
   return csvData.push(csvobj)
   })
  
-  // console.log('csvdata', csvData)
-
- 
+  console.log('csvdata', csvData)
 
   const headers = [
     { label: 'Leg', key: 'leg' },
