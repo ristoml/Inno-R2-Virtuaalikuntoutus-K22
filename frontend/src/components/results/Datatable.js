@@ -11,6 +11,8 @@ const Datatable = ({ data }) => {
     setData(data);
   }, [data]);
 
+  console.log('data', data)
+
   // console.log('datan koko', data.length)
   // console.log('datatablen data', data)
   // console.log('datatablen counter', data[data.length - 1].counter)

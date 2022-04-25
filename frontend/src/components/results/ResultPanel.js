@@ -18,6 +18,8 @@ const ResultPanel = ({ getId, delId, sdata }) => {
     const [label, setLabel] = useState()
     const isLoaded = useRef(false)
 
+    console.log(sdata)
+
     useEffect(() => {
         setAllData(sdata)
         switch (isLoaded.current) {
@@ -53,7 +55,8 @@ const ResultPanel = ({ getId, delId, sdata }) => {
         //     setAllData(response.data)
         // })
     }
-    // const deleteId = (rId) => {
+
+      // const deleteId = (rId) => {
     //     isLoaded.current = false
     //     if (resultId === null) {
     //         delId(options[0].value)
@@ -80,7 +83,7 @@ const ResultPanel = ({ getId, delId, sdata }) => {
                     text='Delete'
                     color='#bdffff'
                     onClick={() => {
-                        window.confirm(`Delete result '${label}' ?`)
+                        window.confirm(`Do you want to delete the test result \n '${label}' ?`)
                         isLoaded.current = false
                         delId(resultId)
 
