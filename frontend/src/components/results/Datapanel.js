@@ -12,7 +12,7 @@ const Datapanel = ({ onClick, squatData, clientName }) => {
     const saved = useRef(false)
 
     const newData = useRef(false)
-    Object.keys(squatData).length > 1 ? newData.current = true : newData.current = false    
+    Object.keys(squatData).length > 1 ? newData.current = true : newData.current = false
 
 
     useEffect(() => {
@@ -20,7 +20,7 @@ const Datapanel = ({ onClick, squatData, clientName }) => {
         switch (newData.current) {
             case true:
                 if (!saved.current) {
-                    saveAndGetResult(squatData)                   
+                    saveAndGetResult(squatData)
                     //getLatestResult()
                     saved.current = true
                     newData.current = false
@@ -70,6 +70,18 @@ const Datapanel = ({ onClick, squatData, clientName }) => {
         })
     }
 
+    const updateResult = (resultId, clientName) => {
+        console.log('update: ' + resultId)
+        //setResultId(resultId)
+        const client = {
+            client: clientName
+        }
+        const promise = axios.put(`http://localhost:3001/api/update/${resultId}`, client)
+        promise.then(response => {
+            console.log(response)
+        })
+    }
+
 
     return (
         <>
@@ -79,6 +91,7 @@ const Datapanel = ({ onClick, squatData, clientName }) => {
                         getId={getResult}
                         delId={deleteResult}
                         sdata={data}
+                        updateClient={updateResult}
                     />
                     <Stats data={data.data} />
                     <Datatable data={data.data} />
