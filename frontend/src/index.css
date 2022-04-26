@@ -63,7 +63,7 @@ canvas {
 }
 
 .select-single {
-  color: #7700bd;
+  color: #8300d4;
   display: block;
   font-size: 14px;
   font-weight: 600;
@@ -132,7 +132,7 @@ input:checked+.slider:before {
 }
 
 .info-page {
-  color: #7700bd;
+  color: #8300d4;
 }
 
 
@@ -202,7 +202,7 @@ table {
   background: rgba(255, 255, 255, 0.548);
   border-radius: 4px;
   padding: 10px;
-  border: 2px solid #7700bd;
+  border: 2px solid #8300d4;
   overflow: auto;
   z-index: 2;
 }
@@ -218,7 +218,7 @@ table {
   background: rgba(255, 255, 255, 0.884);
   border-radius: 4px;
   padding: 10px;
-  border: 2px solid #7700bd;
+  border: 2px solid #8300d4;
   overflow: auto;
   z-index: 2;
 }

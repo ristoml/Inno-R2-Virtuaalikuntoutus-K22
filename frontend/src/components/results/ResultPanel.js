@@ -41,7 +41,7 @@ const ResultPanel = ({ getId, delId, sdata, updateClient }) => {
                     options = makeOptions(response.data)
                     setLabel(options[0].label)
                     setResultId(options[0].value)
-                    console.log('options recreated')
+                    console.log('options created')
                     setTempName(options[0].label.slice(22))
                     setListOptions(options)
                     isLoaded.current = true
@@ -50,26 +50,13 @@ const ResultPanel = ({ getId, delId, sdata, updateClient }) => {
             default:
 
         }
-    }, [sdata, options]);
+    }, [sdata]);
 
 
     const getAllData = () => {
         console.log('get all data')
         return axios.get('http://localhost:3001/api/results')
-        // promise.then(response => {
-        //     setAllData(response.data)
-        // })
     }
-
-    // const deleteId = (rId) => {
-    //     isLoaded.current = false
-    //     if (resultId === null) {
-    //         delId(options[0].value)
-    //     } else {
-    //         delId(resultId)
-    //     }
-    // }
-
 
     return (<>
         {options &&
@@ -88,14 +75,9 @@ const ResultPanel = ({ getId, delId, sdata, updateClient }) => {
                 />
                 <Button2
                     text='Edit'
-                    color='#bdffff'
+                    color='#8300d4'
                     onClick={() => {
                         setShowEdit(true)
-                        //setLabel(label.slice(0, 22))
-
-                        //isLoaded.current = false
-                        //delId(resultId)
-
                     }
                     }
                 />
@@ -106,7 +88,6 @@ const ResultPanel = ({ getId, delId, sdata, updateClient }) => {
                         window.confirm(`Do you want to delete the test result \n '${label}' ?`)
                         isLoaded.current = false
                         delId(resultId)
-
                     }
                     }
                 />
@@ -134,7 +115,6 @@ const ResultPanel = ({ getId, delId, sdata, updateClient }) => {
                         onClick={() => {
                             setShowEdit(false)
                         }} />
-
                 </div>
             </div>
         }
