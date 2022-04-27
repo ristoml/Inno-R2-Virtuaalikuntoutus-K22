@@ -13,22 +13,14 @@ const Datatable = ({ data }) => {
 
   console.log('data', data)
 
-  // console.log('datan koko', data.length)
-  // console.log('datatablen data', data)
-  // console.log('datatablen counter', data[data.length - 1].counter)
-  // console.log('angle', data[0].angle)
-  //console.log('leg', data[0].leg)
-
-  // angleValues.current = []
-
   // SEPARATE angle values for calculation
-    
+
   let temparray = []
   let splitAnglevalues = []
 
   let counterNow = 0
   
-  data.map((dataobj) => {
+  data.data.map((dataobj) => {
     splitAnglevalues[dataobj.counter] = temparray
     if(counterNow === dataobj.counter-1){
       counterNow = dataobj.counter
@@ -38,7 +30,7 @@ const Datatable = ({ data }) => {
     return ''
   })
 
-console.log('splitdata', splitAnglevalues)
+// console.log('splitdata', splitAnglevalues)
 
 // CALCULATE mean and std from minimum and maximum values
 
@@ -55,7 +47,7 @@ console.log('splitdata', splitAnglevalues)
     minvalues.push(minX)
     maxvalues.push(maxX)
   }
- console.log('minvalues', minvalues, maxvalues)
+//  console.log('minvalues', minvalues, maxvalues)
  
   const meanMin= (minvalues.reduce((a, b) => a + b, 0) / minvalues.length).toFixed(2)
   let minvalues2 = minvalues.map((k) => {
@@ -76,38 +68,60 @@ console.log('splitdata', splitAnglevalues)
   // EXPORT DATA TO CSV
 
   let csvData = []
-  let squatcount = data[data.length - 1].counter
 
-  data.slice(0,squatcount).map((csvobj) => { //discard last counter index => not finished squat
-  return csvData.push(csvobj)
-  })
- 
-  console.log('csvdata', csvData)
+    for (let i = 0; i < data.data.length; i++) {
+      if (data.data[i].counter < data.data[data.data.length-1].counter){
+       csvData.push({id: data.id,
+         name: data.client, 
+         date: data.date,
+         leg: data.data[i].leg,
+         counter: data.data[i].counter,
+         angle: data.data[i].angle, 
+         hip_0_x: data.data[i].data[0].x,
+         hip_0_y: data.data[i].data[0].y,
+         hip_0_z: data.data[i].data[0].z,
+         hip_1_x: data.data[i].data[1].x,
+         hip_1_y: data.data[i].data[1].y,
+         hip_1_z: data.data[i].data[1].z,
+         knee_x: data.data[i].data[2].x,
+         knee_y: data.data[i].data[2].y,
+         knee_z: data.data[i].data[2].z,
+         ankle_x: data.data[i].data[3].x,
+         ankle_y: data.data[i].data[3].y,
+         ankle_z: data.data[i].data[3].z,
+       })
+     } 
+    }
+
+  // console.log('csvData', csvData)
 
   const headers = [
+    { label: 'Id', key: 'id' },
+    { label: 'Name', key: 'name' },
+    { label: 'Date', key: 'date' },
     { label: 'Leg', key: 'leg' },
     { label: 'Squats', key: 'counter' },
     { label: 'Anglevalues', key: 'angle' }, 
-    { label: 'Data0x', key: 'data.0.x' }, 
-    { label: 'Data0y', key: 'data.0.y' }, 
-    { label: 'Data0z', key: 'data.0.z' }, 
-    { label: 'Data1x', key: 'data.1.x' }, 
-    { label: 'Data1y', key: 'data.1.y' }, 
-    { label: 'Data1z', key: 'data.1.z' }, 
-    { label: 'Data2x', key: 'data.2.x' }, 
-    { label: 'Data2y', key: 'data.2.y' }, 
-    { label: 'Data2z', key: 'data.2.z' }, 
-    { label: 'Data3x', key: 'data.3.x' }, 
-    { label: 'Data3y', key: 'data.3.y' }, 
-    { label: 'Data3z', key: 'data.3.z' }, 
+    { label: 'Hip_0_x', key: 'hip_0_x' }, 
+    { label: 'Hip_0_y', key: 'hip_0_y' }, 
+    { label: 'Hip_0_z', key: 'hip_0_z' }, 
+    { label: 'Hip_1_x', key: 'hip_1_x' }, 
+    { label: 'Hip_1_y', key: 'hip_1_y' }, 
+    { label: 'Hip_1_z', key: 'hip_1_z' },
+    { label: 'Knee_x', key: 'knee_x' }, 
+    { label: 'Knee_y', key: 'knee_y' }, 
+    { label: 'Knee_z', key: 'knee_z' }, 
+    { label: 'Ankle_x', key: 'ankle_x' }, 
+    { label: 'Ankle_y', key: 'ankle_y' }, 
+    { label: 'Ankle_z', key: 'ankle_z' }
   ]
 
   const csvReport = {
     filename: 'Report.csv',
     headers: headers,
-    data: sdata
+    data: csvData
   }
-
+ 
   return (
 
     <div>
@@ -115,12 +129,12 @@ console.log('splitdata', splitAnglevalues)
     <tbody>
       <tr>
         <th scope="row">Leg</th>
-        <td>{data[0].leg}</td>
+        <td>{data.data[0].leg}</td>
 
       </tr>
       <tr>
         <th scope="row">Rounds</th>
-        <td>{squatcount}</td>
+        <td>{data.data[data.data.length-1].counter}</td>
       </tr>
       <tr>
         <th scope="row">Mean Max Valgus </th>
@@ -142,7 +156,7 @@ console.log('splitdata', splitAnglevalues)
      </table>
       <div className='csv-link'>
         <CSVLink{...csvReport}>Export to CSV</CSVLink>
-       </div>
+      </div> 
     </div>
   )
 }
