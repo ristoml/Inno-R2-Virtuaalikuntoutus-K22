@@ -14,7 +14,7 @@ const ControlPanel = ({ onChange, onClick, onClick2, isRecording, isLeft, handle
         />
         Right</div><div>
         <Button
-          color={isRecording ? '#bdffff' : '#7700bd'}
+          color={isRecording ? '#bdffff' : '#8300d4'}
           onClick={onClick}
           text={isRecording ? 'Stop' : 'Start'}
         />
@@ -23,18 +23,18 @@ const ControlPanel = ({ onChange, onClick, onClick2, isRecording, isLeft, handle
           id='usetimer'
           name='usetimer'
           checked={useTimer}
-          onChange={handleTimer} /><label>timer</label></div>
+          onChange={handleTimer} /><label> Timer</label></div>
       <div className='control-panel2'>
         <Button2
           color={'grey'}
           onClick={onClick2}
-          text={'load'}
+          text={'Load'}
         />
         <br></br>
         <Link to='/info' target={'_blank'}>
           <Button2
             color={'grey'}
-            text={'info'}
+            text={'Help'}
           />
         </Link>
       </div>

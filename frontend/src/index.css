@@ -30,9 +30,9 @@ canvas {
 .control-panel {
   display: flex;
   align-items: center;
-  justify-content: space-evenly;  
+  justify-content: space-evenly;
   background-color: rgba(255, 255, 255, 0.3);
-  margin-top: auto;  
+  margin-top: auto;
   position: absolute;
   color: black;
   bottom: 0%;
@@ -63,7 +63,7 @@ canvas {
 }
 
 .select-single {
-  color: #7700bd;
+  color: #8300d4;
   display: block;
   font-size: 14px;
   font-weight: 600;
@@ -132,7 +132,7 @@ input:checked+.slider:before {
 }
 
 .info-page {
-  color: #7700bd;
+  color: #8300d4;
 }
 
 
@@ -188,6 +188,7 @@ table {
   height: 100vh;
   top: 0;
   left: 0;
+  z-index: 1;
 }
 
 .box {
@@ -201,6 +202,52 @@ table {
   background: rgba(255, 255, 255, 0.548);
   border-radius: 4px;
   padding: 10px;
-  border: 2px solid #7700bd;
+  border: 2px solid #8300d4;
+  overflow: auto;
+  z-index: 2;
+}
+
+.editBox {
+  position: relative;
+  width: 35%;
+  margin: 0 auto;
+  height: auto;
+  color: black;
+  max-height: 90vh;
+  margin-top: calc(100vh - 93vh - 20px);
+  background: rgba(255, 255, 255, 0.884);
+  border-radius: 4px;
+  padding: 10px;
+  border: 2px solid #8300d4;
+  overflow: auto;
+  z-index: 2;
+}
+
+.countdown-popup-box {
+  position: fixed;
+  justify-content: space-evenly;
+  background: #000000c1;
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  left: 0;
+}
+
+.countdown-box {
+  position: relative;
+  text-align: center;
+  align-items: center;
+  width: 25%;
+  margin: 0 auto;
+  font-size: 8rem;
+  font-weight: 600;
+  height: auto;
+  color: rgb(195, 0, 255);
+  max-height: 90vh;
+  margin-top: calc(100vh - 70vh - 20px);
+  background: rgba(0, 0, 0, 0);
+  border-radius: 50%;
+  padding: 10px;
+  border: 0x solid #ffffff7a;
   overflow: auto;
 }
