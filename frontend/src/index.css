@@ -133,11 +133,67 @@ input:checked+.slider:before {
 
 .info-page {
   color: #8300d4;
+  text-align: justify;
+}
+
+h1,
+h2,
+h3 {
+  text-align: center;
+}
+
+article {
+  border: solid 1px #888;
+  padding: 0.5em;
+  margin: 1em;
 }
 
 
 p {
-  color: black
+  color: black;
+  text-align: center;
+}
+
+#info-button {
+  text-align: center;
+  color: #8300d4;
+}
+
+.info-btn {
+  border-radius: 50%;
+  margin: 15px;
+  height: 65px;
+  width: 65px;
+  font-size: small;
+  font-weight: bold;
+  background-color: #888;
+}
+
+ul {
+  list-style-type: none;
+  color: black;
+  text-align: center;
+}
+
+a {
+  color: #8300d4;
+  padding: 0.5rem;
+}
+
+
+#info-menu {
+  list-style-type: none;
+  padding: 0.5rem;
+  margin: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: inherit;
+  align-items: center;
+  justify-content: center;
+  background: #bdffff;
+  font-size: inherit;
+  text-align: center;
+  border: solid 1px #888;
 }
 
 td,
@@ -175,7 +231,6 @@ table {
 .csv-link {
   border: 1px solid rgb(190, 190, 190);
   padding: 10px;
-  font-family: Roboto, sans-serif;
   font-size: .8rem;
   letter-spacing: 1px;
   text-align: center

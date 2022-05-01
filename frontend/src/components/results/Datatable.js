@@ -2,6 +2,7 @@
 import { useState, useEffect} from 'react'
 import { CSVLink } from "react-csv"
 
+//Componen that draws the data table and exports data to CSV file
 
 const Datatable = ({ data }) => {
   const [sdata, setData] = useState(data);
@@ -11,7 +12,7 @@ const Datatable = ({ data }) => {
     setData(data);
   }, [data]);
 
-  console.log('data', data)
+  // console.log('data', data)
 
   // SEPARATE angle values for calculation
 
@@ -20,6 +21,7 @@ const Datatable = ({ data }) => {
 
   let counterNow = 0
   
+  //map anglevalues per squat for calculation
   data.data.map((dataobj) => {
     splitAnglevalues[dataobj.counter] = temparray
     if(counterNow === dataobj.counter-1){
@@ -49,21 +51,26 @@ const Datatable = ({ data }) => {
   }
 //  console.log('minvalues', minvalues, maxvalues)
  
+//mean Valgus from neutral to inteior position
   const meanMin= (minvalues.reduce((a, b) => a + b, 0) / minvalues.length).toFixed(2)
   let minvalues2 = minvalues.map((k) => {
     return (k - meanMin) ** 2
   })
+
+  //standard deviation valgus
   let sum = minvalues2.reduce((a, b) => a + b, 0)
   let variance = sum / minvalues2.length
-  const stdMin = Math.sqrt(variance).toFixed(2)
+  const stdValgus = Math.sqrt(variance).toFixed(2)
 
+  // mean varus from neutral to exterior
   const meanMax = (maxvalues.reduce((a, b) => a + b, 0) / maxvalues.length).toFixed(2)
   let maxvalues2 = maxvalues.map((k) => {
     return (k - meanMax) ** 2
   })
+  //standard deviation varus
   let sumMax = maxvalues2.reduce((a, b) => a + b, 0)
   let varianceMax = sumMax / maxvalues2.length
-  const stdXMax = Math.sqrt(varianceMax).toFixed(2)
+  const stdVarus = Math.sqrt(varianceMax).toFixed(2)
 
   // EXPORT DATA TO CSV
 
@@ -76,6 +83,10 @@ const Datatable = ({ data }) => {
          date: data.date,
          leg: data.data[i].leg,
          counter: data.data[i].counter,
+         meanMaxValgus: meanMin,
+         maxValgusStd: stdValgus,
+         meanMaxVarus: meanMax,
+         maxVarusStd: stdVarus,
          angle: data.data[i].angle, 
          hip_0_x: data.data[i].data[0].x,
          hip_0_y: data.data[i].data[0].y,
@@ -93,7 +104,7 @@ const Datatable = ({ data }) => {
      } 
     }
 
-  // console.log('csvData', csvData)
+  console.log('csvData', csvData[0].meanMaxValgus)
 
   const headers = [
     { label: 'Id', key: 'id' },
@@ -101,6 +112,10 @@ const Datatable = ({ data }) => {
     { label: 'Date', key: 'date' },
     { label: 'Leg', key: 'leg' },
     { label: 'Squats', key: 'counter' },
+    { label: 'Mean_Max_Valgus', key:'meanMaxValgus'},
+    { label: 'std_valgus', key:'maxValgusStd'},
+    { label: 'Mean_Max_Varus', key:'meanMaxVarus'},
+    { label: 'std_varus', key:'maxVarusStd'},
     { label: 'Anglevalues', key: 'angle' }, 
     { label: 'Hip_0_x', key: 'hip_0_x' }, 
     { label: 'Hip_0_y', key: 'hip_0_y' }, 
@@ -129,12 +144,12 @@ const Datatable = ({ data }) => {
     <tbody>
       <tr>
         <th scope="row">Leg</th>
-        <td>{data.data[0].leg}</td>
+        <td>{csvData[0].leg}</td>
 
       </tr>
       <tr>
         <th scope="row">Rounds</th>
-        <td>{data.data[data.data.length-1].counter}</td>
+        <td>{csvData[csvData.length-1].counter}</td>
       </tr>
       <tr>
         <th scope="row">Mean Max Valgus </th>
@@ -142,7 +157,7 @@ const Datatable = ({ data }) => {
       </tr>
       <tr>
         <th scope="row">Standard deviation</th>
-        <td>{stdMin}</td>
+        <td>{stdValgus}</td>
       </tr>
       <tr>
         <th scope="row">Mean Max Varus</th>
@@ -150,7 +165,7 @@ const Datatable = ({ data }) => {
       </tr>
       <tr>
         <th scope="row">Standard deviation</th>
-        <td>{stdXMax}</td>
+        <td>{stdVarus}</td>
       </tr>
       </tbody>
      </table>
