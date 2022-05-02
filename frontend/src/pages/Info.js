@@ -17,15 +17,15 @@ const Info = () => {
       <aside>
 				<ul id="info-menu">
 					{/* <li><a href="#welcome">Welcome</a></li> */}
-					<li><a href="#setup">Set up</a></li>
-					<li><a href="#position">Position</a></li>
-          <li><a href="#tips">Tips for a good streaming</a></li>
-          <li><a href="#leftright">Left-Right</a></li>
-          <li><a href="#start">Start</a></li>
-          <li><a href="#stop">Stop</a></li>
-          <li><a href="#load">Load</a></li>
-          <li><a href="#results">Test Results</a></li>
-					<li><a href="#closepage">Close page</a></li>
+					<li><a id='infoa' href="#setup">Set up</a></li>
+					<li><a id='infoa' href="#position">Position</a></li>
+          <li><a id='infoa' href="#tips">Tips for a good streaming</a></li>
+          <li><a id='infoa' href="#leftright">Left-Right</a></li>
+          <li><a id='infoa' href="#start">Start</a></li>
+          <li><a id='infoa' href="#stop">Stop</a></li>
+          <li><a id='infoa' href="#load">Load</a></li>
+          <li><a id='infoa' href="#results">Test Results</a></li>
+					<li><a id='infoa' href="#closepage">Close page</a></li>
 				</ul>
 			</aside>
      
@@ -52,7 +52,7 @@ const Info = () => {
      <article id="position">
        <h3>Position</h3>
        <p>
-       Position of the person to be examined should be about 3-4 meters away from the camera.
+          Position of the person to be examined should be about 3-4 meters away from the camera.
        </p>
        <p>
          The program should point four points at the screen:

@@ -1,7 +1,7 @@
 import { useState, useRef } from "react"
 import Canvas from "../components/home/Canvas"
 import ControlPanel from "../components/home/ControlPanel"
-import Datapanel from "../components/results/Datapanel"
+import Datapanel from "../components/results/DataPanel"
 import Popup from "../components/home/Popup"
 import Countdown from "react-countdown";
 

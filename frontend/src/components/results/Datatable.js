@@ -2,7 +2,7 @@
 import { useState, useEffect} from 'react'
 import { CSVLink } from "react-csv"
 
-//Componen that draws the data table and exports data to CSV file
+//draws the data table and exports data to CSV file
 
 const Datatable = ({ data }) => {
   const [sdata, setData] = useState(data);
