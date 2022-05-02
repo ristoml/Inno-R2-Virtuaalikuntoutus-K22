@@ -1,4 +1,4 @@
-//this draws the data table and exports data to CSV file
+//this component draws the data table and exports data to CSV file
 
 import { useState, useEffect} from 'react'
 import { CSVLink } from "react-csv"

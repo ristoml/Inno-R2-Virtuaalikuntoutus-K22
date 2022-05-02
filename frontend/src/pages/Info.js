@@ -15,14 +15,13 @@ const Info = () => {
       <aside>
 				<ul id="info-menu">
 					{/* <li><a href="#welcome">Welcome</a></li> */}
-					<li><a id='infoa' href="#setup">Set up</a></li>
-					<li><a id='infoa' href="#position">Position</a></li>
-          <li><a id='infoa' href="#tips">Tips for a good streaming</a></li>
+					<li><a id='infoa' href="#setup">Set Up</a></li>
+					<li><a id='infoa' href="#position">Position Preparation</a></li>
+          <li><a id='infoa' href="#tips">Tips for good testing results</a></li>
           <li><a id='infoa' href="#leftright">Left-Right</a></li>
           <li><a id='infoa' href="#start">Start</a></li>
           <li><a id='infoa' href="#stop">Stop</a></li>
           <li><a id='infoa' href="#load">Load</a></li>
-          <li><a id='infoa' href="#results">Test Results</a></li>
 					<li><a id='infoa' href="#closepage">Close page</a></li>
 				</ul>
 			</aside>
@@ -32,28 +31,34 @@ const Info = () => {
       <article id="welcome">
       <h3>Welcome</h3>
       <p>
-      This tool helps you to check whether a person’s knee is in a right position while doing a single leg squat. 
+      This tool helps to analyse whether a person’s knee is in the neutral position while doing a single leg squat. 
+      </p>
+      <p>
+      This means the maximum of 10 degrees variation of the knee angle either inwards, preventing Valgus, or outwards, preventing Varus.
+      </p>
+      <p>
+      The exercise can be streamed and then analysed by using the visual and numerical results of the test. 
       </p>
       </article>
 
       <article id="setup">
       <h3>Set Up</h3>
       <p>
-        Allow the use of the camera for the program.
+        Allow the use of the camera for the App.
       </p>
       <p>
-          If you wish to get sound signal you should also check that your audio is on.
+          For a sound approval sign, check that your audio is on.
       </p>
      </article>
       </div>
 
      <article id="position">
-       <h3>Position</h3>
+       <h3>Position Preparation</h3>
        <p>
-          Position of the person to be examined should be about 3-4 meters away from the camera.
+          A person to be examined should fit in the screen from feet to head. Usually it means about 2-3 meters distance from the camera.
        </p>
        <p>
-         The program should point four points at the screen:
+         The App should point four points at the screen:
       </p>
         <ul>
           <li>
@@ -76,10 +81,14 @@ const Info = () => {
      </article>
 
      <article id="tips">
-       <h3>Tips for a good streaming</h3>
+       <h3>Tips for good testing results</h3>
 
        <p>
-       The person should be posed directly towards to the camera avoiding any diagonal poses. 
+         Use good lightning, especially, if you are using a mobile device.
+       </p>
+
+       <p>
+       The person to be examined should be posed directly towards to the camera avoiding any diagonal poses. 
           </p>
           <p>
           The leg that is not being examined should be lifted either to backward or to forward.
@@ -94,7 +103,13 @@ const Info = () => {
 
      <article id='leftright'>
        <h3>Left – Right </h3>
-       <p>You can define which leg will be examined by clicking the button.</p>
+       <p>Choose the leg to be analised by clicking the button.</p>
+     </article>
+
+     <article id='timer'>
+       <h3>Timer</h3>
+       <p>Timer gives five seconds for the last pose preparations before the calculation starts.</p>
+       <p>Tick the box to use it. </p>
      </article>
 
      <article id='start'>
@@ -103,14 +118,23 @@ const Info = () => {
        The stream starts. Now you can see a calculator on the top right corner.
        </p>
        <p>
-      When the person’s squat is deep enough you get a visual sign “ok!” and a sound signal of you have your audio on. 
+         Next to knee you can see changing values. Light blue means that the person to be examined is within the desired limits of the neutral position. Dark blue means that the limits have been exceeded.
+       </p>
+       <p>
+        The App starts to gather data, for example anglevalues and landmarks of the movement.  
+       </p>
+       <p>
+      When the person’s squat is deep enough you get a visual sign “ok!” and a sound signal if you have your audio on. 
        </p>
      </article>
 
      <article id='stop'>
      <h3>Stop</h3>
        <p>
-       The stream stops. You can either accept the results by giving name for the exercise or cancel and return to the main view.
+       The stream stops. You can either accept the test results by a giving name for the exercise or presss cancel and return to the main view.
+       </p>
+       <p>
+       The data is saved to the database. 
        </p>
       </article>
 
@@ -119,12 +143,8 @@ const Info = () => {
        <p>
        You can check the latest or any other test results.
        </p>
-       </article>
-
-      <article id='results'>
-      <h3>Test results</h3>
        <p>
-       You can revise the wanted test results at the App sceen or you can export them to the CSV file.
+       You can revise the wanted graphical test results on the App screen or you can export them to the CSV file.
        </p>
        </article>
 
