@@ -1,6 +1,9 @@
-import React from "react";
+/* This component is used for querying the client's name after succesful recording. 
+   It is also used for informing the user of invalid recording attempt, when it receives dataOk prop as false. */
+
+import React from "react"
 import { useState } from "react"
-import Button2 from "./Button2";
+import Button2 from "./Button2"
 
 const Popup = props => {
     const [cname, setCname] = useState('')
@@ -9,10 +12,10 @@ const Popup = props => {
         <div className="popup-box">
             <div className="box">
                 {props.dataOk ? (
-                    <>  <p><strong>Recording successful!</strong><br/><br/>
+                    <>  <p><strong>Recording successful!</strong><br /><br />
                         Insert client name and click <strong>Ok</strong> to continue or click <strong>Cancel</strong> to discard current recording and return to main screen.</p>
                         <label>Client name: </label>
-                        <input type="text" value={cname} onChange={(e) => setCname(e.target.value)} /><br/><br/>
+                        <input type="text" value={cname} onChange={(e) => setCname(e.target.value)} /><br /><br />
                         <Button2
                             color='grey'
                             text='Ok'
@@ -27,7 +30,7 @@ const Popup = props => {
                             }} />
                     </>
                 ) : (
-                    <><p>Invalid recording, hit <strong>Ok</strong> to try again!</p><br/><br/>
+                    <><p>Invalid recording, hit <strong>Ok</strong> to try again!</p><br /><br />
                         <Button2
                             color='grey'
                             text='Ok'
@@ -41,4 +44,4 @@ const Popup = props => {
     );
 };
 
-export default Popup;
+export default Popup

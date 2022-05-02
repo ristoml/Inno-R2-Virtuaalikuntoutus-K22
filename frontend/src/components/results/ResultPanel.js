@@ -1,9 +1,12 @@
+/* Component used for displaying the drop-down menu showing the entries from the DB. 
+   It also calls the API to get all of the data from the DB. */
+
 import { useState, useEffect, useRef } from 'react'
 import Select from 'react-select'
 import axios from 'axios'
 import Button2 from '../home/Button2'
 
-const makeOptions = (data) => {
+const makeOptions = (data) => { // form the initial array of labels and Ids which is passed on to the react-select drop-down menu component
     const rdata = data.map(x => ({
         value: x.id,
         label: new Date(x.date).toLocaleString('en-GB') + ': ' + x.client
@@ -11,11 +14,10 @@ const makeOptions = (data) => {
     return rdata.reverse()
 }
 
-const updateOptions = (data, value, newName) => {
-    console.log("update options")
+const updateOptions = (data, value, newName) => { // after deleting an entry we need to form the array again.    
     for (let i = 0; i < data.length; i++) {
         if (data[i].value === value) {
-            data[i].label = data[i].label.slice(0, 22) + newName
+            data[i].label = data[i].label.slice(0, 22) + newName // label includes both the date and the client name, so we slice it a little
         }
     }
     return data
@@ -29,19 +31,16 @@ const ResultPanel = ({ getId, delId, sdata, updateClient }) => {
     const [showEdit, setShowEdit] = useState(false)
     const isLoaded = useRef(false)
     const [tempName, setTempName] = useState('')
-    const [listOptions, setListOptions] = useState('')
-
-    //console.log(sdata)
+    const [listOptions, setListOptions] = useState('')    
 
     useEffect(() => {
         setAllData(sdata)
-        switch (isLoaded.current) {
-            case false:
+        switch (isLoaded.current) { 
+            case false: // when we render this component for the first time
                 getAllData().then(response => {
                     options = makeOptions(response.data)
                     setLabel(options[0].label)
-                    setResultId(options[0].value)
-                    console.log('options created')
+                    setResultId(options[0].value)                    
                     setTempName(options[0].label.slice(22))
                     setListOptions(options)
                     isLoaded.current = true
@@ -50,16 +49,14 @@ const ResultPanel = ({ getId, delId, sdata, updateClient }) => {
             default:
 
         }
-    }, [sdata]);
+    }, [sdata])
 
-
-    const getAllData = () => {
-        console.log('get all data')
+    const getAllData = () => {        
         return axios.get('http://localhost:3001/api/results')
     }
 
     return (<>
-        {options &&
+        {options && // dont render before we have the array ready
             <div className='result-panel'>
                 <Select className='select-single'
                     onChange={e => {
@@ -92,7 +89,7 @@ const ResultPanel = ({ getId, delId, sdata, updateClient }) => {
                     }
                 />
             </div>
-        } {showEdit &&
+        } {showEdit && // show a pop-up box for editing the name
             <div className='popup-box'>
                 <div className='editBox'>
                     <p><strong>Edit client name</strong><br /></p>
@@ -120,6 +117,5 @@ const ResultPanel = ({ getId, delId, sdata, updateClient }) => {
         }
     </>)
 }
-
 
 export default ResultPanel
