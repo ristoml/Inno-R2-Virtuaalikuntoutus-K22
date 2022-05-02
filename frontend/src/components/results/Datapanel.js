@@ -1,3 +1,5 @@
+/* This component is used for displaying the result-components to the user. This component also contains most of the API-calls */
+
 import ResultPanel from './ResultPanel'
 import Button from '../home/Button'
 import Stats from "./Stats"
@@ -9,30 +11,25 @@ import { useEffect, useState, useRef } from 'react'
 const Datapanel = ({ onClick, squatData, clientName }) => {
     const [data, setCurrentData] = useState(null)
     const saved = useRef(false)
-
     const newData = useRef(false)
-    Object.keys(squatData).length > 1 ? newData.current = true : newData.current = false
 
+    Object.keys(squatData).length > 1 ? newData.current = true : newData.current = false // check if we are accessing this component after fresh recording
 
     useEffect(() => {
-        console.log(data) // REMOVE
         switch (newData.current) {
-            case true:
+            case true: // when we have a new recording
                 if (!saved.current) {
                     saveAndGetResult(squatData)
-                    //getLatestResult()
                     saved.current = true
                     newData.current = false
                 }
                 break
             default:
-                getLatestResult()
+                getLatestResult() // in case of no new recording, just get the latest entry from the database
         }
     }, [])
 
-
-    const saveAndGetResult = (results) => {
-        console.log('save and get result')
+    const saveAndGetResult = (results) => { // called when we access this component with newly recorded data and we need to save it to DB        
         const resultObject = {
             date: new Date().toISOString(),
             data: results,
@@ -43,35 +40,27 @@ const Datapanel = ({ onClick, squatData, clientName }) => {
             setCurrentData(response.data)
         })
     }
-    const getResult = (resultId) => {
-        console.log('get result id: ' + resultId)
+    const getResult = (resultId) => { // get specific result by ID
         const promise = axios.get(`http://localhost:3001/api/results/${resultId}`)
         promise.then(response => {
             setCurrentData(response.data)
         })
     }
-
-    const getLatestResult = () => {
-        console.log('get latest')
+    const getLatestResult = () => { // get latest entry from the DB        
         const promise = axios.get('http://localhost:3001/api/getLatest')
         promise.then(response => {
-            console.log(response.data.id)
             setCurrentData(response.data)
         })
     }
-    const deleteResult = (resultId) => {
-        console.log('delete result id: ' + resultId)
+    const deleteResult = (resultId) => { // delete entry from DB by using a Id        
         const promise = axios.delete(`http://localhost:3001/api/results/${resultId}`)
         promise.then(response => {
-            //setCurrentdata(response.data.data)
             console.log(response)
             getLatestResult()
         })
     }
 
-    const updateResult = (resultId, clientName) => {
-        console.log('update: ' + resultId)
-        //setResultId(resultId)
+    const updateResult = (resultId, clientName) => { // called when we want to edit the Clients name on a DB entry with specific Id              
         const client = {
             client: clientName
         }
@@ -81,10 +70,9 @@ const Datapanel = ({ onClick, squatData, clientName }) => {
         })
     }
 
-
     return (
         <>
-            {data &&
+            {data && // dont try to render before we have the data needed by the child-components
                 <div className='data-panel'>
                     <ResultPanel
                         getId={getResult}
@@ -102,7 +90,6 @@ const Datapanel = ({ onClick, squatData, clientName }) => {
                 </div>
             }
         </>
-
     )
 }
 

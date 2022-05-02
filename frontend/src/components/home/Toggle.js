@@ -1,3 +1,5 @@
+/* This is used for the leg selection toggle-switch in the Home view */
+
 const Toggle = ({ disabled, onChange, isLeft }) => {
   return (
     <label className='toggle-switch'>

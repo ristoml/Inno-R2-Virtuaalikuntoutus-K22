@@ -1,3 +1,4 @@
+/* This component contains the controls logic and is used for rendering the control elements in the Home-view */
 import Button from './Button'
 import Button2 from './Button2'
 import { Link } from 'react-router-dom'
@@ -6,7 +7,7 @@ import Toggle from './Toggle'
 const ControlPanel = ({ onChange, onClick, onClick2, isRecording, isLeft, handleTimer, useTimer }) => {
   return (
     <div className='control-panel'>
-      <div>Left 
+      <div>Left
         <Toggle
           disabled={isRecording ? true : false}
           onChange={onChange}

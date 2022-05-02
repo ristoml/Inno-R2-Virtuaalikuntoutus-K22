@@ -1,9 +1,11 @@
-import { XAxis, YAxis, CartesianGrid, Tooltip, Legend, LineChart, Line, ReferenceLine } from 'recharts';
-import { useEffect, useState, useRef } from 'react';
-import { resampleData } from './Resample';
+/* This component processes the recorded data and then draws it in to a Recharts line chart.
+*/
+import { XAxis, YAxis, CartesianGrid, Tooltip, Legend, LineChart, Line, ReferenceLine } from 'recharts'
+import { useEffect, useState, useRef } from 'react'
+import { resampleData } from './Resample'
 
 let samples = 15 // resample target
-let maxSquats = 4 // squat/(array index) numbering starts at 0, so maximum number of allowed squats is this + 1
+let maxSquats = 4 // squat numbering starts at 0, so maximum number of allowed squats is this + 1
 let sindexArray = []
 const lineNames = ['1st', '2nd', '3rd', '4th', '5th']
 const dataNames = ['first', 'second', 'third', 'fourth', 'fifth']
@@ -25,12 +27,11 @@ const Stats = ({ data }) => {
       sindexArray[i] = []
     }
 
-    for (let i = 0; i < sdata.length; i++) { // find the number of squats      
+    for (let i = 0; i < sdata.length; i++) { // find the number of total squats      
       if (sdata[i].counter > squats.current) {
         squats.current = sdata[i].counter
-        // console.log('statssquats', squats.current )
       }
-    }    
+    }
 
     if (squats.current > maxSquats) squats.current = maxSquats // discard excessive squats
 
@@ -39,7 +40,6 @@ const Stats = ({ data }) => {
         if (sdata[j].counter === i)
           sindexArray[i].push(sdata[j].angle)
       }
-      // console.log('sindexArray', sindexArray)
       sindexArray[i] = resampleData(sindexArray[i], samples)
     }
 
@@ -52,8 +52,7 @@ const Stats = ({ data }) => {
     }
 
     setRdata(rechartsData.current)
-  }, [data, sdata]);
-  
+  }, [data, sdata])
 
   return (
     <div>
@@ -79,22 +78,22 @@ const Stats = ({ data }) => {
           />
           <Legend verticalAlign='top' height={50} />
           {(() => {
-            let rows = [];
-            for (let i = 0; i < squats.current; i++) {
-              rows.push(<Line key={lineNames[i]} 
+            let rows = []
+            for (let i = 0; i < squats.current; i++) { // form the LineCharts-elements based on the number of performed squats
+              rows.push(<Line key={lineNames[i]}
                 name={lineNames[i]}
                 type='monotone'
                 dataKey={dataNames[i]}
                 dot={false}
                 stroke={lineColours[i]}
-                activeDot={{ r: 5 }} />);
+                activeDot={{ r: 5 }} />)
             }
-            return rows;
-          })()}         
+            return rows
+          })()}
         </LineChart>
       </>)}
     </div>
   )
 }
 
-export default Stats;
+export default Stats
