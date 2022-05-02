@@ -1,7 +1,7 @@
 import ResultPanel from './ResultPanel'
 import Button from '../home/Button'
 import Stats from "./Stats"
-import Datatable from "./Datatable"
+import Datatable from "./DataTable"
 import axios from 'axios'
 import { useEffect, useState, useRef } from 'react'
 

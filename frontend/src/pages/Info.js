@@ -1,10 +1,8 @@
-// import { Link } from "react-router-dom";
-
 const Info = () => {
 
    const closeTab = () => {
-          window.opener = null;
-          window.open("", "_self");
+          window.opener = null
+          window.open("", "_self")
           window.close()
       }
 
@@ -95,7 +93,7 @@ const Info = () => {
      </article>
 
      <article id='leftright'>
-       <h3>L (Left) – R (Right) </h3>
+       <h3>Left – Right </h3>
        <p>You can define which leg will be examined by clicking the button.</p>
      </article>
 

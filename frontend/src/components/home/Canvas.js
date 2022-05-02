@@ -4,8 +4,7 @@ import { Pose, POSE_CONNECTIONS } from "@mediapipe/pose";
 import { drawConnectors, drawLandmarks } from "@mediapipe/drawing_utils";
 import { Camera } from "@mediapipe/camera_utils";
 import * as ph from "./PoseHelper";
-import useSound from 'use-sound';
-import sound from "../../assets/sounds/squatBeep.wav"
+import sound from "../../assets/sounds/beep-06.mp3"
 
 var allowedAngleDeviation = 10; // maximum allowed angle deviation in degrees before printing angle with red text
 
@@ -21,19 +20,14 @@ let alreadyRan = false
 let squatted = false
 let hipAtStart, counter, squattedText
 squattedText = 'Ok!'
+let playSound = new Audio(sound)
 
 const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
   const webcamRef = useRef(null)
   const canvasRef = useRef(null)
   isRunning = isStarted
   isLeft = isLeftLeg
-
-  const [play] = useSound(sound, {
-    sprite: {
-      true: [500, 1000],
-      false: ''
-    }
-  });
+  playSound.pause()
 
   useEffect(() => {
     const pose = new Pose({
@@ -169,10 +163,12 @@ const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
         (isLeft && ph.getLeftHipY() >= hipAtStart * squatMargin) || // check if squatted, left leg
         (!isLeft && ph.getRightHipY() >= hipAtStart * squatMargin)  // right leg
       ) {
-        squatted = true //äänimerkki tähän
+        squatted=true
         console.log('squatted')
-        canvasCtx.fillText(squattedText, -200, 450);
+        canvasCtx.fillText(squattedText, -200, 450)
+        playSound.play()
       }
+     
       if (
         (isLeft && ph.getLeftHipY() <= hipAtStart && squatted) || // check if back standing up after a squat, left leg
         (!isLeft && ph.getRightHipY() <= hipAtStart && squatted)  // right leg
@@ -184,22 +180,26 @@ const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
 
     }
     if (!isRunning && alreadyRan) { // recording stops     
-      console.log(record);
       getSquatData(record);
       alreadyRan = false;
       squatted = false;
     }
+    
     canvasCtx.restore();
+    
   };
+
+
+
+
   return (
     <>
       <Webcam
         ref={webcamRef}
         style={{ display: "none" }}
       />
-      <div {...play({ id: squatted ? "true" : "false" })}></div>
-      <canvas ref={canvasRef}></canvas>
-    </>
+      <canvas ref={canvasRef} ></canvas>
+      </>
   );
 };
 

@@ -1,18 +1,14 @@
-// import { useState, useEffect, useRef } from 'react'
 import { useState, useEffect} from 'react'
 import { CSVLink } from "react-csv"
 
 //draws the data table and exports data to CSV file
 
 const Datatable = ({ data }) => {
-  const [sdata, setData] = useState(data);
-  // const angleValues = useRef(null)
+  const [sdata, setData] = useState(data)
 
   useEffect(() => {
-    setData(data);
-  }, [data]);
-
-  // console.log('data', data)
+    setData(data)
+  }, [data])
 
   // SEPARATE angle values for calculation
 
@@ -32,8 +28,6 @@ const Datatable = ({ data }) => {
     return ''
   })
 
-// console.log('splitdata', splitAnglevalues)
-
 // CALCULATE mean and std from minimum and maximum values
 
  let minX = 0
@@ -49,9 +43,8 @@ const Datatable = ({ data }) => {
     minvalues.push(minX)
     maxvalues.push(maxX)
   }
-//  console.log('minvalues', minvalues, maxvalues)
  
-//mean Valgus from neutral to inteior position
+  //mean Valgus from neutral to inteior position
   const meanMin= (minvalues.reduce((a, b) => a + b, 0) / minvalues.length).toFixed(2)
   let minvalues2 = minvalues.map((k) => {
     return (k - meanMin) ** 2
@@ -104,8 +97,6 @@ const Datatable = ({ data }) => {
      } 
     }
 
-  console.log('csvData', csvData[0].meanMaxValgus)
-
   const headers = [
     { label: 'Id', key: 'id' },
     { label: 'Name', key: 'name' },
@@ -149,7 +140,7 @@ const Datatable = ({ data }) => {
       </tr>
       <tr>
         <th scope="row">Rounds</th>
-        <td>{csvData[csvData.length-1].counter}</td>
+        <td>{data.data[data.data.length-1].counter}</td>
       </tr>
       <tr>
         <th scope="row">Mean Max Valgus </th>
