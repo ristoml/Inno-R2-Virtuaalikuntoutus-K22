@@ -1,5 +1,4 @@
-/* Component used for resampling the recorded data so it can be more easily compared. 
-   The solution to resample the data of individual squats to similar lenghts is far from perfect, but hopefully better than nothing. */
+/* Component used for resampling the recorded data so it can be more easily compared.  */
 
 const resampleData = (data, target) => {
     return largestTriangleThreeBuckets(data, target)

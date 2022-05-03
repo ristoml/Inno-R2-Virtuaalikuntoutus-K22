@@ -5,24 +5,21 @@ const Result = require('./models/result')
 const cors = require('cors')
 const { response } = require('express')
 
-app.use(cors())
-app.use(express.json({limit: '25mb'}))
-app.use(express.urlencoded({limit: '25mb'}))
+//This file contains all information of api calls
+//every call returns data in JSON format
 
-//get all
+app.use(cors())
+app.use(express.json({ limit: '25mb' }))
+app.use(express.urlencoded({ limit: '25mb' }))
+
+//get all data available
 app.get('/api/results', (request, response) => {
     Result.find({}).then(results => {
         response.json(results)
     })
 })
-//get id, date and client of every item
-// app.get('/api/resulttitles', (request, response) => {
-//     Result.find({}).then(results => {
-//         response.json(results)
-//     })
-// })
 
-//single search
+//single search using id
 app.get('/api/results/:id', (request, response) => {
     Result.findById(request.params.id)
         .then(result => {
@@ -38,7 +35,7 @@ app.get('/api/results/:id', (request, response) => {
         })
 })
 
-//get latest
+//single search which returns latest one recorded
 app.get('/api/getLatest', (request, response) => {
     Result.findOne({}, {}, { sort: { 'date': -1 } }, function (err, result) {
         console.log(result)
@@ -60,7 +57,6 @@ app.post('/api/addResult', (request, response) => {
         date: body.date,
         data: body.data,
         client: body.client
-        //text: body.text
     })
 
     result.save().then(savedResult => {
@@ -77,7 +73,7 @@ app.delete('/api/results/:id', (request, response, next) => {
         .catch(error => next(error))
 })
 
-//update item with id
+//update client name with id
 app.put('/api/update/:id', (request, response) => {
 
     Result.findByIdAndUpdate(request.params.id, { client: request.body.client }, { new: true })

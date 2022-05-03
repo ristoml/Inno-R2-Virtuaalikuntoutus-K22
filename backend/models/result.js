@@ -11,6 +11,7 @@ mongoose.connect(url)
         console.log('error connecting to MongoDB:', error.message)
     })
 
+//schema & definition of result
 const resultSchema = new mongoose.Schema({
     client: {
         type: String
@@ -23,6 +24,7 @@ const resultSchema = new mongoose.Schema({
     },
 })
 
+//definition of JSON return object
 resultSchema.set('toJSON', {
     transform: (document, returnedObject) => {
         returnedObject.id = returnedObject._id.toString()

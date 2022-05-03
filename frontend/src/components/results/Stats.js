@@ -5,31 +5,31 @@ import { useEffect, useState, useRef } from 'react'
 import { resampleData } from './Resample'
 
 let samples = 15 // resample target
-let maxSquats = 4 // squat numbering starts at 0, so maximum number of allowed squats is this + 1
-let sindexArray = []
-const lineNames = ['1st', '2nd', '3rd', '4th', '5th']
-const dataNames = ['first', 'second', 'third', 'fourth', 'fifth']
-const lineColours = ['#a340d9', '#2ba14b', '#0800ff', '#f5a742', '#00fffb']
+let maxSquats = 9 // squat numbering starts at 0, so maximum number of allowed squats is this + 1
+let sIndexArray = []
+const lineNames = ['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th', '10th']
+const dataNames = ['first', 'second', 'third', 'fourth', 'fifth', 'sixth', 'seventh', 'eighth', 'ninth', 'tenth']
+const lineColours = ['#a340d9', '#2ba14b', '#0800ff', '#f5a742', '#00fffb', '#a340d9', '#2ba14b', '#0800ff', '#f5a742', '#00fffb'] // fix last 5 colours
 
 const Stats = ({ data }) => {
   const [sdata, setData] = useState(data)
   const [rdata, setRdata] = useState({})
   const squats = useRef(0)
-  const rechartsData = useRef([]) // array which is built from sindexArray and finally set as rdata 
+  const rechartsData = useRef([]) // this array contains the final results 
 
   useEffect(() => {
     setData(data)
     rechartsData.current = []
     squats.current = 0
-    sindexArray = []
+    sIndexArray = []
 
-    for (let i = 0; i < 5; i++) { // create arrays
-      sindexArray[i] = []
+    for (let i = 0; i < 10; i++) { // create arrays
+      sIndexArray[i] = []
     }
 
     for (let i = 0; i < sdata.length; i++) { // find the number of total squats      
       if (sdata[i].counter > squats.current) {
-        squats.current = sdata[i].counter
+        squats.current = sdata[i].counter - 1 //discard the last index because its not a full squat
       }
     }
 
@@ -38,17 +38,17 @@ const Stats = ({ data }) => {
     for (let i = 0; i <= squats.current; i++) { // assign and resample the data of individual squats to their own indexes
       for (let j = 0; j < sdata.length; j++) {
         if (sdata[j].counter === i)
-          sindexArray[i].push(sdata[j].angle)
+          sIndexArray[i].push(sdata[j].angle)
       }
-      sindexArray[i] = resampleData(sindexArray[i], samples)
+      sIndexArray[i] = resampleData(sIndexArray[i], samples)
     }
 
-    for (let i = squats.current + 1; i < 5; i++) { // fill remaining empty indexes to prevent null pointer
-      sindexArray[i] = sindexArray[0]
+    for (let i = squats.current + 1; i < maxSquats; i++) { // fill remaining empty indexes to prevent null pointer
+      sIndexArray[i] = sIndexArray[0]
     }
 
     for (let i = 0; i < samples; i++) { // create recharts-dataset
-      rechartsData.current.push({ sample: i, first: sindexArray[0][i], second: sindexArray[1][i], third: sindexArray[2][i], fourth: sindexArray[3][i], fifth: sindexArray[4][i] })
+      rechartsData.current.push({ sample: i, first: sIndexArray[0][i], second: sIndexArray[1][i], third: sIndexArray[2][i], fourth: sIndexArray[3][i], fifth: sIndexArray[4][i], sixth: sIndexArray[5][i], seventh: sIndexArray[6][i], eighth: sIndexArray[7][i], ninth: sIndexArray[8][i], tenth: sIndexArray[9][i] })
     }
 
     setRdata(rechartsData.current)
@@ -79,7 +79,7 @@ const Stats = ({ data }) => {
           <Legend verticalAlign='top' height={50} />
           {(() => {
             let rows = []
-            for (let i = 0; i < squats.current; i++) { // form the LineCharts-elements based on the number of performed squats
+            for (let i = 0; i <= squats.current; i++) { // form the LineCharts-elements based on the number of performed squats
               rows.push(<Line key={lineNames[i]}
                 name={lineNames[i]}
                 type='monotone'

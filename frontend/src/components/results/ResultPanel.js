@@ -6,6 +6,8 @@ import Select from 'react-select'
 import axios from 'axios'
 import Button2 from '../home/Button2'
 
+let APIURL = 'http://localhost:3001/' //Url which is used in api calls
+
 const makeOptions = (data) => { // form the initial array of labels and Ids which is passed on to the react-select drop-down menu component
     const rdata = data.map(x => ({
         value: x.id,
@@ -31,16 +33,16 @@ const ResultPanel = ({ getId, delId, sdata, updateClient }) => {
     const [showEdit, setShowEdit] = useState(false)
     const isLoaded = useRef(false)
     const [tempName, setTempName] = useState('')
-    const [listOptions, setListOptions] = useState('')    
+    const [listOptions, setListOptions] = useState('')
 
     useEffect(() => {
         setAllData(sdata)
-        switch (isLoaded.current) { 
+        switch (isLoaded.current) {
             case false: // when we render this component for the first time
                 getAllData().then(response => {
                     options = makeOptions(response.data)
                     setLabel(options[0].label)
-                    setResultId(options[0].value)                    
+                    setResultId(options[0].value)
                     setTempName(options[0].label.slice(22))
                     setListOptions(options)
                     isLoaded.current = true
@@ -51,8 +53,8 @@ const ResultPanel = ({ getId, delId, sdata, updateClient }) => {
         }
     }, [sdata])
 
-    const getAllData = () => {        
-        return axios.get('http://localhost:3001/api/results')
+    const getAllData = () => {
+        return axios.get(APIURL + 'api/results')
     }
 
     return (<>

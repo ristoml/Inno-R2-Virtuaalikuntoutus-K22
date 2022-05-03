@@ -1,17 +1,17 @@
 /* This component draws the Mediapipe landmarks on top of the webcam video feed. 
    This component also records the Landmark data for later use. */
 
-import { useRef, useEffect } from "react";
-import Webcam from "react-webcam";
-import { Pose, POSE_CONNECTIONS } from "@mediapipe/pose";
-import { drawConnectors, drawLandmarks } from "@mediapipe/drawing_utils";
-import { Camera } from "@mediapipe/camera_utils";
-import * as ph from "./PoseHelper";
+import { useRef, useEffect } from "react"
+import Webcam from "react-webcam"
+import { Pose, POSE_CONNECTIONS } from "@mediapipe/pose"
+import { drawConnectors, drawLandmarks } from "@mediapipe/drawing_utils"
+import { Camera } from "@mediapipe/camera_utils"
+import * as ph from "./PoseHelper"
 import sound from "../../assets/sounds/beep-06.mp3"
 
-var allowedAngleDeviation = 10; // maximum allowed angle deviation in degrees before printing angle with red text
-var hipMargin = 1.05; // considered being in upright standing position
-var squatMargin = 1.1; // considered being in squatted position
+var allowedAngleDeviation = 10 // maximum allowed angle deviation in degrees before printing angle with red text
+var hipMargin = 1.05 // considered being in upright standing position
+var squatMargin = 1.1 // considered being in squatted position
 let maxDataSize = 1000 // maximum length of recorded data before discarding the rest
 let isRunning = false
 let alreadyRan = false
@@ -20,22 +20,19 @@ let hipAtStart, counter, record, isLeft
 let squattedText = 'Ok!'
 let playSound = new Audio(sound)
 
-
 const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
   const webcamRef = useRef(null)
   const canvasRef = useRef(null)
   isRunning = isStarted
   isLeft = isLeftLeg
-
   playSound.pause()
-
 
   useEffect(() => {
     const pose = new Pose({
       locateFile: (file) => {
         return `https://cdn.jsdelivr.net/npm/@mediapipe/pose/${file}`
       },
-    });
+    })
 
     pose.setOptions({
       modelComplexity: 2,
@@ -82,7 +79,7 @@ const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
       0,
       canvasElement.width,
       canvasElement.height
-    );
+    )
 
     switch (isLeft) {
       case true:  // left knee      
@@ -160,11 +157,11 @@ const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
         (isLeft && ph.getLeftHipY() >= hipAtStart * squatMargin) || // check if squatted, left leg
         (!isLeft && ph.getRightHipY() >= hipAtStart * squatMargin)  // right leg
       ) {
-        squatted=true
+        squatted = true
         canvasCtx.fillText(squattedText, -200, 450)
         playSound.play()
       }
-     
+
       if (
         (isLeft && ph.getLeftHipY() <= hipAtStart && squatted) || // check if back standing up after a squat, left leg
         (!isLeft && ph.getRightHipY() <= hipAtStart && squatted)  // right leg
@@ -173,19 +170,16 @@ const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
         squatted = false
       }
       canvasCtx.fillText(counter, -40, 40)
-
     }
 
     if (!isRunning && alreadyRan) { // recording stops     
-      getSquatData(record);
-      alreadyRan = false;
-      squatted = false;
+      getSquatData(record)
+      alreadyRan = false
+      squatted = false
+      playSound.pause()
     }
-    canvasCtx.restore();
-  };
-
-
-
+    canvasCtx.restore()
+  }
 
   return (
     <>
@@ -194,8 +188,8 @@ const Canvas = ({ isLeftLeg, isStarted, getSquatData }) => {
         style={{ display: "none" }}
       />
       <canvas ref={canvasRef} ></canvas>
-      </>
-  );
-};
+    </>
+  )
+}
 
 export default Canvas

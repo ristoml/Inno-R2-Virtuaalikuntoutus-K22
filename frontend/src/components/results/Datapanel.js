@@ -7,6 +7,7 @@ import Datatable from "./DataTable"
 import axios from 'axios'
 import { useEffect, useState, useRef } from 'react'
 
+let APIURL = 'http://localhost:3001/' //Url which is used in api calls
 
 const Datapanel = ({ onClick, squatData, clientName }) => {
     const [data, setCurrentData] = useState(null)
@@ -35,25 +36,25 @@ const Datapanel = ({ onClick, squatData, clientName }) => {
             data: results,
             client: clientName
         }
-        const promise = axios.post('http://localhost:3001/api/addResult', resultObject)
+        const promise = axios.post(APIURL + 'api/addResult', resultObject)
         promise.then(response => {
             setCurrentData(response.data)
         })
     }
     const getResult = (resultId) => { // get specific result by ID
-        const promise = axios.get(`http://localhost:3001/api/results/${resultId}`)
+        const promise = axios.get(APIURL + `api/results/${resultId}`)
         promise.then(response => {
             setCurrentData(response.data)
         })
     }
     const getLatestResult = () => { // get latest entry from the DB        
-        const promise = axios.get('http://localhost:3001/api/getLatest')
+        const promise = axios.get(APIURL + 'api/getLatest')
         promise.then(response => {
             setCurrentData(response.data)
         })
     }
     const deleteResult = (resultId) => { // delete entry from DB by using a Id        
-        const promise = axios.delete(`http://localhost:3001/api/results/${resultId}`)
+        const promise = axios.delete(APIURL + `api/results/${resultId}`)
         promise.then(response => {
             console.log(response)
             getLatestResult()
