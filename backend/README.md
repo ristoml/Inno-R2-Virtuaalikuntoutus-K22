@@ -46,9 +46,9 @@
 
 ## Get result with id
 
-**GET** ` api/results/id `  
+**GET** ` api/searchResult/:id `  
 
-**Example** ` http://localhost:3001/api/results/123 `
+**Example** ` http://localhost:3001/api/searchResult/123 `
 
 ### Response
 
@@ -68,7 +68,7 @@
 
 ### Request
 
-**PUT** ` api/update/id `  
+**PUT** ` api/update/:id `  
 
 **Example** ` http://localhost:3001/api/update/1 ` & new name
 
@@ -80,11 +80,11 @@
 
 ### Request
 
-**DELETE** ` api/results/id `  
+**DELETE** ` api/removeResult/:id `  
 
 ### Response
 
-**Example** ` http://localhost:3001/api/results/1 `
+**Example** ` http://localhost:3001/api/removeResult/1 `
 
 `` On success return status: 204 ``
 
