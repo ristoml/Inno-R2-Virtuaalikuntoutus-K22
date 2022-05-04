@@ -86,9 +86,10 @@ const ResultPanel = ({ getId, delId, sdata, updateClient }) => {
                     text='Delete'
                     color='#bdffff'
                     onClick={() => {
-                        window.confirm(`Do you want to delete the test result \n '${label}' ?`)
-                        isLoaded.current = false
-                        delId(resultId)
+                        if (window.confirm(`Do you want to delete the test result \n '${label}' ?`)) {
+                            isLoaded.current = false
+                            delId(resultId)
+                        }
                     }
                     }
                 />
