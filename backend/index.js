@@ -20,7 +20,7 @@ app.get('/api/results', (request, response) => {
 })
 
 //single search using id
-app.get('/api/results/:id', (request, response) => {
+app.get('/api/searchResult/:id', (request, response) => {
     Result.findById(request.params.id)
         .then(result => {
             if (result) {
@@ -65,7 +65,7 @@ app.post('/api/addResult', (request, response) => {
 })
 
 //remove item by id
-app.delete('/api/results/:id', (request, response, next) => {
+app.delete('/api/removeResult/:id', (request, response, next) => {
     Result.findByIdAndRemove(request.params.id)
         .then(result => {
             response.status(204).end()

@@ -7,7 +7,7 @@ import Datatable from "./DataTable"
 import axios from 'axios'
 import { useEffect, useState, useRef } from 'react'
 
-let APIURL = 'http://localhost:3001/' //Url which is used in api calls
+let APIURL = 'http://localhost:3001/' //url which is used in api calls
 
 const Datapanel = ({ onClick, squatData, clientName }) => {
     const [data, setCurrentData] = useState(null)
@@ -42,7 +42,7 @@ const Datapanel = ({ onClick, squatData, clientName }) => {
         })
     }
     const getResult = (resultId) => { // get specific result by ID
-        const promise = axios.get(APIURL + `api/results/${resultId}`)
+        const promise = axios.get(APIURL + `api/searchResult/${resultId}`)
         promise.then(response => {
             setCurrentData(response.data)
         })
@@ -54,7 +54,7 @@ const Datapanel = ({ onClick, squatData, clientName }) => {
         })
     }
     const deleteResult = (resultId) => { // delete entry from DB by using a Id        
-        const promise = axios.delete(APIURL + `api/results/${resultId}`)
+        const promise = axios.delete(APIURL + `api/removeResult/${resultId}`)
         promise.then(response => {
             console.log(response)
             getLatestResult()
@@ -65,7 +65,7 @@ const Datapanel = ({ onClick, squatData, clientName }) => {
         const client = {
             client: clientName
         }
-        const promise = axios.put(`http://localhost:3001/api/update/${resultId}`, client)
+        const promise = axios.put(APIURL + `api/update/${resultId}`, client)
         promise.then(response => {
             console.log(response)
         })
