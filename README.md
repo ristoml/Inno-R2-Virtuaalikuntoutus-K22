@@ -1,5 +1,9 @@
 # Inno-R2-Virtuaalikuntoutus-K22
 
+## About this project
+
+A web-application to calculate, analyse and record the knee angle while performing a single leg squat. Made as a part of Metropolia UAS Innovation Project.
+
 This README contains brief explanation how to install/start developing and what technologies are used in this project. This README will be updated if something changes/updates.
 
 ## Technologies used
@@ -7,10 +11,6 @@ This README contains brief explanation how to install/start developing and what 
 #### Frontend: React, Mediapipe 
 
 #### Backend: Node.js, MongoDB
-
-## Developing/installation
-
-First use "clone repository" -function in your code editor and use this URL: https://github.com/ristoml/Inno-R2-Virtuaalikuntoutus-K22.git
 
 ### Dependency installation
 
@@ -35,3 +35,5 @@ In terminal:
 ` Frontend: npm start `
 
 ` Backend: npm start dev `
+
+For more information, refer to *[Wiki](https://github.com/ristoml/Inno-R2-Virtuaalikuntoutus-K22/wiki)
