@@ -36,4 +36,4 @@ In terminal:
 
 ` Backend: npm start dev `
 
-For more information, refer to *[Wiki](https://github.com/ristoml/Inno-R2-Virtuaalikuntoutus-K22/wiki)
+For more information, refer to [project Wiki](https://github.com/ristoml/Inno-R2-Virtuaalikuntoutus-K22/wiki)
