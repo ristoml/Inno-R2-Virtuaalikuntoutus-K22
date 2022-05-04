@@ -3,7 +3,7 @@
 
 import React from "react"
 import { useState } from "react"
-import Button2 from "./Button2"
+import Button from "./Button"
 
 const Popup = props => {
     const [cname, setCname] = useState('')
@@ -16,13 +16,15 @@ const Popup = props => {
                         Insert client name and click <strong>Ok</strong> to continue or click <strong>Cancel</strong> to discard current recording and return to main screen.</p>
                         <label>Client name: </label>
                         <input type="text" value={cname} onChange={(e) => setCname(e.target.value)} /><br /><br />
-                        <Button2
+                        <Button
+                            className={'btn2'}
                             color='grey'
                             text='Ok'
                             onClick={() => {
                                 props.handlePopup(true, cname)
                             }} />
-                        <Button2
+                        <Button
+                            className={'btn2'}
                             color='grey'
                             text='Cancel'
                             onClick={() => {
@@ -31,7 +33,8 @@ const Popup = props => {
                     </>
                 ) : (
                     <><p>Invalid recording, hit <strong>Ok</strong> to try again!</p><br /><br />
-                        <Button2
+                        <Button
+                            className={'btn2'}
                             color='grey'
                             text='Ok'
                             onClick={() => {

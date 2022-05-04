@@ -1,3 +1,5 @@
+import Button from "../components/home/Button"
+
 const Info = () => {
 
    const closeTab = () => {
@@ -154,7 +156,12 @@ const Info = () => {
         </article>
     </div >
     <div id='info-button'>
-    <button color='gray' className="info-btn"  onClick={closeTab}>Home</button>
+    <Button
+      className={'info-btn'}
+      color={'grey'}
+      onClick={closeTab}
+      text={'Home'}
+    />
     </div>
   </div>  
   )

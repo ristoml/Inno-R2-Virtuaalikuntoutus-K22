@@ -4,7 +4,7 @@
 import { useState, useEffect, useRef } from 'react'
 import Select from 'react-select'
 import axios from 'axios'
-import Button2 from '../home/Button2'
+import Button from '../home/Button'
 
 let APIURL = 'http://localhost:3001/' //Url which is used in api calls
 
@@ -72,7 +72,8 @@ const ResultPanel = ({ getId, delId, sdata, updateClient }) => {
                     value={{ label: label }}
 
                 />
-                <Button2
+                <Button
+                    className={'btn2'}
                     text='Edit'
                     color='#8300d4'
                     onClick={() => {
@@ -80,7 +81,8 @@ const ResultPanel = ({ getId, delId, sdata, updateClient }) => {
                     }
                     }
                 />
-                <Button2
+                <Button
+                    className={'btn2'}
                     text='Delete'
                     color='#bdffff'
                     onClick={() => {
@@ -97,7 +99,8 @@ const ResultPanel = ({ getId, delId, sdata, updateClient }) => {
                     <p><strong>Edit client name</strong><br /></p>
                     <label>New name: </label>
                     <input type="text" value={tempName} onChange={(e) => { setTempName(e.target.value) }} /><br /><br />
-                    <Button2
+                    <Button
+                        className={'btn2'}
                         color='grey'
                         text='Ok'
                         onClick={() => {
@@ -108,7 +111,8 @@ const ResultPanel = ({ getId, delId, sdata, updateClient }) => {
                             console.log(listOptions)
                             setShowEdit(false)
                         }} />
-                    <Button2
+                    <Button
+                        className={'btn2'}
                         color='grey'
                         text='Cancel'
                         onClick={() => {

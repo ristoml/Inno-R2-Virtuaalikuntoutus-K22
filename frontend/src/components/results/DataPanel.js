@@ -84,6 +84,7 @@ const Datapanel = ({ onClick, squatData, clientName }) => {
                     <Stats data={data.data} />
                     <Datatable data={data} />
                     <Button
+                        className={'btn'}
                         color={'gray'}
                         onClick={onClick}
                         text={'Home'}
