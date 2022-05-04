@@ -32,8 +32,8 @@ create new file called ".env" in backend folder. In that file you need to define
 
 In terminal:
 
-` Frontend: npm start `
+` Frontend: cd frontend && npm start `
 
-` Backend: npm start dev `
+` Backend: cd ../backend && npm start dev `
 
 For more information, refer to [project Wiki](https://github.com/ristoml/Inno-R2-Virtuaalikuntoutus-K22/wiki)
