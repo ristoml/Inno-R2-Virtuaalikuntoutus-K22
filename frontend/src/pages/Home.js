@@ -32,7 +32,7 @@ const Home = () => {
   }
 
   const showResults = () => {
-    squatData.current = {}
+    setSquatData({})
     setRecording(false)
     setShowCanvas(false)
   }
