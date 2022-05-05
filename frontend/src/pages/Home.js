@@ -1,3 +1,5 @@
+/* This component is the Home page, which can be accessed with path '/'. 
+   Uses conditional rendering. Default view is Canvas and ControlPanel. The other one is DataPanel. */
 import { useState, useRef } from "react"
 import Canvas from "../components/home/Canvas"
 import ControlPanel from "../components/home/ControlPanel"

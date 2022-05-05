@@ -1,3 +1,4 @@
+/* This component contains the Router, which defines the routes for the pages Home and Info */
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import Home from './pages/Home'
 import Info from './pages/Info'

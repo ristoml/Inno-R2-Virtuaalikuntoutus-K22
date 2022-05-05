@@ -1,3 +1,4 @@
+/* This component is the Info page, which can be accessed with path '/info' */
 import Button from "../components/home/Button"
 
 const Info = () => {
