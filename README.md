@@ -2,7 +2,7 @@
 
 ## About this project
 
-A web-application utilising webcam to calculate, analyse and record the knee angle while performing a single leg squat. Made as a part of Metropolia UAS Innovation Project.
+A web-application(https://web-sls-test-tool.rahtiapp.fi/) utilising webcam to calculate, analyse and record the knee angle while performing a single leg squat. Made as a part of Metropolia UAS Innovation Project.
 
 This README contains brief explanation how to install/start developing and what technologies are used in this project. This README will be updated if something changes/updates.
 
